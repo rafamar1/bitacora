@@ -13,6 +13,8 @@ import javax.persistence.EntityNotFoundException;
 import javax.persistence.criteria.CriteriaQuery;
 import javax.persistence.criteria.Root;
 import DTO.Pais;
+import DTO.Dia;
+import java.util.ArrayList;
 import java.util.List;
 import javax.persistence.EntityManager;
 import javax.persistence.EntityManagerFactory;
@@ -33,6 +35,9 @@ public class CiudadJpaController implements Serializable {
     }
 
     public void create(Ciudad ciudad) {
+        if (ciudad.getDiaList() == null) {
+            ciudad.setDiaList(new ArrayList<Dia>());
+        }
         EntityManager em = null;
         try {
             em = getEntityManager();
@@ -42,10 +47,20 @@ public class CiudadJpaController implements Serializable {
                 idPais = em.getReference(idPais.getClass(), idPais.getId());
                 ciudad.setIdPais(idPais);
             }
+            List<Dia> attachedDiaList = new ArrayList<Dia>();
+            for (Dia diaListDiaToAttach : ciudad.getDiaList()) {
+                diaListDiaToAttach = em.getReference(diaListDiaToAttach.getClass(), diaListDiaToAttach.getId());
+                attachedDiaList.add(diaListDiaToAttach);
+            }
+            ciudad.setDiaList(attachedDiaList);
             em.persist(ciudad);
             if (idPais != null) {
                 idPais.getCiudadList().add(ciudad);
                 idPais = em.merge(idPais);
+            }
+            for (Dia diaListDia : ciudad.getDiaList()) {
+                diaListDia.getCiudadList().add(ciudad);
+                diaListDia = em.merge(diaListDia);
             }
             em.getTransaction().commit();
         } finally {
@@ -63,10 +78,19 @@ public class CiudadJpaController implements Serializable {
             Ciudad persistentCiudad = em.find(Ciudad.class, ciudad.getId());
             Pais idPaisOld = persistentCiudad.getIdPais();
             Pais idPaisNew = ciudad.getIdPais();
+            List<Dia> diaListOld = persistentCiudad.getDiaList();
+            List<Dia> diaListNew = ciudad.getDiaList();
             if (idPaisNew != null) {
                 idPaisNew = em.getReference(idPaisNew.getClass(), idPaisNew.getId());
                 ciudad.setIdPais(idPaisNew);
             }
+            List<Dia> attachedDiaListNew = new ArrayList<Dia>();
+            for (Dia diaListNewDiaToAttach : diaListNew) {
+                diaListNewDiaToAttach = em.getReference(diaListNewDiaToAttach.getClass(), diaListNewDiaToAttach.getId());
+                attachedDiaListNew.add(diaListNewDiaToAttach);
+            }
+            diaListNew = attachedDiaListNew;
+            ciudad.setDiaList(diaListNew);
             ciudad = em.merge(ciudad);
             if (idPaisOld != null && !idPaisOld.equals(idPaisNew)) {
                 idPaisOld.getCiudadList().remove(ciudad);
@@ -75,6 +99,18 @@ public class CiudadJpaController implements Serializable {
             if (idPaisNew != null && !idPaisNew.equals(idPaisOld)) {
                 idPaisNew.getCiudadList().add(ciudad);
                 idPaisNew = em.merge(idPaisNew);
+            }
+            for (Dia diaListOldDia : diaListOld) {
+                if (!diaListNew.contains(diaListOldDia)) {
+                    diaListOldDia.getCiudadList().remove(ciudad);
+                    diaListOldDia = em.merge(diaListOldDia);
+                }
+            }
+            for (Dia diaListNewDia : diaListNew) {
+                if (!diaListOld.contains(diaListNewDia)) {
+                    diaListNewDia.getCiudadList().add(ciudad);
+                    diaListNewDia = em.merge(diaListNewDia);
+                }
             }
             em.getTransaction().commit();
         } catch (Exception ex) {
@@ -109,6 +145,11 @@ public class CiudadJpaController implements Serializable {
             if (idPais != null) {
                 idPais.getCiudadList().remove(ciudad);
                 idPais = em.merge(idPais);
+            }
+            List<Dia> diaList = ciudad.getDiaList();
+            for (Dia diaListDia : diaList) {
+                diaListDia.getCiudadList().remove(ciudad);
+                diaListDia = em.merge(diaListDia);
             }
             em.remove(ciudad);
             em.getTransaction().commit();
