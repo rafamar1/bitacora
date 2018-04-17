@@ -16,6 +16,7 @@ import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
+import javax.persistence.ManyToMany;
 import javax.persistence.ManyToOne;
 import javax.persistence.NamedQueries;
 import javax.persistence.NamedQuery;
@@ -49,6 +50,8 @@ public class Dia implements Serializable {
     @Column(name = "fecha")
     @Temporal(TemporalType.TIMESTAMP)
     private Date fecha;
+    @ManyToMany(mappedBy = "diaList")
+    private List<Ciudad> ciudadList;
     @OneToMany(cascade = CascadeType.ALL, mappedBy = "idDia")
     private List<Entrada> entradaList;
     @JoinColumn(name = "id_viaje", referencedColumnName = "id")
@@ -81,6 +84,15 @@ public class Dia implements Serializable {
 
     public void setFecha(Date fecha) {
         this.fecha = fecha;
+    }
+
+    @XmlTransient
+    public List<Ciudad> getCiudadList() {
+        return ciudadList;
+    }
+
+    public void setCiudadList(List<Ciudad> ciudadList) {
+        this.ciudadList = ciudadList;
     }
 
     @XmlTransient

@@ -6,6 +6,7 @@
 package DTO;
 
 import java.io.Serializable;
+import java.util.List;
 import javax.persistence.Basic;
 import javax.persistence.Column;
 import javax.persistence.Entity;
@@ -13,11 +14,14 @@ import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
+import javax.persistence.JoinTable;
+import javax.persistence.ManyToMany;
 import javax.persistence.ManyToOne;
 import javax.persistence.NamedQueries;
 import javax.persistence.NamedQuery;
 import javax.persistence.Table;
 import javax.xml.bind.annotation.XmlRootElement;
+import javax.xml.bind.annotation.XmlTransient;
 
 /**
  *
@@ -41,6 +45,11 @@ public class Ciudad implements Serializable {
     @Basic(optional = false)
     @Column(name = "nombre")
     private String nombre;
+    @JoinTable(name = "dia_ciudad", joinColumns = {
+        @JoinColumn(name = "id_ciudad", referencedColumnName = "id")}, inverseJoinColumns = {
+        @JoinColumn(name = "id_dia", referencedColumnName = "id")})
+    @ManyToMany
+    private List<Dia> diaList;
     @JoinColumn(name = "id_pais", referencedColumnName = "id")
     @ManyToOne
     private Pais idPais;
@@ -71,6 +80,15 @@ public class Ciudad implements Serializable {
 
     public void setNombre(String nombre) {
         this.nombre = nombre;
+    }
+
+    @XmlTransient
+    public List<Dia> getDiaList() {
+        return diaList;
+    }
+
+    public void setDiaList(List<Dia> diaList) {
+        this.diaList = diaList;
     }
 
     public Pais getIdPais() {
