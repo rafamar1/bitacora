@@ -2,14 +2,14 @@
 <persistence version="2.1" xmlns="http://xmlns.jcp.org/xml/ns/persistence" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://xmlns.jcp.org/xml/ns/persistence http://xmlns.jcp.org/xml/ns/persistence/persistence_2_1.xsd">
   <persistence-unit name="bitacoraPU" transaction-type="RESOURCE_LOCAL">
     <provider>org.eclipse.persistence.jpa.PersistenceProvider</provider>
-    <class>DTO.Dia</class>
-    <class>DTO.Pais</class>
-    <class>DTO.Usuario</class>
-    <class>DTO.Entrada</class>
-    <class>DTO.Ciudad</class>
-    <class>DTO.Viaje</class>
-    <class>DTO.Opinion</class>
-    <class>DTO.Foto</class>
+    <class>datos.entidades.Usuario</class>
+    <class>datos.entidades.Entrada</class>
+    <class>datos.entidades.Ciudad</class>
+    <class>datos.entidades.Dia</class>
+    <class>datos.entidades.Viaje</class>
+    <class>datos.entidades.Foto</class>
+    <class>datos.entidades.Pais</class>
+    <class>datos.entidades.Opinion</class>
     <exclude-unlisted-classes>false</exclude-unlisted-classes>
     <properties>
       <property name="javax.persistence.jdbc.url" value="jdbc:mysql://localhost:3306/bitacora"/>

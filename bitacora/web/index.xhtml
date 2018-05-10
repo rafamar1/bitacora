@@ -1,12 +1,48 @@
 <?xml version='1.0' encoding='UTF-8' ?>
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml"
-      xmlns:h="http://xmlns.jcp.org/jsf/html">
-    <h:head>
-        <title>Primera Subida</title>
-    </h:head>
-    <h:body>
-        
-    </h:body>
-</html>
+      xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+      xmlns:h="http://xmlns.jcp.org/jsf/html"
+      xmlns:f="http://xmlns.jcp.org/jsf/core"
+      xmlns:p="http://primefaces.org/ui">
 
+    <body>
+
+        <ui:composition template="./templates/plantilla.xhtml">
+
+            <ui:define name="content">
+
+                <f:view>
+                    <h:form>
+                        <h:panelGrid columns="2">
+                            <p:outputLabel value="Nombre: " />
+                            <p:inputText id="nombre" value="#{registroBean.usuario.nombre}" autocomplete="true" required="true"/>
+
+                            <p:outputLabel value="Apellidos " />
+                            <p:inputText id="apellidos" value="#{registroBean.usuario.apellidos}" autocomplete="true" required="true"/>
+
+                            <p:outputLabel value="Contraseña: " />                            
+                            <p:password weakLabel="PazaBro" id="password" value="#{registroBean.usuario.password}" autocomplete="true" required="true"/>
+                            
+                            <p:outputLabel value="Email: " />
+                            <p:inputText id="mail" value="#{registroBean.usuario.email}" autocomplete="true" required="true"/>
+
+                            <p:commandButton 
+                                ajax="false"
+                                action="#{registroBean.loginOk}" 
+                                value="Alta"/>
+                            
+                        </h:panelGrid>
+                    </h:form>
+                </f:view>
+
+            </ui:define>
+
+            <ui:define name="bottom">
+                Esto aqui loko
+            </ui:define>
+
+        </ui:composition>
+
+    </body>
+</html>
