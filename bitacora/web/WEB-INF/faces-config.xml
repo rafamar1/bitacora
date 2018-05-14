@@ -7,8 +7,8 @@
     <navigation-rule>
         <from-view-id>/index.xhtml</from-view-id>
         <navigation-case>
-            <from-outcome>registrOK</from-outcome>
-            <to-view-id>/registrOK.xhtml</to-view-id>
+            <from-outcome>registro</from-outcome>
+            <to-view-id>/registro.xhtml</to-view-id>
         </navigation-case>
     </navigation-rule>
 </faces-config>

@@ -7,7 +7,6 @@ package datos.entidades;
 
 import java.io.Serializable;
 import java.util.List;
-import javax.inject.Named;
 import javax.persistence.Basic;
 import javax.persistence.CascadeType;
 import javax.persistence.Column;
@@ -34,9 +33,9 @@ import javax.xml.bind.annotation.XmlTransient;
     @NamedQuery(name = "Usuario.findAll", query = "SELECT u FROM Usuario u")
     , @NamedQuery(name = "Usuario.findByNombreUsuario", query = "SELECT u FROM Usuario u WHERE u.nombreUsuario = :nombreUsuario")
     , @NamedQuery(name = "Usuario.findByPassword", query = "SELECT u FROM Usuario u WHERE u.password = :password")
-    , @NamedQuery(name = "Usuario.findByNombre", query = "SELECT u FROM Usuario u WHERE u.nombre = :nombre")
-    , @NamedQuery(name = "Usuario.findByApellidos", query = "SELECT u FROM Usuario u WHERE u.apellidos = :apellidos")
-    , @NamedQuery(name = "Usuario.findByEmail", query = "SELECT u FROM Usuario u WHERE u.email = :email")})
+    , @NamedQuery(name = "Usuario.findByNombreCompleto", query = "SELECT u FROM Usuario u WHERE u.nombreCompleto = :nombreCompleto")
+    , @NamedQuery(name = "Usuario.findByEmail", query = "SELECT u FROM Usuario u WHERE u.email = :email")
+    , @NamedQuery(name = "Usuario.findByPublic1", query = "SELECT u FROM Usuario u WHERE u.public1 = :public1")})
 public class Usuario implements Serializable {
 
     private static final long serialVersionUID = 1L;
@@ -48,14 +47,13 @@ public class Usuario implements Serializable {
     @Column(name = "password")
     private String password;
     @Basic(optional = false)
-    @Column(name = "nombre")
-    private String nombre;
-    @Basic(optional = false)
-    @Column(name = "apellidos")
-    private String apellidos;
+    @Column(name = "nombre_completo")
+    private String nombreCompleto;
     @Basic(optional = false)
     @Column(name = "email")
     private String email;
+    @Column(name = "public")
+    private Integer public1;
     @JoinTable(name = "usuario_sigue", joinColumns = {
         @JoinColumn(name = "usuario", referencedColumnName = "nombre_usuario")}, inverseJoinColumns = {
         @JoinColumn(name = "usuario_seguido", referencedColumnName = "nombre_usuario")})
@@ -75,11 +73,10 @@ public class Usuario implements Serializable {
         this.nombreUsuario = nombreUsuario;
     }
 
-    public Usuario(String nombreUsuario, String password, String nombre, String apellidos, String email) {
+    public Usuario(String nombreUsuario, String password, String nombreCompleto, String email) {
         this.nombreUsuario = nombreUsuario;
         this.password = password;
-        this.nombre = nombre;
-        this.apellidos = apellidos;
+        this.nombreCompleto = nombreCompleto;
         this.email = email;
     }
 
@@ -99,20 +96,12 @@ public class Usuario implements Serializable {
         this.password = password;
     }
 
-    public String getNombre() {
-        return nombre;
+    public String getNombreCompleto() {
+        return nombreCompleto;
     }
 
-    public void setNombre(String nombre) {
-        this.nombre = nombre;
-    }
-
-    public String getApellidos() {
-        return apellidos;
-    }
-
-    public void setApellidos(String apellidos) {
-        this.apellidos = apellidos;
+    public void setNombreCompleto(String nombreCompleto) {
+        this.nombreCompleto = nombreCompleto;
     }
 
     public String getEmail() {
@@ -121,6 +110,14 @@ public class Usuario implements Serializable {
 
     public void setEmail(String email) {
         this.email = email;
+    }
+
+    public Integer getPublic1() {
+        return public1;
+    }
+
+    public void setPublic1(Integer public1) {
+        this.public1 = public1;
     }
 
     @XmlTransient
@@ -181,7 +178,7 @@ public class Usuario implements Serializable {
 
     @Override
     public String toString() {
-        return "DTO.Usuario[ nombreUsuario=" + nombreUsuario + " ]";
+        return "datos.entidades.Usuario[ nombreUsuario=" + nombreUsuario + " ]";
     }
     
 }

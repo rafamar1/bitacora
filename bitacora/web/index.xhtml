@@ -13,40 +13,29 @@
             <ui:define name="content">
 
                 <f:view>
-                    <h:form>
-                        <h:panelGrid columns="2">
-                            <p:outputLabel value="Nombre: " />
-                            <p:inputText id="nombre" value="#{registroBean.usuario.nombre}" autocomplete="true" required="true"/>
+                    <section id="panel_busqueda">
 
-                            <p:outputLabel value="Apellidos " />
-                            <p:inputText id="apellidos" value="#{registroBean.usuario.apellidos}" autocomplete="true" required="true"/>
+                        <h:form>
+                            <p:inputText id="busqueda" value="#{searchView.text1}" title="Buscar una localización/persona" >
+                                <f:validateLength minimum="3" />
+                            </p:inputText>
+                            <p:commandButton action="buscar" value="BusqueUste"/>
+                        </h:form>
 
-                            <p:outputLabel value="Contraseña: " />                            
-                            <p:password weakLabel="PazaBro" id="password" value="#{registroBean.usuario.password}" autocomplete="true" required="true"/>
+                        <h1>Únete y descubre lugares increíbles</h1>
+                        <h2>Comparte tus experiencias con miles de usuarios</h2>
 
-                            <p:outputLabel value="Email: " />
-                            <p:inputText id="mail" value="#{registroBean.usuario.email}" autocomplete="true" required="true"/>
 
-                            <p:commandButton 
-                                ajax="false"
-                                action="#{registroBean.loginOk}" 
-                                value="Alta"/>
+                    </section>
 
-                        </h:panelGrid>
+                    <section id="paises_continent_grid">
+                        <h1>¡Tenemos el lugar ideal para ti!</h1>
+                    </section>
 
-                        <p:inputText id="busqueda" value="#{searchView.text1}" title="Buscar una localización/persona" >
-                            <f:validateLength minimum="3" />
-                        </p:inputText>
-                        <p:commandButton action="buscar"/>
-                    </h:form>
-                    
-                    <div id="paises_continent_grid">
-                        
-                    </div>
-                    
-                    
-                    <div id="usuarios_destacados">
-                    </div>
+
+                    <section id="usuarios_destacados">
+                        <h1>La clave es compartir</h1>
+                    </section>
                 </f:view>
 
             </ui:define>

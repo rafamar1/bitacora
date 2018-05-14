@@ -27,18 +27,22 @@
         <div id="top" style="position:fixed;top:0;left: 0;right:0;">
             <ui:insert name="top">
                 <header>
-                    <p:panelGrid columns="2" layout="grid">            
-                        <p:outputLabel value="BITACORA" /> 
+                    <h:form prependId="false">
+                        <p:panelGrid columns="2" layout="grid">            
+                            <p:outputLabel value="BITACORA" /> 
 
-                        <p:menubar style="border: none;">
-                            <p:menuitem value="ENTRAR" action="login" icon="ui-icon-close"/>
-                            <p:submenu label="EXPLORAR">
-                                <p:menuitem value="Undo" url="#"></p:menuitem>
-                                <p:menuitem value="Redo" url="#"></p:menuitem>
-                            </p:submenu>
-                            <p:menuitem value="REGISTRATE"  url="registrOK.xhtml" icon="ui-icon-close"/>
-                        </p:menubar>
-                    </p:panelGrid>
+                            <p:menubar style="border: none;">
+                                <p:menuitem value="ENTRAR" action="login"/>
+                                <p:submenu label="EXPLORAR">
+                                    <p:menuitem value="Undo" url="#"></p:menuitem>
+                                    <p:menuitem value="Redo" url="#"></p:menuitem>
+                                </p:submenu>
+                                <p:menuitem value="REGISTRATE"  url="registro.xhtml"/>
+                            </p:menubar>
+                        </p:panelGrid>
+                    </h:form>
+
+
                 </header>
             </ui:insert>
         </div>
