@@ -23,7 +23,7 @@
 
                             <p:outputLabel value="Contraseña: " />                            
                             <p:password weakLabel="PazaBro" id="password" value="#{registroBean.usuario.password}" autocomplete="true" required="true"/>
-                            
+
                             <p:outputLabel value="Email: " />
                             <p:inputText id="mail" value="#{registroBean.usuario.email}" autocomplete="true" required="true"/>
 
@@ -31,9 +31,22 @@
                                 ajax="false"
                                 action="#{registroBean.loginOk}" 
                                 value="Alta"/>
-                            
+
                         </h:panelGrid>
+
+                        <p:inputText id="busqueda" value="#{searchView.text1}" title="Buscar una localización/persona" >
+                            <f:validateLength minimum="3" />
+                        </p:inputText>
+                        <p:commandButton action="buscar"/>
                     </h:form>
+                    
+                    <div id="paises_continent_grid">
+                        
+                    </div>
+                    
+                    
+                    <div id="usuarios_destacados">
+                    </div>
                 </f:view>
 
             </ui:define>

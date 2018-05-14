@@ -10,6 +10,15 @@
         <!--h:outputStylesheet name="./css/default.css"/>
         <h:outputStylesheet name="./css/cssLayout.css"/-->
         <h:outputStylesheet name="./css/normalize.css"/>
+        <style>
+            #bottom .ui-icon{
+                width: 30px !important;
+                height: 30px !important;
+            }
+            #bottom .ui-g div:first-child{
+                padding-top: 2%;
+            }
+        </style>
         <title>Facelets Template</title>
     </h:head>
 
@@ -18,16 +27,18 @@
         <div id="top" style="position:fixed;top:0;left: 0;right:0;">
             <ui:insert name="top">
                 <header>
-                    <p:menubar>
-                        <p:submenu label="EXPLORAR">
-                            <p:menuitem value="Undo" url="#"></p:menuitem>
-                            <p:menuitem value="Redo" url="#"></p:menuitem>
-                        </p:submenu>
+                    <p:panelGrid columns="2" layout="grid">            
+                        <p:outputLabel value="BITACORA" /> 
 
-                        <p:menuitem value="ENTRAR" url="http://www.primefaces.org" icon="ui-icon-close" />
-                        <p:menuitem value="REGISTRATE" url="http://www.primefaces.org" icon="ui-icon-close" />
-
-                    </p:menubar>
+                        <p:menubar style="border: none;">
+                            <p:menuitem value="ENTRAR" action="login" icon="ui-icon-close"/>
+                            <p:submenu label="EXPLORAR">
+                                <p:menuitem value="Undo" url="#"></p:menuitem>
+                                <p:menuitem value="Redo" url="#"></p:menuitem>
+                            </p:submenu>
+                            <p:menuitem value="REGISTRATE"  url="registrOK.xhtml" icon="ui-icon-close"/>
+                        </p:menubar>
+                    </p:panelGrid>
                 </header>
             </ui:insert>
         </div>
@@ -39,15 +50,15 @@
         <div id="bottom" style="position:absolute;bottom: 0;left: 0;right:0;">
             <ui:insert name="bottom">
                 <footer>
-                    <p:panelGrid columns="3" layout="grid">            
-                        <p:outputLabel value="2018@Todos los derechos reservados" /> 
-                        <p:outputLabel value="bitacora" /> 
+                    <p:panelGrid columns="2" layout="grid">            
+                        <p:outputLabel value="2018 &copy; bitacora" /> 
 
-                        <p:menubar>
-                            <p:menuitem value="New" url="#" icon="fa fa-plus" />
-                            <p:menuitem value="Refresh" url="#" icon="fa fa-refresh"/>
-                            <p:menuitem value="Home" url="http://www.primefaces.org" icon="fa fa-home"/>
-                            <p:menuitem value="Facebook" url="http://www.facebook.es" title="Enlace a facebook" icon="fa fa-facebook"/>
+                        <p:menubar style="border: none;">
+                            <p:menuitem title="Facebook" url="http://www.facebook.es" icon="fa fa-facebook fa-2x"/>
+                            <p:menuitem title="Twitter" url="http://www.facebook.es" icon="fa fa-twitter fa-2x"/>
+                            <p:menuitem title="Google+" url="http://www.facebook.es" icon="fa fa-google fa-2x"/>
+                            <p:menuitem title="Pinterest" url="http://www.facebook.es" icon="fa fa-pinterest fa-2x"/>
+                            <p:menuitem title="Contacto" url="" icon="fa fa-mail"/>
                         </p:menubar>
                     </p:panelGrid>
 
