@@ -3,14 +3,15 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package beans;
+package beans.modelos;
 
 import datos.entidades.Usuario;
 import java.io.Serializable;
+//import javax.annotation.ManagedBean;
+//import javax.enterprise.context.RequestScoped;
 import javax.enterprise.context.SessionScoped;
-import javax.enterprise.inject.Default;
 import javax.faces.bean.ManagedBean;
-import javax.faces.bean.ManagedProperty;
+import javax.faces.bean.RequestScoped;
 import javax.inject.*;
 
 
@@ -18,9 +19,9 @@ import javax.inject.*;
  *
  * @author Rafa
  */
-@Named
-//@ManagedBean
-@SessionScoped
+//@Named
+@ManagedBean
+@RequestScoped
 public class RegistroBean implements Serializable{
 
 //   @ManagedProperty(value = "#{usuario}")

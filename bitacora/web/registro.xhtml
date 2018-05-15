@@ -1,4 +1,4 @@
-<?xml version='1.0' encoding='UTF-8'?>
+<?xml version='1.0' encoding='UTF-8' ?>
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml"
       xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
@@ -9,8 +9,8 @@
     <body>
 
         <ui:composition template="./templates/plantilla.xhtml">
-           
-            <ui:define name="content">
+
+             <ui:define name="content">
                 <f:view>
                         <h:form>
                             <h:panelGrid columns="2">
@@ -24,15 +24,15 @@
                                 <p:inputText id="mail" value="#{registroBean.usuario.email}" autocomplete="true" required="true"/>
 
                                 <p:outputLabel value="Contraseña: " />                            
-                                <p:password weakLabel="PazaBro" id="password" value="#{registroBean.usuario.password}" autocomplete="true" required="true"/>
+                                <p:password weakLabel="La contraseña es demasiado debil" goodLabel="La contraseña es correcta" strongLabel="Contraseña muy fuerte" id="password" value="#{registroBean.usuario.password}" autocomplete="true" required="true"/>
 
                                 <p:outputLabel value="Repita contraseña: " />                            
-                                <p:password weakLabel="PazaBro" id="password" value="#{registroBean.usuario.password}" autocomplete="true" required="true"/>
+                                <p:password id="password" value="#{registroBean.usuario.password}" autocomplete="true" required="true"/>
 
 
                                 <p:commandButton 
                                     ajax="false"
-                                    action="#{registroBean.loginOk}" 
+                                    action="#{registroController.altaUsuario}" 
                                     value="Alta"/>
 
                             </h:panelGrid>
@@ -45,15 +45,6 @@
 
 
         </ui:composition>
-        <!--ui:composition template="./templates/plantilla.xhtml">
-    
-            <ui:define name="content">
-                
-    
-    
-            </ui:define>
-    
-        </ui:composition-->
 
     </body>
 </html>
