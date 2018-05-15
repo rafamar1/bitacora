@@ -35,7 +35,7 @@ import javax.xml.bind.annotation.XmlTransient;
     , @NamedQuery(name = "Usuario.findByPassword", query = "SELECT u FROM Usuario u WHERE u.password = :password")
     , @NamedQuery(name = "Usuario.findByNombreCompleto", query = "SELECT u FROM Usuario u WHERE u.nombreCompleto = :nombreCompleto")
     , @NamedQuery(name = "Usuario.findByEmail", query = "SELECT u FROM Usuario u WHERE u.email = :email")
-    , @NamedQuery(name = "Usuario.findByPublic1", query = "SELECT u FROM Usuario u WHERE u.public1 = :public1")})
+    , @NamedQuery(name = "Usuario.findByPublico", query = "SELECT u FROM Usuario u WHERE u.publico = :publico")})
 public class Usuario implements Serializable {
 
     private static final long serialVersionUID = 1L;
@@ -52,8 +52,8 @@ public class Usuario implements Serializable {
     @Basic(optional = false)
     @Column(name = "email")
     private String email;
-    @Column(name = "public")
-    private Integer public1;
+    @Column(name = "publico")
+    private Integer publico;
     @JoinTable(name = "usuario_sigue", joinColumns = {
         @JoinColumn(name = "usuario", referencedColumnName = "nombre_usuario")}, inverseJoinColumns = {
         @JoinColumn(name = "usuario_seguido", referencedColumnName = "nombre_usuario")})
@@ -112,12 +112,12 @@ public class Usuario implements Serializable {
         this.email = email;
     }
 
-    public Integer getPublic1() {
-        return public1;
+    public Integer getPublico() {
+        return publico;
     }
 
-    public void setPublic1(Integer public1) {
-        this.public1 = public1;
+    public void setPublico(Integer publico) {
+        this.publico = publico;
     }
 
     @XmlTransient
@@ -170,10 +170,7 @@ public class Usuario implements Serializable {
             return false;
         }
         Usuario other = (Usuario) object;
-        if ((this.nombreUsuario == null && other.nombreUsuario != null) || (this.nombreUsuario != null && !this.nombreUsuario.equals(other.nombreUsuario))) {
-            return false;
-        }
-        return true;
+        return !((this.nombreUsuario == null && other.nombreUsuario != null) || (this.nombreUsuario != null && !this.nombreUsuario.equals(other.nombreUsuario)));
     }
 
     @Override

@@ -15,19 +15,10 @@
                         <h:form>
                             <h:panelGrid columns="2">
                                 <p:outputLabel value="Nombre de usuario: " />
-                                <p:inputText id="nickname" value="#{registroBean.nombreUsuario}" autocomplete="true" required="true"/>
-
-                                <p:outputLabel value="Nombre Completo: " />
-                                <p:inputText id="nombre" value="#{registroBean.nombreCompleto}" autocomplete="true" required="true"/>
-
-                                <p:outputLabel value="Email: " />
-                                <p:inputText id="mail" value="#{registroBean.email}" autocomplete="true" required="true"/>
-
-                                <p:outputLabel value="Contraseña: " />                            
-                                <p:password weakLabel="La contraseña es demasiado debil" goodLabel="La contraseña es correcta" strongLabel="Contraseña muy fuerte" id="password" value="#{registroBean.password}" autocomplete="true" match="password2" required="true"/>
+                                <p:inputText id="nickname" value="#{registroBean.usuario.nombreUsuario}" autocomplete="true" required="true"/>
 
                                 <p:outputLabel value="Repita contraseña: " />                            
-                                <p:password id="password2" value="#{registroBean.password}" autocomplete="true" required="true"/>
+                                <p:password id="password2" value="#{registroBean.usuario.password}" autocomplete="true" required="true"/>
 
 
                                 <p:commandButton 

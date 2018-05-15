@@ -9,7 +9,7 @@ import datos.entidades.Usuario;
 import java.io.Serializable;
 //import javax.annotation.ManagedBean;
 //import javax.enterprise.context.RequestScoped;
-import javax.enterprise.context.SessionScoped;
+//import javax.enterprise.context.SessionScoped;
 import javax.faces.bean.ManagedBean;
 import javax.faces.bean.RequestScoped;
 import javax.inject.*;
@@ -19,21 +19,24 @@ import javax.inject.*;
  *
  * @author Rafa
  */
-//@Named
+//@Named(value = "registroBean")
 @ManagedBean
 @RequestScoped
 public class RegistroBean implements Serializable{
 
 //   @ManagedProperty(value = "#{usuario}")
-    private Usuario usuario;
-    private String name;
+    //private Usuario usuario;
+    private String nombreUsuario;
+    private String nombreCompleto;
+    private String email;
+    private String password;
     //private Conversation conversation;
     
     public RegistroBean() {
-        usuario = new Usuario();
+        //usuario = new Usuario();
     }
 
-    public Usuario getUsuario() {
+    /*public Usuario getUsuario() {
         return usuario;
     }
 
@@ -43,6 +46,39 @@ public class RegistroBean implements Serializable{
     
     public String loginOk(){
         return "registrOK";
+    }*/
+
+    public String getNombreUsuario() {
+        return nombreUsuario;
     }
+
+    public void setNombreUsuario(String nombreUsuario) {
+        this.nombreUsuario = nombreUsuario;
+    }
+
+    public String getNombreCompleto() {
+        return nombreCompleto;
+    }
+
+    public void setNombreCompleto(String nombreCompleto) {
+        this.nombreCompleto = nombreCompleto;
+    }
+
+    public String getEmail() {
+        return email;
+    }
+
+    public void setEmail(String email) {
+        this.email = email;
+    }
+
+    public String getPassword() {
+        return password;
+    }
+
+    public void setPassword(String password) {
+        this.password = password;
+    }
+    
     
 }

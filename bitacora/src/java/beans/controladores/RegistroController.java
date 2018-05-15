@@ -7,25 +7,41 @@ package beans.controladores;
 
 
 import beans.modelos.RegistroBean;
-import javax.inject.Named;
-import javax.enterprise.context.ConversationScoped;
+import datos.dao.UsuarioJpaController;
+import datos.entidades.Usuario;
+import javax.inject.*;
+//import javax.enterprise.context.ConversationScoped;
 import java.io.Serializable;
+import java.util.logging.Level;
+import java.util.logging.Logger;
+import javax.faces.bean.ManagedBean;
 import javax.faces.bean.ManagedProperty;
+import javax.faces.bean.RequestScoped;
+//import javax.faces.bean.SessionScoped;
+import javax.persistence.EntityManagerFactory;
+import javax.persistence.Persistence;
+import javax.persistence.PersistenceContext;
+import javax.persistence.PersistenceUnit;
 
 /**
  *
  * @author rfmarquez
  */
-@Named(value = "registroController")
-@ConversationScoped
+//@Named(value = "registroController")
+@ManagedBean
+
+@RequestScoped
 public class RegistroController implements Serializable {
 
     @ManagedProperty(value = "#{registroBean}")
     private RegistroBean registroBean;
-    /**
-     * Creates a new instance of RegistroController
-     */
+    
+    //@PersistenceUnit(unitName = "bitacoraPU")
+    private final EntityManagerFactory emf;
+    
+    
     public RegistroController() {
+        emf=Persistence.createEntityManagerFactory("bitacoraPU"); 
     }
 
     public RegistroBean getRegistroBean() {
@@ -37,6 +53,21 @@ public class RegistroController implements Serializable {
     }
     
     public String altaUsuario(){
+        Usuario usuario = new Usuario();
+        usuario.setNombreCompleto(registroBean.getNombreCompleto());
+        usuario.setNombreUsuario(registroBean.getNombreUsuario());
+        usuario.setPassword(registroBean.getPassword());
+        usuario.setEmail(registroBean.getEmail());
+        usuario.setPublico(1); //Siempre se inicializa un usuario como público
+        UsuarioJpaController usuarioController = new UsuarioJpaController(emf);
+        
+        try {
+            usuarioController.create(usuario);
+        } catch (Exception ex) {
+            Logger.getLogger(RegistroController.class.getName()).log(Level.SEVERE, null, ex);
+            return "error.xhtml";
+        }
+        
         return "index.xhtml";
     }
 }
