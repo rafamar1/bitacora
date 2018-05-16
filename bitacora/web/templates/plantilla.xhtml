@@ -33,12 +33,12 @@
         <div id="top" style="position:fixed;top:0;left: 0;right:0;">
             <ui:insert name="top">
                 <header>
-                    <!--h:form prependId="false"-->
+                    <h:form prependId="false">
                         <p:panelGrid columns="2" layout="grid">            
                             <p:outputLabel value="BITACORA" /> 
 
                             <p:menubar style="border: none;">
-                                <p:menuitem value="ENTRAR" action="login"/>
+                                <p:menuitem value="ENTRAR" url="login.xhtml"/>
                                 <p:submenu label="EXPLORAR">
                                     <p:menuitem value="Undo" url="#"></p:menuitem>
                                     <p:menuitem value="Redo" url="#"></p:menuitem>
@@ -46,7 +46,7 @@
                                 <p:menuitem value="REGISTRATE"  url="registro.xhtml"/>
                             </p:menubar>
                         </p:panelGrid>
-                    <!--/h:form-->
+                    </h:form>
 
 
                 </header>

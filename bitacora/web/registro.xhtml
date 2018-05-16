@@ -10,37 +10,40 @@
 
         <ui:composition template="./templates/plantilla.xhtml">
 
-             <ui:define name="content">
+            <ui:define name="content">
+                <h:outputScript target="head" name="js/jquery-3.3.1.js"/>
+                <h:outputScript target="head" name="js/jquery.validate.min.js"/>
+                <h:outputScript target="head" name="js/formRegistro_validate.js"/>
                 <f:view>
-                        <h:form>
-                            <h:panelGrid columns="2">
-                                <p:outputLabel value="Nombre de usuario: " />
-                                <p:inputText id="nickname" value="#{registroBean.nombreUsuario}" autocomplete="true" required="true"/>
+                    <h:form id="formRegistro" prependId="false">
+                        <h:panelGrid columns="2">
+                            <p:outputLabel value="Nombre de usuario: " />
+                            <p:inputText id="nickname" value="#{registroBean.nombreUsuario}"/>
 
-                                <p:outputLabel value="Nombre Completo: " />
-                                <p:inputText id="nombre" value="#{registroBean.nombreCompleto}" autocomplete="true" required="true"/>
+                            <p:outputLabel value="Nombre Completo: " />
+                            <p:inputText id="nombre" value="#{registroBean.nombreCompleto}"/>
 
-                                <p:outputLabel value="Email: " />
-                                <p:inputText id="mail" value="#{registroBean.email}" autocomplete="true" required="true"/>
-                                <!--input jsf:id="foo" type="text" jsf:value="#{bean.bar}"-->
-                                
-                                <p:outputLabel value="Contraseña: " />                            
-                                <p:password weakLabel="La contraseña es demasiado debil" goodLabel="La contraseña es correcta" strongLabel="Contraseña muy fuerte" id="password" value="#{registroBean.password}" autocomplete="true" match="password2" required="true"/>
+                            <p:outputLabel value="Email: " />
+                            <p:inputText id="mail" value="#{registroBean.email}"/>
 
-                                <p:outputLabel value="Repita contraseña: " />                            
-                                <p:password id="password2" value="#{registroBean.password}" autocomplete="true" required="true"/>
+                            <p:outputLabel value="Contraseña: " />                            
+                            <p:password weakLabel="La contraseña es demasiado debil" goodLabel="La contraseña es correcta" strongLabel="Contraseña muy fuerte" id="password" value="#{registroBean.password}" match="password2"/>
+
+                            <p:outputLabel value="Repita contraseña: " />                            
+                            <p:password id="password2" value="#{registroBean.password}"/>
+                    <!--input jsf:id="foo" type="text" jsf:value="#{bean.bar}"-->
 
 
-                                <p:commandButton 
-                                    ajax="false"
-                                    action="#{registroController.altaUsuario}" 
-                                    value="Alta"/>
-                                <hr/>
-                                <h:outputLabel value="¿Ya estás registrado?"/>
-                                <p:commandLink action="login.xhtml" value="Inicia sesión"/>
-                            </h:panelGrid>
-                        </h:form>
-                   
+                            <p:commandButton 
+                                ajax="false"
+                                action="#{registroController.altaUsuario}" 
+                                value="Alta"/>
+
+                            <h:outputLabel value="¿Ya estás registrado?"/>
+                            <p:link outcome="login" value="Inicia sesión"/>
+                        </h:panelGrid>
+                    </h:form>
+
 
                 </f:view>
 
@@ -50,5 +53,11 @@
         </ui:composition>
 
     </body>
+    <script src="js/jquery-3.3.1.js"/>
+    <script src="js/jquery.validate.min.js"/>
+    <script>
+
+    </script>
+
 </html>
 

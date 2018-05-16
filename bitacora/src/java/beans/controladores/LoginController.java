@@ -66,9 +66,8 @@ public class LoginController implements Serializable {
             Usuario usuario = usuarioController.findUsuario(nickname);
             if (usuario != null) {
                 BasicPasswordEncryptor passwordEncryptor = new BasicPasswordEncryptor();
-                String encryptedPassword = passwordEncryptor.encryptPassword(usuario.getPassword());
                 
-                if (passwordEncryptor.checkPassword(inputPassword, encryptedPassword)) {
+                if (passwordEncryptor.checkPassword(inputPassword, usuario.getPassword())) {
                     return "inicio.xhtml";
                 } else {
                     this.badLogin = true;
