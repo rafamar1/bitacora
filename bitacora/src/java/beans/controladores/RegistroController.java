@@ -5,12 +5,11 @@
  */
 package beans.controladores;
 
-
 import beans.modelos.RegistroBean;
 import datos.dao.UsuarioJpaController;
 import datos.entidades.Usuario;
 import javax.inject.*;
-//import javax.enterprise.context.ConversationScoped;
+import org.jasypt.util.password.*;
 import java.io.Serializable;
 import java.util.logging.Level;
 import java.util.logging.Logger;
@@ -35,13 +34,12 @@ public class RegistroController implements Serializable {
 
     @ManagedProperty(value = "#{registroBean}")
     private RegistroBean registroBean;
-    
+
     //@PersistenceUnit(unitName = "bitacoraPU")
     private final EntityManagerFactory emf;
-    
-    
+
     public RegistroController() {
-        emf=Persistence.createEntityManagerFactory("bitacoraPU"); 
+        emf = Persistence.createEntityManagerFactory("bitacoraPU");
     }
 
     public RegistroBean getRegistroBean() {
@@ -51,23 +49,33 @@ public class RegistroController implements Serializable {
     public void setRegistroBean(RegistroBean registroBean) {
         this.registroBean = registroBean;
     }
-    
-    public String altaUsuario(){
-        Usuario usuario = new Usuario();
-        usuario.setNombreCompleto(registroBean.getNombreCompleto());
-        usuario.setNombreUsuario(registroBean.getNombreUsuario());
-        usuario.setPassword(registroBean.getPassword());
-        usuario.setEmail(registroBean.getEmail());
-        usuario.setPublico(1); //Siempre se inicializa un usuario como público
-        UsuarioJpaController usuarioController = new UsuarioJpaController(emf);
+
+    public String altaUsuario() {
+        Usuario usuario = setUsuario();
         
+        BasicPasswordEncryptor passwordEncryptor = new BasicPasswordEncryptor();
+        String passwordEncrypt = passwordEncryptor.encryptPassword(registroBean.getPassword());
+        usuario.setPassword(passwordEncrypt);
+        
+        UsuarioJpaController usuarioController = new UsuarioJpaController(emf);
+
         try {
             usuarioController.create(usuario);
         } catch (Exception ex) {
             Logger.getLogger(RegistroController.class.getName()).log(Level.SEVERE, null, ex);
             return "error.xhtml";
         }
-        
+
         return "index.xhtml";
+    }
+
+    
+    private Usuario setUsuario() {
+        Usuario usuario = new Usuario();
+        usuario.setNombreCompleto(registroBean.getNombreCompleto());
+        usuario.setNombreUsuario(registroBean.getNombreUsuario());
+        usuario.setEmail(registroBean.getEmail());
+        usuario.setPublico(1); //Siempre se inicializa un usuario como público
+        return usuario;
     }
 }

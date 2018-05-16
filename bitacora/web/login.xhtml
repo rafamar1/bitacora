@@ -15,16 +15,20 @@
                         <h:form>
                             <h:panelGrid columns="2">
                                 <p:outputLabel value="Nombre de usuario: " />
-                                <p:inputText id="nickname" value="#{registroBean.usuario.nombreUsuario}" autocomplete="true" required="true"/>
+                                <p:inputText id="nickname" value="#{loginBean.nombreUsuario}" autocomplete="true" required="true"/>
 
                                 <p:outputLabel value="Repita contraseña: " />                            
-                                <p:password id="password2" value="#{registroBean.usuario.password}" autocomplete="true" required="true"/>
+                                <p:password id="password2" value="#{loginBean.password}" autocomplete="true" required="true"/>
 
-
+                                <p:outputLabel value="Usuario o contraseña incorrectos" rendered="#{loginController.badLogin}"/>
                                 <p:commandButton 
                                     ajax="false"
-                                    action="#{registroController.altaUsuario}" 
+                                    action="#{loginController.loginUsuario}" 
                                     value="Alta"/>
+                                
+                                <hr/>
+                                <h:outputLabel value="¿No tienes cuenta?"/>
+                                <p:commandLink action="registro.xhtml" value="Regístrate"/>
 
                             </h:panelGrid>
                         </h:form>

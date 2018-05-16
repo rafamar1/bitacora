@@ -22,7 +22,8 @@
 
                                 <p:outputLabel value="Email: " />
                                 <p:inputText id="mail" value="#{registroBean.email}" autocomplete="true" required="true"/>
-
+                                <!--input jsf:id="foo" type="text" jsf:value="#{bean.bar}"-->
+                                
                                 <p:outputLabel value="Contraseña: " />                            
                                 <p:password weakLabel="La contraseña es demasiado debil" goodLabel="La contraseña es correcta" strongLabel="Contraseña muy fuerte" id="password" value="#{registroBean.password}" autocomplete="true" match="password2" required="true"/>
 
@@ -34,7 +35,9 @@
                                     ajax="false"
                                     action="#{registroController.altaUsuario}" 
                                     value="Alta"/>
-
+                                <hr/>
+                                <h:outputLabel value="¿Ya estás registrado?"/>
+                                <p:commandLink action="login.xhtml" value="Inicia sesión"/>
                             </h:panelGrid>
                         </h:form>
                    
