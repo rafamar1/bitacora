@@ -1,0 +1,51 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+      xmlns:h="http://xmlns.jcp.org/jsf/html"
+      xmlns:f="http://xmlns.jcp.org/jsf/core"
+      xmlns:p="http://primefaces.org/ui">
+
+    <body>
+
+        <ui:composition template="./templates/principal.xhtml">
+
+            <ui:define name="content">
+
+                <f:view>
+                    <section id="panel_busqueda">
+
+                        <h:form>
+                            <p:inputText id="busqueda" value="#{searchView.text1}" title="Buscar una localización/persona" >
+                                <f:validateLength minimum="3" />
+                            </p:inputText>
+                            <p:commandButton action="buscar" value="BusqueUste"/>
+                        </h:form>
+
+                        <h1>Únete y descubre lugares increíbles</h1>
+                        <h2>Comparte tus experiencias con miles de usuarios</h2>
+
+
+                    </section>
+
+                    <section id="paises_continent_grid">
+                        <h1>¡Tenemos el lugar ideal para ti!</h1>
+                        <a href=""><img src="imagenSpain.jpg" alt="Spain"/></a>
+                        <a href=""><img src="Europa.jpg" alt="Europa"/></a>
+                        <a href=""><img src="Asia.jpg" alt="Asia"/></a>
+                        <a href=""><img src="Africa.jpg" alt="Africa"/></a>
+                    </section>
+
+
+                    <section id="usuarios_destacados">
+                        <h1>La clave es compartir</h1>
+                    </section>
+                </f:view>
+
+            </ui:define>
+
+
+        </ui:composition>
+
+    </body>
+</html>

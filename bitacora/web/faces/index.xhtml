@@ -8,9 +8,9 @@
 
     <body>
 
-        <ui:composition template="./templates/plantilla.xhtml">
+        <ui:composition template="./templates/plantilla.xhtml" >
 
-            <ui:define name="content">
+            <ui:define name="content" >
 
                 <f:view>
                     <section id="panel_busqueda">
@@ -30,14 +30,14 @@
 
                     <section id="paises_continent_grid">
                         <h1>¡Tenemos el lugar ideal para ti!</h1>
-                        <a href=""><img src="imagenSpain.jpg" alt="Spain"/></a>
-                        <a href=""><img src="Europa.jpg" alt="Europa"/></a>
-                        <a href=""><img src="Asia.jpg" alt="Asia"/></a>
-                        <a href=""><img src="Africa.jpg" alt="Africa"/></a>
+                        <a href="explorar.xhtml#asia"><img src="Asia.jpg" alt="Asia"/></a>
+                        <a href="explorar.xhtml#usa"><img src="imgUsa.jpg" alt="USA"/></a>
+                        <a href="explorar.xhtml#europa"><img src="Europa.jpg" alt="Europa"/></a>
+                        <a href="explorar.xhtml#africa"><img src="Africa.jpg" alt="Africa"/></a>
                     </section>
 
 
-                    <section id="usuarios_destacados">
+                    <section id="usuarios_destacados" style="display: none;">
                         <h1>La clave es compartir</h1>
                     </section>
                 </f:view>
