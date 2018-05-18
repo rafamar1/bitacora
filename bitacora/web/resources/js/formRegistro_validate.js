@@ -8,7 +8,7 @@ $(function () {
             mail: {
                 required: true,
                 email: true,
-                remote: {
+                /*remote: {
                     url: "compruebaMailRemote",
                     type: "post",
                     data: {mail: function () {
@@ -16,7 +16,7 @@ $(function () {
                         }
                     }
 
-                }
+                }*/
             }
         },
 

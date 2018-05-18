@@ -63,10 +63,10 @@ public class RegistroController implements Serializable {
             usuarioController.create(usuario);
         } catch (Exception ex) {
             Logger.getLogger(RegistroController.class.getName()).log(Level.SEVERE, null, ex);
-            return "error.xhtml";
+            return "error";
         }
 
-        return "index.xhtml";
+        return "registroOk";
     }
 
     

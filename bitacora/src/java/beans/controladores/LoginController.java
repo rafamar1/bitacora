@@ -68,10 +68,10 @@ public class LoginController implements Serializable {
                 BasicPasswordEncryptor passwordEncryptor = new BasicPasswordEncryptor();
                 
                 if (passwordEncryptor.checkPassword(inputPassword, usuario.getPassword())) {
-                    return "inicio.xhtml";
+                    return "loginOk";
                 } else {
                     this.badLogin = true;
-                    return "login.xhtml";
+                    return "error";
                 }
                 
             }
