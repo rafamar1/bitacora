@@ -16,22 +16,21 @@
 
                 <f:view>
                     <h:form  enctype="multipart/form-data">                        
-                   
-                    PUBLIQUE USTED SU VIAJECITO COMPAÑERO!
-                    <p>
-                        Titulo: <h:inputText value="#{publicarViajeBean.titulo}"/> 
-                    </p> 
-                    
-                    <p>
-                        Breve descripción: <h:inputTextarea value="#{publicarViajeBean.descripcion}"/>
-                    </p>
-                    
-                    <p>
-                        Imagen de Portada:  <p:fileUpload id="fileIdResume"  value="#{publicarViajeBean.imagen}" mode="simple" allowTypes="/(\.|\/)(gif|jpe?g|zip)$/" skinSimple="true" dragDropSupport="true"/>
-                    
- 
+
+                        Información esencial de su viaje
+                        <p>
+                            Titulo: <h:inputText value="#{publicarViajeBean.titulo}"/> 
+                        </p> 
+
+                        <p>
+                            Breve descripción: <h:inputTextarea value="#{publicarViajeBean.descripcion}"/>
+                        </p>
+
+                        <p>
+                            Imagen de Portada:  <p:fileUpload id="fileIdResume"  value="#{publicarViajeBean.imagen}" mode="simple" allowTypes="/(\.|\/)(gif|jpe?g|zip)$/" skinSimple="true" dragDropSupport="true"/>
+                        </p>
                         <p:commandButton value="PublicarViaje" ajax="false" action="#{publicarViajeController.publicar}"/> 
-                    </p>
+
                     </h:form>
                 </f:view>
 

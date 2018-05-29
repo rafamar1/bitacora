@@ -25,30 +25,12 @@ import javax.faces.application.FacesMessage;
 public class PublicarViajeBean implements Serializable{
 
 
-    private String pais;
-    private String ciudad;
     private String titulo;
     private String descripcion;
     private UploadedFile imagen;
     
     
     public PublicarViajeBean() {
-    }
-
-    public String getPais() {
-        return pais;
-    }
-
-    public void setPais(String pais) {
-        this.pais = pais;
-    }
-
-    public String getCiudad() {
-        return ciudad;
-    }
-
-    public void setCiudad(String ciudad) {
-        this.ciudad = ciudad;
     }
 
     public String getTitulo() {
@@ -74,12 +56,5 @@ public class PublicarViajeBean implements Serializable{
     public void setImagen(UploadedFile imagen) {
         this.imagen = imagen;
     }
-    
-    
-    /*public void handleFileUpload(FileUploadEvent event) {
-        FacesMessage message = new FacesMessage("Succesful", event.getFile().getFileName() + " is uploaded.");
-        FacesContext.getCurrentInstance().addMessage(null, message);
-    }*/
-    
     
 }

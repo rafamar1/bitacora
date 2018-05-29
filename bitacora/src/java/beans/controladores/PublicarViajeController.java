@@ -24,6 +24,7 @@ import java.util.logging.Logger;
 import javax.faces.bean.ManagedBean;
 import javax.faces.bean.ManagedProperty;
 import javax.faces.bean.RequestScoped;
+import javax.faces.context.FacesContext;
 import javax.faces.event.ValueChangeEvent;
 import javax.persistence.EntityManagerFactory;
 import javax.persistence.Persistence;
@@ -100,38 +101,41 @@ public class PublicarViajeController implements Serializable {
         }
         newViaje.setTitulo(publicarViajeBean.getTitulo());
         newViaje.setDescripcion(publicarViajeBean.getDescripcion());
-        //TODO de donde cogemos el usuario?
+        //TODO COGER USUARIO DE LA SESION
         newViaje.setUsuario(new Usuario("usuarioPrueba"));
         newViaje.setImgMiniatura(publicarViajeBean.getImagen().getFileName());
+        //TODO gestionar la imagen tanto las individuales como las de la galería
         return "ok";
     }
 
     public void manejaEvento() {
         if (cadena.length() >= 3) {
             CiudadJpaController ciudadController = new CiudadJpaController(emf);
-            List<Ciudad> listaCiudades = ciudadController.dameListaCiudadesLikeNombre(cadena);
-            this.listaCiudades = listaCiudades;
+            this.listaCiudades = ciudadController.dameListaCiudadesLikeNombre(cadena);
         }
     }
-    
-        public void subirFoto() throws IOException {
 
+    public void subirFoto() throws IOException {
         UploadedFile uploadedPhoto = publicarViajeBean.getImagen();
-        //System.out.println("Name " + getName());
-        //System.out.println("tmp directory" System.getProperty("java.io.tmpdir"));
-        //System.out.println("File Name " + uploadedPhoto.getFileName());
-        //System.out.println("Size " + uploadedPhoto.getSize());
-        String filePath = "c:/prueba/";
+        //String filePath = "c:/bitacora";
         byte[] bytes = null;
 
         if (null != uploadedPhoto) {
-            bytes = uploadedPhoto.getContents();
+            //String rutaFaces = FacesContext.getCurrentInstance().getExternalContext().getRealPath("/");
+            String ruta = "C:/bitacora/usuarios/"; // main location for uploads
+            String nombreUsuario = "kendrickMarGon"; //TODO coger de la sesion
             String filename = FilenameUtils.getName(uploadedPhoto.getFileName());
-            BufferedOutputStream stream = new BufferedOutputStream(new FileOutputStream(new File(filePath + filename)));
+            File theFile = new File(ruta + "/" + nombreUsuario);
+            theFile.mkdirs(); //Creación de carpetas
+
+            bytes = uploadedPhoto.getContents();
+//          BufferedOutputStream stream = new BufferedOutputStream(new FileOutputStream(new File(ruta + filename)));
+            BufferedOutputStream stream = new BufferedOutputStream(new FileOutputStream(ruta + "/" + nombreUsuario+"/"+filename)); // cannot find path when adding username atm
+            
             stream.write(bytes);
             stream.close();
         }
-        
+
     }
 
 }
