@@ -33,4 +33,13 @@
             <to-view-id>/error.xhtml</to-view-id>
         </navigation-case>
     </navigation-rule>
+    
+    <navigation-rule>
+      <from-view-id>fileUpload.xhtml</from-view-id>
+     <navigation-case>
+        <from-action>#{fileUploadBean.uploadResume}</from-action>
+        <from-outcome>success</from-outcome>
+        <to-view-id>/fileUploadAck.xhtml</to-view-id>
+    </navigation-case>
+     </navigation-rule>
 </faces-config>
