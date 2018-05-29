@@ -4,7 +4,8 @@
       xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
       xmlns:h="http://xmlns.jcp.org/jsf/html"
       xmlns:f="http://xmlns.jcp.org/jsf/core"
-      xmlns:p="http://primefaces.org/ui">
+      xmlns:p="http://primefaces.org/ui"
+      xmlns:c="http://xmlns.jcp.org/jsp/jstl/core">
 
     <body>
 
@@ -30,10 +31,15 @@
 
                     <section id="paises_continent_grid">
                         <h1>¡Tenemos el lugar ideal para ti!</h1>
-                        <a href="explorar.xhtml#asia"><img src="Asia.jpg" alt="Asia"/></a>
+                        <c:forEach items="#{indexController.dameListaViajes()}" var="viaje">
+                            <p>Usuario -> #{viaje.usuario}</p>
+                            <p>Titulo -> #{viaje.titulo}</p>
+                            <p>Descripcion -> #{viaje.descripcion}</p>
+                        </c:forEach>
+                        <!--a href="explorar.xhtml#asia"><img src="Asia.jpg" alt="Asia"/></a>
                         <a href="explorar.xhtml#usa"><img src="imgUsa.jpg" alt="USA"/></a>
                         <a href="explorar.xhtml#europa"><img src="Europa.jpg" alt="Europa"/></a>
-                        <a href="explorar.xhtml#africa"><img src="Africa.jpg" alt="Africa"/></a>
+                        <a href="explorar.xhtml#africa"><img src="Africa.jpg" alt="Africa"/></a-->
                     </section>
 
 

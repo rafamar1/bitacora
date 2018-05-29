@@ -6,7 +6,6 @@
 package beans.controladores;
 
 import beans.modelos.LoginBean;
-import beans.modelos.RegistroBean;
 import datos.dao.UsuarioJpaController;
 import datos.entidades.Usuario;
 import org.jasypt.util.password.*;
@@ -81,7 +80,6 @@ public class LoginController implements Serializable {
             return "login.xhtml";
         }
 
-        //TODO revisar flujo turbioo de paginas
         this.badLogin = true;
         return "login.xhtml";
     }

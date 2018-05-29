@@ -1,4 +1,4 @@
-<?xml version='1.0' encoding='UTF-8' ?>
+
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml"
       xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
@@ -16,7 +16,7 @@
                 <h:outputScript target="head" name="js/formRegistro_validate.js"/>
                 <f:view>
                     <h:form id="formRegistro" prependId="false">
-                        <h:panelGrid columns="2">
+                        <p:panelGrid columns="2" layout="grid">
                             <p:outputLabel value="Nombre de usuario: " />
                             <p:inputText id="nickname" value="#{registroBean.nombreUsuario}"/>
 
@@ -27,9 +27,9 @@
                             <p:inputText id="mail" value="#{registroBean.email}"/>
 
                             <p:outputLabel value="Contraseña: " />                            
-                            <p:password weakLabel="La contraseña es demasiado debil" goodLabel="La contraseña es correcta" strongLabel="Contraseña muy fuerte" id="password" value="#{registroBean.password}" match="password2"/>
+                            <p:password id="password" value="#{registroBean.password}"/>
 
-                            <p:outputLabel value="Repita contraseña: " />                            
+                            <p:outputLabel value="Confirmar contraseña: " />                            
                             <p:password id="password2" value="#{registroBean.password}"/>
 
                             <p:commandButton 
@@ -39,7 +39,7 @@
 
                             <h:outputLabel value="¿Ya estás registrado?"/>
                             <p:link outcome="login" value="Inicia sesión"/>
-                        </h:panelGrid>
+                        </p:panelGrid>
                     </h:form>
 
 

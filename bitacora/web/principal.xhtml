@@ -14,12 +14,10 @@
 
                 <f:view>
                     <section id="panel_busqueda">
-
+                        ESTO SERIA LA PAGINA PRINCIPAL, YA ESTA USTED LOGEADO!
                         <h:form>
-                            <p:inputText id="busqueda" value="#{searchView.text1}" title="Buscar una localización/persona" >
-                                <f:validateLength minimum="3" />
-                            </p:inputText>
-                            <p:commandButton action="buscar" value="BusqueUste"/>
+                            <p:commandButton action="publicarViaje.xhtml" value="Publicar Viaje" rendered="#{indexController.logeado}"/>
+                            <p:commandButton action="miPerfil.xhtml" value="Mis Viajes"/>
                         </h:form>
 
                         <h1>Únete y descubre lugares increíbles</h1>
