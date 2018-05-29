@@ -1,0 +1,46 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+"http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+xmlns:ui="http://java.sun.com/jsf/facelets"
+xmlns:f="http://java.sun.com/jsf/core"
+xmlns:h="http://java.sun.com/jsf/html"
+xmlns:p="http://primefaces.org/ui">
+<h:head>
+<meta http-equiv="Content-Type" content="text/html; charset=ISO-8859-1" />
+<title>JSF PrimeFaces File Upload Example</title>
+</h:head>
+<h:body>
+        <h3>JSF  PrimeFaces 5.2  File Upload Example</h3>
+<h:form id="fileUpoad" prependId="false"     enctype="multipart/form-data">
+ 
+            <h:outputLabel for="txtIdName" value="Enter Your Name:" />
+            <p:inputText id="txtIdName" required="true" value="#{fileUploadBean.name}"   label="Name" />
+ 
+              <p:separator/>
+ 
+<!-- File Upload with  mode="advanced". multiple files can be uploaded. upload button  -->       
+ 
+            <h:outputLabel for="fileIdPhoto" value="Upload Your Photo:" />
+ 
+            <p:fileUpload id="fileIdPhoto"  fileUploadListener="#{fileUploadBean.uploadPhoto}" mode="advanced" dragDropSupport="false"
+             multiple="false" update="messages" sizeLimit="10000000" fileLimit="3" allowTypes="/(\.|\/)(gif|jpe?g|zip)$/"  />
+ 
+              <p:messages id="messages" autoUpdate="true" closable="true" />
+ 
+              <p:separator/>
+ 
+    <!-- File Upload with  mode="simple". Only one file can be uploaded. upload using submit button -->        
+ 
+            <h:outputLabel for="fileIdResume" value="Upload Your Resume:" />
+ 
+            <p:fileUpload id="fileIdResume"  value="#{fileUploadBean.resume}" mode="simple" allowTypes="/(\.|\/)(gif|jpe?g|zip)$/" skinSimple="true"/>
+ 
+        <p:separator/>            
+ 
+            <p:commandButton value="Submit" ajax="false" action="#{fileUploadBean.uploadResume}"/>   
+ 
+</h:form>                                 
+ 
+</h:body>
+</html>
