@@ -17,6 +17,7 @@ import java.util.ArrayList;
 import java.util.List;
 import javax.persistence.EntityManager;
 import javax.persistence.EntityManagerFactory;
+import javax.persistence.TypedQuery;
 
 /**
  *
@@ -187,4 +188,10 @@ public class PaisJpaController implements Serializable {
         }
     }
     
+    public int dameIDdadoNombrePais(String nombrePais){
+        EntityManager em = emf.createEntityManager();
+        TypedQuery<Pais> query = em.createNamedQuery("Pais.findByNombre", Pais.class);
+        Pais pais = query.setParameter("nombre", nombrePais).getSingleResult();
+        return pais.getId();
+    }     
 }

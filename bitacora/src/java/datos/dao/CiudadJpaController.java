@@ -18,6 +18,7 @@ import java.util.ArrayList;
 import java.util.List;
 import javax.persistence.EntityManager;
 import javax.persistence.EntityManagerFactory;
+import javax.persistence.TypedQuery;
 
 /**
  *
@@ -206,4 +207,17 @@ public class CiudadJpaController implements Serializable {
         }
     }
     
+    public List<Ciudad> dameListaCiudadesDadoIdPais(int idPais){
+        EntityManager em = emf.createEntityManager();
+        TypedQuery<List> query = em.createNamedQuery("Ciudad.findByIdPais",List.class);
+        List lista = query.setParameter("idPais", idPais).getResultList();
+        return lista;
+    }
+    
+    public List<Ciudad> dameListaCiudadesLikeNombre(String nombre){
+        EntityManager em = emf.createEntityManager();
+        TypedQuery<List> query = em.createNamedQuery("Ciudad.findLikeNombre",List.class);
+        List lista = query.setParameter("nombre", nombre+"%").getResultList();
+        return lista;
+    }
 }
