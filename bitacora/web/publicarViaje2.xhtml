@@ -1,0 +1,42 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+      xmlns:h="http://xmlns.jcp.org/jsf/html"
+      xmlns:pt="http://xmlns.jcp.org/jsf/passthrough"
+      xmlns:f="http://xmlns.jcp.org/jsf/core"
+      xmlns:p="http://primefaces.org/ui"
+      xmlns:c="http://xmlns.jcp.org/jsp/jstl/core">
+
+    <body>
+
+        <ui:composition template="./templates/principal.xhtml">
+
+            <ui:define name="content">
+
+                <f:view>
+                    <h:form  enctype="multipart/form-data">                        
+
+
+                        <h:inputText pt:list="ciudades" value="#{publicarViajeController.cadena}" pt:placeholder="Buscar ciudad">
+                            <p:ajax event="keyup" update="listBox" listener="#{publicarViajeController.manejaEvento}"/>
+                        </h:inputText>
+                        <p:selectOneListbox value="#{publicarViajeBean.ciudad}" id="listBox">
+                            <f:selectItems value="#{publicarViajeController.listaCiudades}" var="ciudad"
+                                           itemValue="#{ciudad.id}" itemLabel="#{ciudad.nombre}, #{ciudad.idPais.nombre}"/>       
+                        </p:selectOneListbox>
+                        <datalist id="ciudades">
+                            <c:forEach items="#{publicarViajeController.listaCiudades}" var="ciudad" transient="true">
+                                <option value="#{ciudad.nombre}" label="#{ciudad.idPais.nombre}"></option>
+                            </c:forEach>
+                        </datalist>
+                    </h:form>
+                </f:view>
+
+            </ui:define>
+
+
+        </ui:composition>
+
+    </body>
+</html>
