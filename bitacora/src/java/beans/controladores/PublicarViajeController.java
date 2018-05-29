@@ -8,6 +8,7 @@ package beans.controladores;
 import beans.modelos.PublicarViajeBean;
 import datos.dao.CiudadJpaController;
 import datos.dao.PaisJpaController;
+import datos.dao.ViajeJpaController;
 import datos.entidades.Ciudad;
 import datos.entidades.Pais;
 import datos.entidades.Usuario;
@@ -41,6 +42,8 @@ public class PublicarViajeController implements Serializable {
 
     @ManagedProperty(value = "#{publicarViajeBean}")
     private PublicarViajeBean publicarViajeBean;
+    @ManagedProperty(value = "#{detalleViajeController}")
+    private DetalleViajeController detalleViajeController;
     private final EntityManagerFactory emf;
     private List<Ciudad> listaCiudades;
     private String cadena;
@@ -58,6 +61,14 @@ public class PublicarViajeController implements Serializable {
         this.publicarViajeBean = publicarViajeBean;
     }
 
+    public DetalleViajeController getDetalleViajeController() {
+        return detalleViajeController;
+    }
+
+    public void setDetalleViajeController(DetalleViajeController detalleViajeController) {
+        this.detalleViajeController = detalleViajeController;
+    }
+    
     public List<Ciudad> getListaCiudades() {
         return listaCiudades;
     }
@@ -98,13 +109,19 @@ public class PublicarViajeController implements Serializable {
             subirFoto();
         } catch (IOException ex) {
             Logger.getLogger(PublicarViajeController.class.getName()).log(Level.SEVERE, null, ex);
+            return "error"; //TODO revisar control de excepciones
         }
         newViaje.setTitulo(publicarViajeBean.getTitulo());
         newViaje.setDescripcion(publicarViajeBean.getDescripcion());
         //TODO COGER USUARIO DE LA SESION
-        newViaje.setUsuario(new Usuario("usuarioPrueba"));
+        newViaje.setUsuario(new Usuario("kendrick"));
         newViaje.setImgMiniatura(publicarViajeBean.getImagen().getFileName());
+        
+        ViajeJpaController viajeController = new ViajeJpaController(emf);
+        viajeController.create(newViaje);
         //TODO gestionar la imagen tanto las individuales como las de la galería
+        detalleViajeController.setViaje(newViaje);
+        
         return "ok";
     }
 
@@ -123,7 +140,7 @@ public class PublicarViajeController implements Serializable {
         if (null != uploadedPhoto) {
             //String rutaFaces = FacesContext.getCurrentInstance().getExternalContext().getRealPath("/");
             String ruta = "C:/bitacora/usuarios/"; // main location for uploads
-            String nombreUsuario = "kendrickMarGon"; //TODO coger de la sesion
+            String nombreUsuario = "frankamente"; //TODO coger de la sesion
             String filename = FilenameUtils.getName(uploadedPhoto.getFileName());
             File theFile = new File(ruta + "/" + nombreUsuario);
             theFile.mkdirs(); //Creación de carpetas

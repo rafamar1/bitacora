@@ -18,7 +18,7 @@ import org.primefaces.model.UploadedFile;
 
 @ManagedBean
 @RequestScoped
-public class PublicarViajeBean implements Serializable{
+public class DetalleViajeBean implements Serializable{
 
 
     private String titulo;
@@ -27,7 +27,7 @@ public class PublicarViajeBean implements Serializable{
     private String ciudad;
     
     
-    public PublicarViajeBean() {
+    public DetalleViajeBean() {
     }
 
     public String getTitulo() {

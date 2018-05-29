@@ -42,4 +42,11 @@
         <to-view-id>/fileUploadAck.xhtml</to-view-id>
     </navigation-case>
      </navigation-rule>
+    <navigation-rule>
+        <from-view-id>/publicarViaje.xhtml</from-view-id>
+        <navigation-case>
+            <from-outcome>ok</from-outcome>
+            <to-view-id>/detalleViaje.xhtml</to-view-id>
+        </navigation-case>
+    </navigation-rule>
 </faces-config>

@@ -6,6 +6,7 @@
 package beans.controladores;
 
 import beans.modelos.LoginBean;
+import beans.respaldo.Session;
 import datos.dao.UsuarioJpaController;
 import datos.entidades.Usuario;
 import org.jasypt.util.password.*;
@@ -67,6 +68,7 @@ public class LoginController implements Serializable {
                 BasicPasswordEncryptor passwordEncryptor = new BasicPasswordEncryptor();
                 
                 if (passwordEncryptor.checkPassword(inputPassword, usuario.getPassword())) {
+                    Session.getInstance().setAttribute("usuario", usuario);
                     return "loginOk";
                 } else {
                     this.badLogin = true;
