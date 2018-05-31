@@ -5,6 +5,7 @@
  */
 package beans.controladores;
 
+import beans.modelos.PublicarEntradaBean;
 import beans.modelos.PublicarViajeBean;
 import beans.respaldo.Session;
 import datos.dao.CiudadJpaController;
@@ -39,29 +40,30 @@ import org.primefaces.model.UploadedFile;
  */
 @ManagedBean
 @RequestScoped
-public class PublicarViajeController implements Serializable {
+public class PublicarEntradaController implements Serializable {
 
-    @ManagedProperty(value = "#{publicarViajeBean}")
-    private PublicarViajeBean publicarViajeBean;
-    /*@ManagedProperty(value = "#{detalleViajeController}")
-    private DetalleViajeController detalleViajeController;*/
+    @ManagedProperty(value = "#{publicarEntradaBean}")
+    private PublicarEntradaBean publicarEntradaBean;
     private final EntityManagerFactory emf;
     private List<Ciudad> listaCiudades;
+    private List<String> listaEtiquetas;
     private String cadena;
+    private boolean primeraEntrada = true;
 
-    public PublicarViajeController() {
+    public PublicarEntradaController() {
         emf = Persistence.createEntityManagerFactory("bitacoraPU");
         listaCiudades = new ArrayList<>();
-    }
-
-    public PublicarViajeBean getPublicarViajeBean() {
-        return publicarViajeBean;
-    }
-
-    public void setPublicarViajeBean(PublicarViajeBean publicarViajeBean) {
-        this.publicarViajeBean = publicarViajeBean;
-    }
+        listaEtiquetas = cargaListaEtiquetas();
+    }    
     
+    public PublicarEntradaBean getPublicarEntradaBean() {
+        return publicarEntradaBean;
+    }
+
+    public void setPublicarEntradaBean(PublicarEntradaBean publicarEntradaBean) {
+        this.publicarEntradaBean = publicarEntradaBean;
+    }
+
     public List<Ciudad> getListaCiudades() {
         return listaCiudades;
     }
@@ -77,24 +79,13 @@ public class PublicarViajeController implements Serializable {
     public void setCadena(String cadena) {
         this.cadena = cadena;
     }
-    
-    //TODO revisar si estos dos métodos se utilizan o pueden ser eliminados!
-    public List<Pais> dameListaPaises() {
-        PaisJpaController paisController = new PaisJpaController(emf);
-        /*Pais pais = paisController.findPaisEntities().get(5);
-        int idPais = paisController.dameIDdadoNombrePais(pais.getNombre());*/
-        return paisController.findPaisEntities();
+
+    public boolean isPrimeraEntrada() {
+        return primeraEntrada;
     }
 
-    public void cambioPais(ValueChangeEvent event) {
-        String cadenaPais = event.getNewValue().toString();
-        if (cadenaPais != null && cadenaPais.length() > 3) {
-            PaisJpaController paisController = new PaisJpaController(emf);
-            CiudadJpaController ciudadController = new CiudadJpaController(emf);
-            int idPais = paisController.dameIDdadoNombrePais(cadenaPais);
-            List<Ciudad> listaCiudades = ciudadController.dameListaCiudadesDadoIdPais(idPais);
-            this.listaCiudades = listaCiudades;
-        }
+    public void setPrimeraEntrada(boolean primeraEntrada) {
+        this.primeraEntrada = primeraEntrada;
     }
 
     public String publicar() {
@@ -102,23 +93,21 @@ public class PublicarViajeController implements Serializable {
         try {
             subirFoto();
         } catch (IOException ex) {
-            Logger.getLogger(PublicarViajeController.class.getName()).log(Level.SEVERE, null, ex);
+            Logger.getLogger(PublicarEntradaController.class.getName()).log(Level.SEVERE, null, ex);
             return "error"; //TODO revisar control de excepciones
         }
-        newViaje.setTitulo(publicarViajeBean.getTitulo());
-        newViaje.setDescripcion(publicarViajeBean.getDescripcion());
+        newViaje.setTitulo(publicarEntradaBean.getTitulo());
+        newViaje.setDescripcion(publicarEntradaBean.getDescripcion());
         //TODO COGER USUARIO DE LA SESION
         newViaje.setUsuario(((Usuario)Session.getInstance().getAttribute("usuario")));
         //newViaje.setUsuario(new Usuario("kendrick"));
-        newViaje.setImgMiniatura(publicarViajeBean.getImagen().getFileName());
+        newViaje.setImgMiniatura(publicarEntradaBean.getImagen().getFileName());
         //TODO gestionar la imagen tanto las individuales como las de la galería
         ViajeJpaController viajeController = new ViajeJpaController(emf);
         viajeController.create(newViaje);
         
         int idViajeInsert = viajeController.getViajeCount();
         Session.getInstance().setAttribute("idViajeSeleccionado", idViajeInsert);
-        
-        //detalleViajeController.setViaje(newViaje);
         
         return "ok";
     }
@@ -131,14 +120,15 @@ public class PublicarViajeController implements Serializable {
     }
 
     public void subirFoto() throws IOException {
-        UploadedFile uploadedPhoto = publicarViajeBean.getImagen();
+        UploadedFile uploadedPhoto = publicarEntradaBean.getImagen();
         //String filePath = "c:/bitacora";
         byte[] bytes = null;
 
         if (null != uploadedPhoto) {
             //String rutaFaces = FacesContext.getCurrentInstance().getExternalContext().getRealPath("/");
-            String ruta = "C:/bitacora/usuarios/"; // main location for uploads
-            String nombreUsuario = "frankamente"; //TODO coger de la sesion
+            String ruta = "C:/bitacora/usuarios/"; 
+            //TODO extraer de la sesión o extraer del propio Viaje??
+            String nombreUsuario = ((Usuario)Session.getInstance().getAttribute("usuarioLogeado")).getNombreUsuario();
             String filename = FilenameUtils.getName(uploadedPhoto.getFileName());
             File theFile = new File(ruta + "/" + nombreUsuario);
             theFile.mkdirs(); //Creación de carpetas
@@ -151,6 +141,15 @@ public class PublicarViajeController implements Serializable {
             stream.close();
         }
 
+    }
+
+    private List<String> cargaListaEtiquetas() {
+        List<String> listaEtiquetas = new ArrayList<String>();
+        listaEtiquetas.add("Alojamiento");
+        listaEtiquetas.add("Restaurante");
+        listaEtiquetas.add("Actividad");
+        
+        return listaEtiquetas;
     }
 
 }

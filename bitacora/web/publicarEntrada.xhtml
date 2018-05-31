@@ -1,0 +1,59 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+      xmlns:h="http://xmlns.jcp.org/jsf/html"
+      xmlns:pt="http://xmlns.jcp.org/jsf/passthrough"
+      xmlns:f="http://xmlns.jcp.org/jsf/core"
+      xmlns:p="http://primefaces.org/ui"
+      xmlns:c="http://xmlns.jcp.org/jsp/jstl/core">
+
+    <body>
+
+        <ui:composition template="./templates/principal.xhtml">
+
+            <ui:define name="content">
+
+                <f:view>
+                    <h:form  enctype="multipart/form-data">                        
+
+                        <c:if test="#{publicarEntradaController.primeraEntrada}">                      
+                            <h:inputText value="#{publicarEntradaController.cadena}" pt:placeholder="Buscar ciudad">
+                                <p:ajax event="keyup" update="listBox" listener="#{publicarEntradaController.manejaEvento}"/>
+                            </h:inputText>
+                            <p:selectOneListbox value="#{publicarEntradaBean.ciudad}" id="listBox">
+                                <f:selectItems value="#{publicarEntradaController.listaCiudades}" var="ciudad"
+                                               itemValue="#{ciudad.id}" itemLabel="#{ciudad.nombre}, #{ciudad.idPais.nombre}"/>       
+                            </p:selectOneListbox>
+                        </c:if>
+                        <p>
+                            Titulo de la entrada: <h:inputText value="#{publicarViajeBean.titulo}"/> 
+                        </p> 
+
+                        <p>
+                            Escribe tu opinión: <h:inputTextarea value="#{publicarViajeBean.descripcion}"/>
+                        </p>
+
+                        <p>
+                            Comparte una foto del lugar:  <p:fileUpload id="fileIdResume"  value="#{publicarViajeBean.imagen}" mode="simple" allowTypes="/(\.|\/)(gif|jpe?g|zip)$/" skinSimple="true" dragDropSupport="true"/>
+                        </p>
+                        
+                        <p>
+                            Selecciona una etiqueta para tu entrada: 
+                            <p:selectOneListbox value="#{publicarEntradaBean.tipo}">
+                                <f:selectItems value="#{publicarEntradaController.listaEtiquetas}" var="etiqueta"
+                                               itemValue="#{etiqueta}" itemLabel="#{etiqueta}"/>       
+                            </p:selectOneListbox>
+                        </p>
+                        <p:commandButton value="PublicarViaje" ajax="false" action="#{publicarEntradaController.publicar}"/> 
+
+                    </h:form>
+                </f:view>
+
+            </ui:define>
+
+
+        </ui:composition>
+
+    </body>
+</html>

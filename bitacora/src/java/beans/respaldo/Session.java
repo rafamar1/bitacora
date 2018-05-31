@@ -37,6 +37,8 @@ public class Session {
     }
 
     public String logout() {
+        //TODO revisar este setAttribute
+        setAttribute("usuarioLogeado", false);
         this.currentExternalContext().invalidateSession();
         return "/index.xhtml?faces-redirect=true";
     }
