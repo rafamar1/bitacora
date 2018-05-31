@@ -3,7 +3,18 @@
     <Scope Scope="Faces Configuration Only"/>
     <Scope Scope="Project">
         <Node id="templates/plantilla.xhtml" x="400" y="150" zoom="true"/>
+        <Node id="publicarViajeAjax.xhtml" x="150" y="600" zoom="true"/>
+        <Node id="error.xhtml" x="900" y="150" zoom="true"/>
         <Node id="index.xhtml" x="150" y="300" zoom="true"/>
+        <Node id="registro.xhtml" x="162" y="407" zoom="true"/>
+        <Node id="templates/principal.xhtml" x="650" y="150" zoom="true"/>
+        <Node id="explorar.xhtml" x="650" y="300" zoom="true"/>
+        <Node id="publicarViaje.xhtml" x="446" y="452" zoom="true"/>
+        <Node id="detalleViaje.xhtml" x="150" y="450" zoom="true"/>
+        <Node id="fileUpload.xhtml" x="1150" y="150" zoom="true"/>
+        <Node id="fileUploadAck.xhtml" x="939" y="434" zoom="true"/>
+        <Node id="login.xhtml" x="400" y="300" zoom="true"/>
+        <Node id="principal.xhtml" x="150" y="150" zoom="true"/>
     </Scope>
     <Scope Scope="All Faces Configurations"/>
 </Scene>

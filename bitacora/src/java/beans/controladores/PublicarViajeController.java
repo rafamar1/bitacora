@@ -6,6 +6,7 @@
 package beans.controladores;
 
 import beans.modelos.PublicarViajeBean;
+import beans.respaldo.Session;
 import datos.dao.CiudadJpaController;
 import datos.dao.PaisJpaController;
 import datos.dao.ViajeJpaController;
@@ -42,8 +43,8 @@ public class PublicarViajeController implements Serializable {
 
     @ManagedProperty(value = "#{publicarViajeBean}")
     private PublicarViajeBean publicarViajeBean;
-    @ManagedProperty(value = "#{detalleViajeController}")
-    private DetalleViajeController detalleViajeController;
+    /*@ManagedProperty(value = "#{detalleViajeController}")
+    private DetalleViajeController detalleViajeController;*/
     private final EntityManagerFactory emf;
     private List<Ciudad> listaCiudades;
     private String cadena;
@@ -61,13 +62,13 @@ public class PublicarViajeController implements Serializable {
         this.publicarViajeBean = publicarViajeBean;
     }
 
-    public DetalleViajeController getDetalleViajeController() {
+    /*public DetalleViajeController getDetalleViajeController() {
         return detalleViajeController;
     }
 
     public void setDetalleViajeController(DetalleViajeController detalleViajeController) {
         this.detalleViajeController = detalleViajeController;
-    }
+    }*/
     
     public List<Ciudad> getListaCiudades() {
         return listaCiudades;
@@ -114,13 +115,17 @@ public class PublicarViajeController implements Serializable {
         newViaje.setTitulo(publicarViajeBean.getTitulo());
         newViaje.setDescripcion(publicarViajeBean.getDescripcion());
         //TODO COGER USUARIO DE LA SESION
-        newViaje.setUsuario(new Usuario("kendrick"));
+        newViaje.setUsuario(((Usuario)Session.getInstance().getAttribute("usuario")));
+        //newViaje.setUsuario(new Usuario("kendrick"));
         newViaje.setImgMiniatura(publicarViajeBean.getImagen().getFileName());
-        
+        //TODO gestionar la imagen tanto las individuales como las de la galería
         ViajeJpaController viajeController = new ViajeJpaController(emf);
         viajeController.create(newViaje);
-        //TODO gestionar la imagen tanto las individuales como las de la galería
-        detalleViajeController.setViaje(newViaje);
+        
+        int idViajeInsert = viajeController.getViajeCount();
+        Session.getInstance().setAttribute("idViajeSeleccionado", idViajeInsert);
+        
+        //detalleViajeController.setViaje(newViaje);
         
         return "ok";
     }

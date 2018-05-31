@@ -7,7 +7,6 @@ package beans.respaldo;
 
 import javax.faces.context.ExternalContext;
 import javax.faces.context.FacesContext;
-import javax.servlet.http.HttpSession;
 
 /**
  *
@@ -17,6 +16,7 @@ import javax.servlet.http.HttpSession;
 public class Session {
 
     private static Session instance;
+    private static boolean usuarioLogeado;
 
     public static Session getInstance() {
         if (instance == null) {
@@ -47,5 +47,14 @@ public class Session {
     public void setAttribute(String name, Object value) {
         currentExternalContext().getSessionMap().put(name, value);
     }
+
+    public static boolean isUsuarioLogeado() {
+        return usuarioLogeado;
+    }
+
+    public static void setUsuarioLogeado(boolean usuarioLogeado) {
+        Session.usuarioLogeado = usuarioLogeado;
+    }
+    
 }
 

@@ -16,7 +16,7 @@
                     <section id="panel_busqueda">
                         ESTO SERIA LA PAGINA PRINCIPAL, YA ESTA USTED LOGEADO!
                         <h:form>
-                            <p:commandButton action="publicarViaje.xhtml" value="Publicar Viaje" rendered="#{indexController.logeado}"/>
+                            <p:commandButton action="publicarViaje.xhtml" value="Publicar Viaje" rendered="#{sessionScope.usuarioLogeado}"/>
                             <p:commandButton action="miPerfil.xhtml" value="Mis Viajes"/>
                         </h:form>
 

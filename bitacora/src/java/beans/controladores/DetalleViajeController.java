@@ -6,6 +6,8 @@
 package beans.controladores;
 
 import beans.modelos.DetalleViajeBean;
+import beans.respaldo.Session;
+import datos.dao.ViajeJpaController;
 import datos.entidades.Viaje;
 import java.io.Serializable;
 import javax.faces.bean.ManagedBean;
@@ -30,6 +32,7 @@ public class DetalleViajeController implements Serializable {
 
     public DetalleViajeController() {
         emf = Persistence.createEntityManagerFactory("bitacoraPU");
+        this.viaje = cargarViaje();
     }
 
     public DetalleViajeBean getDetalleViajeBean() {
@@ -48,8 +51,10 @@ public class DetalleViajeController implements Serializable {
         this.viaje = viaje;
     }
     
-    public void cargarViaje(){
+    private Viaje cargarViaje(){
+        ViajeJpaController controlViaje = new ViajeJpaController(emf);
         
+        return controlViaje.findViaje((int)Session.getInstance().getAttribute("idViajeSeleccionado"));
     }
     
     

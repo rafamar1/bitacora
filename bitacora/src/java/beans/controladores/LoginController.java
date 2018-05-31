@@ -69,6 +69,8 @@ public class LoginController implements Serializable {
                 
                 if (passwordEncryptor.checkPassword(inputPassword, usuario.getPassword())) {
                     Session.getInstance().setAttribute("usuario", usuario);
+                    Session.getInstance().setAttribute("usuarioLogeado", true);
+                    //TODO esta seria la otra versionSession.setUsuarioLogeado(true);
                     return "loginOk";
                 } else {
                     this.badLogin = true;
