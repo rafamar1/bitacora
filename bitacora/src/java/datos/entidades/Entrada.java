@@ -59,7 +59,10 @@ public class Entrada implements Serializable {
     private String imgMiniatura;
     @Basic(optional = false)
     @Column(name = "tipo")
-    private String tipo;
+    private String tipo;    
+    @Basic(optional = false)
+    @Column(name = "puntuacion")
+    private Integer puntuacion;
     @Column(name = "precio")
     private Integer precio;
     // @Max(value=?)  @Min(value=?)//if you know range of your decimal fields consider using these annotations to enforce field validation
@@ -82,11 +85,12 @@ public class Entrada implements Serializable {
         this.id = id;
     }
 
-    public Entrada(Integer id, String titulo, String descripcion, String imgMiniatura, String tipo) {
+    public Entrada(Integer id, String titulo, String descripcion, String imgMiniatura, String tipo,Integer puntuacion) {
         this.id = id;
         this.titulo = titulo;
         this.descripcion = descripcion;
         this.imgMiniatura = imgMiniatura;
+        this.puntuacion = puntuacion;
         this.tipo = tipo;
     }
 
@@ -136,6 +140,14 @@ public class Entrada implements Serializable {
 
     public void setPrecio(Integer precio) {
         this.precio = precio;
+    }
+    
+    public Integer getPuntuacion() {
+        return puntuacion;
+    }
+
+    public void setPuntuacion(Integer puntuacion) {
+        this.puntuacion = puntuacion;
     }
 
     public Double getLatitud() {
