@@ -18,10 +18,10 @@
                     <h:form  enctype="multipart/form-data">                        
 
                         <c:if test="#{publicarEntradaController.primeraEntrada}">                      
-                            <h:inputText value="#{publicarEntradaController.cadena}" pt:placeholder="Buscar ciudad">
-                                <p:ajax event="keyup" update="listBox" listener="#{publicarEntradaController.manejaEvento}"/>
+                            <h:inputText value="#{publicarEntradaController.busquedaCiudad}" pt:placeholder="Buscar ciudad">
+                                <p:ajax event="keyup" update="listaCiudades" listener="#{publicarEntradaController.manejaEvento}"/>
                             </h:inputText>
-                            <p:selectOneListbox value="#{publicarEntradaBean.ciudad}" id="listBox">
+                            <p:selectOneListbox value="#{publicarEntradaBean.ciudad}" id="listaCiudades">
                                 <f:selectItems value="#{publicarEntradaController.listaCiudades}" var="ciudad"
                                                itemValue="#{ciudad.id}" itemLabel="#{ciudad.nombre}, #{ciudad.idPais.nombre}"/>       
                             </p:selectOneListbox>
@@ -44,12 +44,12 @@
                         
                         <p>
                             Selecciona una etiqueta para tu entrada: 
-                            <p:selectOneListbox value="#{publicarEntradaBean.tipo}">
+                            <p:selectOneMenu value="#{publicarEntradaBean.tipo}">
                                 <f:selectItems value="#{publicarEntradaController.listaEtiquetas}" var="etiqueta"
                                                itemValue="#{etiqueta}" itemLabel="#{etiqueta}"/>       
-                            </p:selectOneListbox>
+                            </p:selectOneMenu>
                         </p>
-                        <p:commandButton value="PublicarViaje" ajax="false" action="#{publicarEntradaController.publicar}"/> 
+                        <p:commandButton value="Publicar Entrada" ajax="false" action="#{publicarEntradaController.publicar}"/> 
 
                     </h:form>
                 </f:view>

@@ -44,7 +44,7 @@ public class PublicarEntradaController implements Serializable {
     private final EntityManagerFactory emf;
     private List<Ciudad> listaCiudades;
     private List<String> listaEtiquetas;
-    private String cadena;
+    private String busquedaCiudad;
     private boolean primeraEntrada = true;
 
     public PublicarEntradaController() {
@@ -69,12 +69,12 @@ public class PublicarEntradaController implements Serializable {
         this.listaCiudades = listaCiudades;
     }
 
-    public String getCadena() {
-        return cadena;
+    public String getBusquedaCiudad() {
+        return busquedaCiudad;
     }
 
-    public void setCadena(String cadena) {
-        this.cadena = cadena;
+    public void setBusquedaCiudad(String busquedaCiudad) {
+        this.busquedaCiudad = busquedaCiudad;
     }
 
     public boolean isPrimeraEntrada() {
@@ -112,17 +112,14 @@ public class PublicarEntradaController implements Serializable {
         if(publicarEntradaBean.getPrecio() != null){
             newEntrada.setPrecio(publicarEntradaBean.getPrecio());
         }        
-        
-        int idViajeInsert = viajeController.getViajeCount();
-        Session.getInstance().setAttribute("idViajeSeleccionado", idViajeInsert);
-        
+                
         return "ok";
     }
 
     public void manejaEvento() {
-        if (cadena.length() >= 3) {
+        if (busquedaCiudad.length() >= 3) {
             CiudadJpaController ciudadController = new CiudadJpaController(emf);
-            this.listaCiudades = ciudadController.dameListaCiudadesLikeNombre(cadena);
+            this.listaCiudades = ciudadController.dameListaCiudadesLikeNombre(busquedaCiudad);
         }
     }
 
@@ -154,7 +151,8 @@ public class PublicarEntradaController implements Serializable {
         List<String> listaEtiquetas = new ArrayList<String>();
         listaEtiquetas.add("Alojamiento");
         listaEtiquetas.add("Restaurante");
-        listaEtiquetas.add("Actividad");
+        listaEtiquetas.add("Espectaculos");
+        listaEtiquetas.add("Ocio");
         
         return listaEtiquetas;
     }
