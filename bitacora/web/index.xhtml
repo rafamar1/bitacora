@@ -10,12 +10,14 @@
     <body>
 
         <ui:composition template="./templates/plantilla.xhtml" >
-
+            
+            <ui:define name="title">#{messages.tituloIndex}</ui:define>
+            
             <ui:define name="content" >
 
                 <f:view>
                     <section id="panel_busqueda">
-
+                        <p>Probando internacionalización -> #{messages.tituloIndex}</p>
                         <h:form>
                             <p:inputText id="busqueda" value="#{searchView.text1}" title="Buscar una localización/persona" >
                                 <f:validateLength minimum="3" />
