@@ -6,13 +6,12 @@
 package beans.controladores;
 
 import beans.modelos.PublicarEntradaBean;
-import beans.modelos.PublicarViajeBean;
 import beans.respaldo.Session;
 import datos.dao.CiudadJpaController;
-import datos.dao.PaisJpaController;
 import datos.dao.ViajeJpaController;
 import datos.entidades.Ciudad;
-import datos.entidades.Pais;
+import datos.entidades.Dia;
+import datos.entidades.Entrada;
 import datos.entidades.Usuario;
 import datos.entidades.Viaje;
 import java.io.BufferedOutputStream;
@@ -27,8 +26,6 @@ import java.util.logging.Logger;
 import javax.faces.bean.ManagedBean;
 import javax.faces.bean.ManagedProperty;
 import javax.faces.bean.RequestScoped;
-import javax.faces.context.FacesContext;
-import javax.faces.event.ValueChangeEvent;
 import javax.persistence.EntityManagerFactory;
 import javax.persistence.Persistence;
 import org.apache.commons.io.FilenameUtils;
@@ -88,23 +85,33 @@ public class PublicarEntradaController implements Serializable {
         this.primeraEntrada = primeraEntrada;
     }
 
-    public String publicar() {
-        Viaje newViaje = new Viaje();
+    public List<String> getListaEtiquetas() {
+        return listaEtiquetas;
+    }
+
+    public void setListaEtiquetas(List<String> listaEtiquetas) {
+        this.listaEtiquetas = listaEtiquetas;
+    }
+    
+    public String publicar() {        
+        ViajeJpaController viajeController = new ViajeJpaController(emf);
+        Viaje viajeSeleccionado = viajeController.findViaje((int)Session.getInstance().getAttribute("idViajeSeleccionado"));
         try {
             subirFoto();
         } catch (IOException ex) {
             Logger.getLogger(PublicarEntradaController.class.getName()).log(Level.SEVERE, null, ex);
             return "error"; //TODO revisar control de excepciones
         }
-        newViaje.setTitulo(publicarEntradaBean.getTitulo());
-        newViaje.setDescripcion(publicarEntradaBean.getDescripcion());
-        //TODO COGER USUARIO DE LA SESION
-        newViaje.setUsuario(((Usuario)Session.getInstance().getAttribute("usuario")));
-        //newViaje.setUsuario(new Usuario("kendrick"));
-        newViaje.setImgMiniatura(publicarEntradaBean.getImagen().getFileName());
+        Entrada newEntrada = new Entrada();
+        newEntrada.setTitulo(publicarEntradaBean.getTitulo());
+        newEntrada.setDescripcion(publicarEntradaBean.getDescripcion());
+        newEntrada.setIdDia((Dia)Session.getInstance().getAttribute("diaSeleccionado"));
+        newEntrada.setImgMiniatura(publicarEntradaBean.getImagen().getFileName());
         //TODO gestionar la imagen tanto las individuales como las de la galería
-        ViajeJpaController viajeController = new ViajeJpaController(emf);
-        viajeController.create(newViaje);
+        
+        if(publicarEntradaBean.getPrecio() != null){
+            newEntrada.setPrecio(publicarEntradaBean.getPrecio());
+        }        
         
         int idViajeInsert = viajeController.getViajeCount();
         Session.getInstance().setAttribute("idViajeSeleccionado", idViajeInsert);

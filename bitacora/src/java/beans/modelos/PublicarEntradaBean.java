@@ -25,6 +25,9 @@ public class PublicarEntradaBean implements Serializable{
     private String descripcion;
     private UploadedFile imagen;
     private String ciudad;
+    private String tipo;
+    private Integer precio;
+    private Integer puntuacion;
     
     
     public PublicarEntradaBean() {
@@ -61,5 +64,30 @@ public class PublicarEntradaBean implements Serializable{
     public void setImagen(UploadedFile imagen) {
         this.imagen = imagen;
     }
+
+    public String getTipo() {
+        return tipo;
+    }
+
+    public void setTipo(String tipo) {
+        this.tipo = tipo;
+    }
+
+    public Integer getPrecio() {
+        return precio;
+    }
+
+    public void setPrecio(Integer precio) {
+        this.precio = precio;
+    }
+
+    public Integer getPuntuacion() {
+        return puntuacion;
+    }
+
+    public void setPuntuacion(Integer puntuacion) {
+        this.puntuacion = puntuacion;
+    }
+    
     
 }

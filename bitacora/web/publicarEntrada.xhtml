@@ -27,15 +27,19 @@
                             </p:selectOneListbox>
                         </c:if>
                         <p>
-                            Titulo de la entrada: <h:inputText value="#{publicarViajeBean.titulo}"/> 
+                            Titulo de la entrada: <h:inputText value="#{publicarEntradaBean.titulo}"/> 
                         </p> 
 
                         <p>
-                            Escribe tu opinión: <h:inputTextarea value="#{publicarViajeBean.descripcion}"/>
+                            Escribe tu opinión: <h:inputTextarea value="#{publicarEntradaBean.descripcion}"/>
                         </p>
 
                         <p>
-                            Comparte una foto del lugar:  <p:fileUpload id="fileIdResume"  value="#{publicarViajeBean.imagen}" mode="simple" allowTypes="/(\.|\/)(gif|jpe?g|zip)$/" skinSimple="true" dragDropSupport="true"/>
+                            Comparte una foto del lugar:  <p:fileUpload id="fileIdResume"  value="#{publicarEntradaBean.imagen}" mode="simple" allowTypes="/(\.|\/)(gif|jpe?g|zip)$/" skinSimple="true" dragDropSupport="true"/>
+                        </p>
+                        
+                        <p>
+                            Valora tu experiencia: <p:rating value="#{publicarEntradaBean.puntuacion}" />
                         </p>
                         
                         <p>
