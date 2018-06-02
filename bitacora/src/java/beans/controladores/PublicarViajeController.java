@@ -7,7 +7,9 @@ package beans.controladores;
 
 import beans.modelos.PublicarViajeBean;
 import beans.respaldo.Session;
+import datos.dao.DiaJpaController;
 import datos.dao.ViajeJpaController;
+import datos.entidades.Dia;
 import datos.entidades.Usuario;
 import datos.entidades.Viaje;
 import java.io.BufferedOutputStream;
@@ -15,13 +17,13 @@ import java.io.File;
 import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.Serializable;
+import java.sql.SQLException;
+import java.util.Calendar;
 import java.util.logging.Level;
 import java.util.logging.Logger;
-import javax.enterprise.context.RequestScoped;
-//import javax.faces.bean.ManagedBean;
+import javax.faces.bean.ManagedBean;
 import javax.faces.bean.ManagedProperty;
-import javax.inject.Named;
-//import javax.faces.bean.RequestScoped;
+import javax.faces.bean.RequestScoped;
 import javax.persistence.EntityManagerFactory;
 import javax.persistence.Persistence;
 import org.apache.commons.io.FilenameUtils;
@@ -33,7 +35,7 @@ import org.primefaces.model.UploadedFile;
  */
 
 //TODO revisar si esta refactorizacion de anotaciones funciona correctamente
-@Named
+@ManagedBean
 @RequestScoped
 public class PublicarViajeController implements Serializable {
 
@@ -68,9 +70,17 @@ public class PublicarViajeController implements Serializable {
         //TODO gestionar la imagen tanto las individuales como las de la galería
         ViajeJpaController viajeController = new ViajeJpaController(emf);
         viajeController.create(newViaje);
-        //TODO intentar gestionar esto de otra manera!
-        int idViajeInsert = viajeController.getViajeCount();
+        Integer idViajeInsert = newViaje.getId();
         Session.getInstance().setAttribute("idViajeSeleccionado", idViajeInsert);
+        
+        DiaJpaController diaController = new DiaJpaController(emf);
+        Dia primerDia = new Dia();
+        primerDia.setIdViaje(viajeController.findViaje(idViajeInsert));
+        primerDia.setFecha(Calendar.getInstance().getTime());
+        diaController.create(primerDia);
+        Integer idPrimerDia = primerDia.getId();
+        Session.getInstance().setAttribute("idDiaSeleccionado", idPrimerDia);
+        
         
         return "ok";
     }

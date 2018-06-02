@@ -57,4 +57,18 @@
             <to-view-id>/detalleViaje.xhtml</to-view-id>
         </navigation-case>
     </navigation-rule>
+    <navigation-rule>
+        <from-view-id>/publicarEntrada.xhtml</from-view-id>
+        <navigation-case>
+            <from-outcome>ok</from-outcome>
+            <to-view-id>/detalleViaje.xhtml</to-view-id>
+        </navigation-case>
+    </navigation-rule>
+    <navigation-rule>
+        <from-view-id>/publicarViajeAjax.xhtml</from-view-id>
+        <navigation-case>
+            <from-outcome>ok</from-outcome>
+            <to-view-id>/principal.xhtml</to-view-id>
+        </navigation-case>
+    </navigation-rule>
 </faces-config>

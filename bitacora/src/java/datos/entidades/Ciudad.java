@@ -123,7 +123,7 @@ public class Ciudad implements Serializable {
 
     @Override
     public String toString() {
-        return "DTO.Ciudad[ id=" + id + " ]";
+        return nombre +", "+idPais.getNombre();
     }
     
 }

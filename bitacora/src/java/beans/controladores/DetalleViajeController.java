@@ -53,7 +53,6 @@ public class DetalleViajeController implements Serializable {
     
     private Viaje cargarViaje(){
         ViajeJpaController controlViaje = new ViajeJpaController(emf);
-        
         return controlViaje.findViaje((int)Session.getInstance().getAttribute("idViajeSeleccionado"));
     }
     

@@ -14,24 +14,21 @@
 
             <ui:define name="content">
 
-                <f:view>
-                    <h:form  enctype="multipart/form-data">                        
+                <h:form id="formInput">
+                    <p:inputText value="#{publicarEntradaController.busquedaCiudad}" id="inputt" placeholder="Buscar ciudad">
+                        <p:ajax event="keyup" update="" listener="#{publicarEntradaController.manejaEvento}"/>
+                    </p:inputText>
+                </h:form>
+                <h:form id="formListaCiudades">
+                    <p:autoComplete id="acSimple" 
+                                    value="#{publicarEntradaController.listaCiudades}" 
+                                    completeMethod="#{publicarEntradaController.completeText}"/>
 
-
-                        <h:inputText pt:list="ciudades" value="#{publicarViajeController.cadena}" pt:placeholder="Buscar ciudad">
-                            <p:ajax event="keyup" update="listBox" listener="#{publicarViajeController.manejaEvento}"/>
-                        </h:inputText>
-                        <p:selectOneListbox value="#{publicarViajeBean.ciudad}" id="listBox">
-                            <f:selectItems value="#{publicarViajeController.listaCiudades}" var="ciudad"
-                                           itemValue="#{ciudad.id}" itemLabel="#{ciudad.nombre}, #{ciudad.idPais.nombre}"/>       
-                        </p:selectOneListbox>
-                        <datalist id="ciudades">
-                            <c:forEach items="#{publicarViajeController.listaCiudades}" var="ciudad" transient="true">
-                                <option value="#{ciudad.nombre}" label="#{ciudad.idPais.nombre}"></option>
-                            </c:forEach>
-                        </datalist>
-                    </h:form>
-                </f:view>
+                    <p:autoComplete id="themeCustom" value="#{publicarEntradaController.pruebaId}" placeholder="Buscar ciudad"
+                                    completeMethod="#{publicarEntradaController.completeText}"
+                                    var="ciudad" itemLabel="#{ciudad}" itemValue="#{ciudad.id}"
+                                    scrollHeight="200" forceSelection="true"/>
+            </h:form>
 
             </ui:define>
 

@@ -15,16 +15,13 @@
             <ui:define name="content">
 
                 <f:view>
-                    <h:form  enctype="multipart/form-data">                        
+                    <h:form  enctype="multipart/form-data">     
 
                         <c:if test="#{publicarEntradaController.primeraEntrada}">                      
-                            <h:inputText value="#{publicarEntradaController.busquedaCiudad}" pt:placeholder="Buscar ciudad">
-                                <p:ajax event="keyup" update="listaCiudades" listener="#{publicarEntradaController.manejaEvento}"/>
-                            </h:inputText>
-                            <p:selectOneListbox value="#{publicarEntradaBean.ciudad}" id="listaCiudades">
-                                <f:selectItems value="#{publicarEntradaController.listaCiudades}" var="ciudad"
-                                               itemValue="#{ciudad.id}" itemLabel="#{ciudad.nombre}, #{ciudad.idPais.nombre}"/>       
-                            </p:selectOneListbox>
+                            <p:autoComplete id="themeCustom" value="#{publicarEntradaController.pruebaId}" placeholder="Buscar ciudad"
+                                    completeMethod="#{publicarEntradaController.completeText}"
+                                    var="ciudad" itemLabel="#{ciudad}" itemValue="#{ciudad.id}"
+                                    scrollHeight="200" forceSelection="true"/>
                         </c:if>
                         <p>
                             Titulo de la entrada: <h:inputText value="#{publicarEntradaBean.titulo}"/> 
@@ -37,11 +34,11 @@
                         <p>
                             Comparte una foto del lugar:  <p:fileUpload id="fileIdResume"  value="#{publicarEntradaBean.imagen}" mode="simple" allowTypes="/(\.|\/)(gif|jpe?g|zip)$/" skinSimple="true" dragDropSupport="true"/>
                         </p>
-                        
+
                         <p>
                             Valora tu experiencia: <p:rating value="#{publicarEntradaBean.puntuacion}" />
                         </p>
-                        
+
                         <p>
                             Selecciona una etiqueta para tu entrada: 
                             <p:selectOneMenu value="#{publicarEntradaBean.tipo}">
