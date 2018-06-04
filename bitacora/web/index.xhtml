@@ -17,22 +17,21 @@
 
                 <f:view>
                     <section id="panel_busqueda">
-                        <p>Probando internacionalización -> #{messages.tituloIndex}</p>
                         <h:form>
-                            <p:inputText id="busqueda" value="#{searchView.text1}" title="Buscar una localización/persona" >
+                            <p:inputText id="busqueda" value="#{indexBean.busqueda}" title="Buscar una localización/persona" >
                                 <f:validateLength minimum="3" />
                             </p:inputText>
-                            <p:commandButton action="buscar" value="BusqueUste"/>
+                            <p:commandButton action="buscar" value="#{messages.buscar}"/>
                         </h:form>
 
-                        <h1>Únete y descubre lugares increíbles</h1>
-                        <h2>Comparte tus experiencias con miles de usuarios</h2>
+                        <h1>#{messages.mensajePrincipalIndex}</h1>
+                        <h2>#{messages.subtituloPrincipalIndex}</h2>
 
 
                     </section>
 
                     <section id="paises_continent_grid">
-                        <h1>¡Tenemos el lugar ideal para ti!</h1>
+                        <h1>#{messages.cabeceraGridViajes}</h1>
                         <c:forEach items="#{indexController.dameListaViajes()}" var="viaje">
                             <p>Usuario -> #{viaje.usuario}</p>
                             <p>Titulo -> #{viaje.titulo}</p>
@@ -46,7 +45,7 @@
 
 
                     <section id="usuarios_destacados" style="display: none;">
-                        <h1>La clave es compartir</h1>
+                        <h1>#{messages.cabeceraUsuariosDestacados}</h1>
                     </section>
                 </f:view>
 

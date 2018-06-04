@@ -9,6 +9,7 @@ import beans.modelos.PublicarViajeBean;
 import beans.respaldo.Session;
 import datos.dao.DiaJpaController;
 import datos.dao.ViajeJpaController;
+import datos.dao.exceptions.NonexistentEntityException;
 import datos.entidades.Dia;
 import datos.entidades.Usuario;
 import datos.entidades.Viaje;
@@ -33,7 +34,6 @@ import org.primefaces.model.UploadedFile;
  *
  * @author rfmarquez
  */
-
 //TODO revisar si esta refactorizacion de anotaciones funciona correctamente
 @ManagedBean
 @RequestScoped
@@ -54,57 +54,87 @@ public class PublicarViajeController implements Serializable {
     public void setPublicarViajeBean(PublicarViajeBean publicarViajeBean) {
         this.publicarViajeBean = publicarViajeBean;
     }
-    
+
     public String publicar() {
-        Viaje newViaje = new Viaje();
+
+        Viaje newViaje = setearValoresNuevoViaje();
+        //TODO gestionar la imagen tanto las individuales como las de la galería
+
         try {
-            subirFoto();
+            cambiarNombreImagenPorIdViaje(newViaje);
+            subirFotoViaje();
+
         } catch (IOException ex) {
             Logger.getLogger(PublicarViajeController.class.getName()).log(Level.SEVERE, null, ex);
             return "error"; //TODO revisar control de excepciones
+        } catch (Exception ex) {
+            Logger.getLogger(PublicarViajeController.class.getName()).log(Level.SEVERE, null, ex);
+            return "error";
         }
-        newViaje.setTitulo(publicarViajeBean.getTitulo());
-        newViaje.setDescripcion(publicarViajeBean.getDescripcion());
-        newViaje.setUsuario(((Usuario)Session.getInstance().getAttribute("usuario")));
-        newViaje.setImgMiniatura(publicarViajeBean.getImagen().getFileName());
-        //TODO gestionar la imagen tanto las individuales como las de la galería
-        ViajeJpaController viajeController = new ViajeJpaController(emf);
-        viajeController.create(newViaje);
-        Integer idViajeInsert = newViaje.getId();
-        Session.getInstance().setAttribute("idViajeSeleccionado", idViajeInsert);
-        
-        DiaJpaController diaController = new DiaJpaController(emf);
-        Dia primerDia = new Dia();
-        primerDia.setIdViaje(viajeController.findViaje(idViajeInsert));
-        primerDia.setFecha(Calendar.getInstance().getTime());
-        diaController.create(primerDia);
-        Integer idPrimerDia = primerDia.getId();
-        Session.getInstance().setAttribute("idDiaSeleccionado", idPrimerDia);
-        
-        
+
         return "ok";
     }
 
-    public void subirFoto() throws IOException {
+    private Viaje setearValoresNuevoViaje() {
+        Viaje newViaje = new Viaje();
+        newViaje.setTitulo(publicarViajeBean.getTitulo());
+        newViaje.setDescripcion(publicarViajeBean.getDescripcion());
+        if (((Usuario) Session.getInstance().getAttribute("usuario")).getNombreUsuario() != null) {
+            newViaje.setUsuario(((Usuario) Session.getInstance().getAttribute("usuario")));
+        }
+        newViaje.setImgMiniatura(publicarViajeBean.getImagen().getFileName());
+        return newViaje;
+    }
+
+    private void cambiarNombreImagenPorIdViaje(Viaje newViaje) throws NonexistentEntityException, Exception {
+        ViajeJpaController viajeController = new ViajeJpaController(emf);
+        viajeController.create(newViaje);
+        Integer idViajeInsert = newViaje.getId();
+        newViaje.setImgMiniatura(String.valueOf(idViajeInsert) + ".jpg");
+        viajeController.edit(newViaje);
+
+        DiaJpaController diaController = new DiaJpaController(emf);
+        Dia primerDia = setearPrimerDia(viajeController, newViaje);
+        diaController.create(primerDia);
+        Integer idPrimerDia = primerDia.getId();
+
+        Session.getInstance().setAttribute("idDiaSeleccionado", idPrimerDia);
+        Session.getInstance().setAttribute("idViajeSeleccionado", idViajeInsert);
+
+    }
+
+    private Dia setearPrimerDia(ViajeJpaController viajeController, Viaje newViaje) {
+        Dia primerDia = new Dia();
+        primerDia.setIdViaje(viajeController.findViaje(newViaje.getId()));
+        primerDia.setFecha(Calendar.getInstance().getTime());
+        return primerDia;
+    }
+
+    public void subirFotoViaje() throws IOException {
         UploadedFile uploadedPhoto = publicarViajeBean.getImagen();
-        //String filePath = "c:/bitacora";
         byte[] bytes = null;
 
         if (null != uploadedPhoto) {
             //String rutaFaces = FacesContext.getCurrentInstance().getExternalContext().getRealPath("/");
-            String ruta = "C:/bitacora/usuarios/"; // main location for uploads
-            //TODO coger de la sesion
-            String nombreUsuario = ((Usuario)Session.getInstance().getAttribute("usuario")).getNombreUsuario(); 
-            String filename = FilenameUtils.getName(uploadedPhoto.getFileName());
-            File theFile = new File(ruta + "/" + nombreUsuario);
-            theFile.mkdirs(); //Creación de carpetas
+            String rutaRaiz = "C:/bitacora/usuarios/"; // main location for uploads
+            if (((Usuario) Session.getInstance().getAttribute("usuario")).getNombreUsuario() != null
+                    && Session.getInstance().getAttribute("idViajeSeleccionado") != null) {
+                String nombreUsuario = ((Usuario) Session.getInstance().getAttribute("usuario")).getNombreUsuario();
+                String idViajeSeleccionado = String.valueOf(Session.getInstance().getAttribute("idViajeSeleccionado"));
+                String rutaFichero = rutaRaiz + "/" + nombreUsuario + "/" + idViajeSeleccionado;
+                File theFile = new File(rutaFichero);
+                theFile.mkdirs(); //Creación de carpeta
 
-            bytes = uploadedPhoto.getContents();
-//          BufferedOutputStream stream = new BufferedOutputStream(new FileOutputStream(new File(ruta + filename)));
-            BufferedOutputStream stream = new BufferedOutputStream(new FileOutputStream(ruta + "/" + nombreUsuario+"/"+filename)); // cannot find path when adding username atm
-            
-            stream.write(bytes);
-            stream.close();
+                bytes = uploadedPhoto.getContents();
+
+                FileOutputStream nuevoFichero = new FileOutputStream(rutaFichero + "/" + idViajeSeleccionado + ".jpg");
+                BufferedOutputStream stream = new BufferedOutputStream(nuevoFichero);
+
+                stream.write(bytes);
+                stream.close();
+
+            }
+
         }
 
     }

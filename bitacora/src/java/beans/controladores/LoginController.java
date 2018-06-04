@@ -31,7 +31,6 @@ public class LoginController implements Serializable {
     @ManagedProperty(value = "#{loginBean}")
     private LoginBean loginBean;
 
-    //@PersistenceUnit(unitName = "bitacoraPU")
     private final EntityManagerFactory emf;
     private boolean badLogin;
 
@@ -70,7 +69,6 @@ public class LoginController implements Serializable {
                 if (passwordEncryptor.checkPassword(inputPassword, usuario.getPassword())) {
                     Session.getInstance().setAttribute("usuario", usuario);
                     Session.getInstance().setAttribute("usuarioLogeado", true);
-                    //TODO esta seria la otra versionSession.setUsuarioLogeado(true);
                     return "loginOk";
                 } else {
                     this.badLogin = true;

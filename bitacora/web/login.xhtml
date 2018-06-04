@@ -9,26 +9,28 @@
     <body>
 
         <ui:composition template="./templates/plantilla.xhtml">
-
+            
+            <ui:define name="title">#{messages.tituloLogin}</ui:define>
+            
              <ui:define name="content">
                 <f:view>
                         <h:form>
                             <h:panelGrid columns="2">
-                                <p:outputLabel value="Nombre de usuario: " />
+                                <p:outputLabel value="#{messages.nombreUsuario}:" />
                                 <p:inputText id="nickname" value="#{loginBean.nombreUsuario}" autocomplete="true" required="true"/>
 
-                                <p:outputLabel value="Repita contraseña: " />                            
-                                <p:password id="password2" value="#{loginBean.password}" autocomplete="true" required="true"/>
+                                <p:outputLabel value="#{messages.password}:"/>                            
+                                <p:password id="password" value="#{loginBean.password}" autocomplete="true" required="true"/>
 
-                                <p:outputLabel value="Usuario o contraseña incorrectos" rendered="#{loginController.badLogin}"/>
+                                <p:outputLabel value="#{messages.loginFail}" rendered="#{loginController.badLogin}"/>
                                 <p:commandButton 
                                     ajax="false"
                                     action="#{loginController.loginUsuario}" 
-                                    value="Entrar"/>
+                                    value="#{messages.login}"/>
                                 
                                 <hr/>
-                                <h:outputLabel value="¿No tienes cuenta?"/>
-                                <p:link outcome="registro" value="Regístrate"/>
+                                <h:outputLabel value="#{messages.registroLogin}"/>
+                                <p:link outcome="registro" value="#{messages.registro}"/>
 
                             </h:panelGrid>
                         </h:form>

@@ -24,7 +24,6 @@ public class PublicarViajeBean implements Serializable{
     private String titulo;
     private String descripcion;
     private UploadedFile imagen;
-    private String ciudad;
     
     
     public PublicarViajeBean() {
@@ -44,14 +43,6 @@ public class PublicarViajeBean implements Serializable{
 
     public void setDescripcion(String descripcion) {
         this.descripcion = descripcion;
-    }
-    
-    public String getCiudad() {
-        return ciudad;
-    }
-
-    public void setCiudad(String ciudad) {
-        this.ciudad = ciudad;
     }
 
     public UploadedFile getImagen() {

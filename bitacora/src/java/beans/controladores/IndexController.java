@@ -5,6 +5,7 @@
  */
 package beans.controladores;
 
+import beans.modelos.IndexBean;
 import datos.dao.ViajeJpaController;
 import datos.entidades.Viaje;
 import java.io.Serializable;
@@ -13,6 +14,7 @@ import java.util.HashSet;
 import java.util.List;
 import java.util.Random;
 import javax.faces.bean.ManagedBean;
+import javax.faces.bean.ManagedProperty;
 import javax.faces.bean.RequestScoped;
 import javax.persistence.EntityManagerFactory;
 import javax.persistence.Persistence;
@@ -25,24 +27,23 @@ import javax.persistence.Persistence;
 @ManagedBean
 @RequestScoped
 public class IndexController implements Serializable {
-
+    
+    @ManagedProperty(value = "#{indexBean}")
+    private IndexBean indexBean;
     private final EntityManagerFactory emf;
-    private boolean logeado = false;
-
+    
     public IndexController() {
         emf = Persistence.createEntityManagerFactory("bitacoraPU");
+    }    
+
+    public IndexBean getIndexBean() {
+        return indexBean;
     }
 
-    public boolean isLogeado() {
-        return logeado;
-    }
-
-    public void setLogeado(boolean logeado) {
-        this.logeado = logeado;
+    public void setIndexBean(IndexBean indexBean) {
+        this.indexBean = indexBean;
     }
     
-    
-
     public List<Viaje> dameListaViajes(){
         HashSet<Viaje> hashSetViajes = new HashSet<>();
         

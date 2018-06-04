@@ -11,25 +11,27 @@
     <body>
 
         <ui:composition template="./templates/principal.xhtml">
-
+            
+            <ui:define name="title">#{messages.tituloPublicarViaje}</ui:define>
+            
             <ui:define name="content">
 
                 <f:view>
                     <h:form  enctype="multipart/form-data">                        
 
-                        Información esencial de su viaje
+                        #{messages.informacionEsencial}
                         <p>
-                            Titulo: <h:inputText value="#{publicarViajeBean.titulo}"/> 
+                            #{messages.tituloViaje}: <h:inputText value="#{publicarViajeBean.titulo}"/> 
                         </p> 
 
                         <p>
-                            Breve descripción: <h:inputTextarea value="#{publicarViajeBean.descripcion}"/>
+                            #{messages.descripcionViaje}: <h:inputTextarea value="#{publicarViajeBean.descripcion}"/>
                         </p>
 
                         <p>
-                            Imagen de Portada:  <p:fileUpload id="fileIdResume"  value="#{publicarViajeBean.imagen}" mode="simple" allowTypes="/(\.|\/)(gif|jpe?g|zip)$/" skinSimple="true" dragDropSupport="true"/>
+                            #{messages.imagenViaje}:  <p:fileUpload id="fileIdResume"  value="#{publicarViajeBean.imagen}" mode="simple" allowTypes="/(\.|\/)(gif|jpe?g|zip)$/" skinSimple="true" dragDropSupport="true"/>
                         </p>
-                        <p:commandButton value="PublicarViaje" ajax="false" action="#{publicarViajeController.publicar}"/> 
+                        <p:commandButton value="#{messages.publicarViaje}" ajax="false" action="#{publicarViajeController.publicar}"/> 
 
                     </h:form>
                 </f:view>
