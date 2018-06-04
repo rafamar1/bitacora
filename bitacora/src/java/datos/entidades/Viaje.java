@@ -56,7 +56,9 @@ public class Viaje implements Serializable {
     private Usuario usuario;
     @OneToMany(cascade = CascadeType.ALL, mappedBy = "idViaje")
     private List<Dia> diaList;
-
+    @OneToMany(cascade = CascadeType.ALL, mappedBy = "idViaje")
+    private List<Foto> fotoList;
+    
     public Viaje() {
     }
 
@@ -117,6 +119,16 @@ public class Viaje implements Serializable {
     public void setDiaList(List<Dia> diaList) {
         this.diaList = diaList;
     }
+
+    @XmlTransient
+    public List<Foto> getFotoList() {
+        return fotoList;
+    }
+
+    public void setFotoList(List<Foto> fotoList) {
+        this.fotoList = fotoList;
+    }
+    
 
     @Override
     public int hashCode() {

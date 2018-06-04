@@ -14,9 +14,10 @@ import javax.persistence.criteria.CriteriaQuery;
 import javax.persistence.criteria.Root;
 import datos.entidades.Usuario;
 import datos.entidades.Dia;
-import datos.entidades.Viaje;
 import java.util.ArrayList;
 import java.util.List;
+import datos.entidades.Foto;
+import datos.entidades.Viaje;
 import javax.persistence.EntityManager;
 import javax.persistence.EntityManagerFactory;
 
@@ -39,6 +40,9 @@ public class ViajeJpaController implements Serializable {
         if (viaje.getDiaList() == null) {
             viaje.setDiaList(new ArrayList<Dia>());
         }
+        if (viaje.getFotoList() == null) {
+            viaje.setFotoList(new ArrayList<Foto>());
+        }
         EntityManager em = null;
         try {
             em = getEntityManager();
@@ -54,6 +58,12 @@ public class ViajeJpaController implements Serializable {
                 attachedDiaList.add(diaListDiaToAttach);
             }
             viaje.setDiaList(attachedDiaList);
+            List<Foto> attachedFotoList = new ArrayList<Foto>();
+            for (Foto fotoListFotoToAttach : viaje.getFotoList()) {
+                fotoListFotoToAttach = em.getReference(fotoListFotoToAttach.getClass(), fotoListFotoToAttach.getId());
+                attachedFotoList.add(fotoListFotoToAttach);
+            }
+            viaje.setFotoList(attachedFotoList);
             em.persist(viaje);
             if (usuario != null) {
                 usuario.getViajeList().add(viaje);
@@ -66,6 +76,15 @@ public class ViajeJpaController implements Serializable {
                 if (oldIdViajeOfDiaListDia != null) {
                     oldIdViajeOfDiaListDia.getDiaList().remove(diaListDia);
                     oldIdViajeOfDiaListDia = em.merge(oldIdViajeOfDiaListDia);
+                }
+            }
+            for (Foto fotoListFoto : viaje.getFotoList()) {
+                Viaje oldIdViajeOfFotoListFoto = fotoListFoto.getIdViaje();
+                fotoListFoto.setIdViaje(viaje);
+                fotoListFoto = em.merge(fotoListFoto);
+                if (oldIdViajeOfFotoListFoto != null) {
+                    oldIdViajeOfFotoListFoto.getFotoList().remove(fotoListFoto);
+                    oldIdViajeOfFotoListFoto = em.merge(oldIdViajeOfFotoListFoto);
                 }
             }
             em.getTransaction().commit();
@@ -86,6 +105,8 @@ public class ViajeJpaController implements Serializable {
             Usuario usuarioNew = viaje.getUsuario();
             List<Dia> diaListOld = persistentViaje.getDiaList();
             List<Dia> diaListNew = viaje.getDiaList();
+            List<Foto> fotoListOld = persistentViaje.getFotoList();
+            List<Foto> fotoListNew = viaje.getFotoList();
             List<String> illegalOrphanMessages = null;
             for (Dia diaListOldDia : diaListOld) {
                 if (!diaListNew.contains(diaListOldDia)) {
@@ -93,6 +114,14 @@ public class ViajeJpaController implements Serializable {
                         illegalOrphanMessages = new ArrayList<String>();
                     }
                     illegalOrphanMessages.add("You must retain Dia " + diaListOldDia + " since its idViaje field is not nullable.");
+                }
+            }
+            for (Foto fotoListOldFoto : fotoListOld) {
+                if (!fotoListNew.contains(fotoListOldFoto)) {
+                    if (illegalOrphanMessages == null) {
+                        illegalOrphanMessages = new ArrayList<String>();
+                    }
+                    illegalOrphanMessages.add("You must retain Foto " + fotoListOldFoto + " since its idViaje field is not nullable.");
                 }
             }
             if (illegalOrphanMessages != null) {
@@ -109,6 +138,13 @@ public class ViajeJpaController implements Serializable {
             }
             diaListNew = attachedDiaListNew;
             viaje.setDiaList(diaListNew);
+            List<Foto> attachedFotoListNew = new ArrayList<Foto>();
+            for (Foto fotoListNewFotoToAttach : fotoListNew) {
+                fotoListNewFotoToAttach = em.getReference(fotoListNewFotoToAttach.getClass(), fotoListNewFotoToAttach.getId());
+                attachedFotoListNew.add(fotoListNewFotoToAttach);
+            }
+            fotoListNew = attachedFotoListNew;
+            viaje.setFotoList(fotoListNew);
             viaje = em.merge(viaje);
             if (usuarioOld != null && !usuarioOld.equals(usuarioNew)) {
                 usuarioOld.getViajeList().remove(viaje);
@@ -126,6 +162,17 @@ public class ViajeJpaController implements Serializable {
                     if (oldIdViajeOfDiaListNewDia != null && !oldIdViajeOfDiaListNewDia.equals(viaje)) {
                         oldIdViajeOfDiaListNewDia.getDiaList().remove(diaListNewDia);
                         oldIdViajeOfDiaListNewDia = em.merge(oldIdViajeOfDiaListNewDia);
+                    }
+                }
+            }
+            for (Foto fotoListNewFoto : fotoListNew) {
+                if (!fotoListOld.contains(fotoListNewFoto)) {
+                    Viaje oldIdViajeOfFotoListNewFoto = fotoListNewFoto.getIdViaje();
+                    fotoListNewFoto.setIdViaje(viaje);
+                    fotoListNewFoto = em.merge(fotoListNewFoto);
+                    if (oldIdViajeOfFotoListNewFoto != null && !oldIdViajeOfFotoListNewFoto.equals(viaje)) {
+                        oldIdViajeOfFotoListNewFoto.getFotoList().remove(fotoListNewFoto);
+                        oldIdViajeOfFotoListNewFoto = em.merge(oldIdViajeOfFotoListNewFoto);
                     }
                 }
             }
@@ -165,6 +212,13 @@ public class ViajeJpaController implements Serializable {
                     illegalOrphanMessages = new ArrayList<String>();
                 }
                 illegalOrphanMessages.add("This Viaje (" + viaje + ") cannot be destroyed since the Dia " + diaListOrphanCheckDia + " in its diaList field has a non-nullable idViaje field.");
+            }
+            List<Foto> fotoListOrphanCheck = viaje.getFotoList();
+            for (Foto fotoListOrphanCheckFoto : fotoListOrphanCheck) {
+                if (illegalOrphanMessages == null) {
+                    illegalOrphanMessages = new ArrayList<String>();
+                }
+                illegalOrphanMessages.add("This Viaje (" + viaje + ") cannot be destroyed since the Foto " + fotoListOrphanCheckFoto + " in its fotoList field has a non-nullable idViaje field.");
             }
             if (illegalOrphanMessages != null) {
                 throw new IllegalOrphanException(illegalOrphanMessages);

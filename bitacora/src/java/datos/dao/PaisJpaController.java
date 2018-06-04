@@ -193,5 +193,5 @@ public class PaisJpaController implements Serializable {
         TypedQuery<Pais> query = em.createNamedQuery("Pais.findByNombre", Pais.class);
         Pais pais = query.setParameter("nombre", nombrePais).getSingleResult();
         return pais.getId();
-    }     
+    }
 }

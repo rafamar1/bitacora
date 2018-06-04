@@ -106,7 +106,8 @@ public class PublicarViajeController implements Serializable {
     private Dia setearPrimerDia(ViajeJpaController viajeController, Viaje newViaje) {
         Dia primerDia = new Dia();
         primerDia.setIdViaje(viajeController.findViaje(newViaje.getId()));
-        primerDia.setFecha(Calendar.getInstance().getTime());
+        primerDia.setFechaCreacion(Calendar.getInstance().getTime());
+        primerDia.setFechaModificacion(Calendar.getInstance().getTime());
         return primerDia;
     }
 

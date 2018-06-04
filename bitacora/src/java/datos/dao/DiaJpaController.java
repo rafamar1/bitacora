@@ -7,17 +7,16 @@ package datos.dao;
 
 import datos.dao.exceptions.IllegalOrphanException;
 import datos.dao.exceptions.NonexistentEntityException;
+import datos.entidades.Dia;
 import java.io.Serializable;
 import javax.persistence.Query;
 import javax.persistence.EntityNotFoundException;
 import javax.persistence.criteria.CriteriaQuery;
 import javax.persistence.criteria.Root;
 import datos.entidades.Viaje;
-import datos.entidades.Ciudad;
-import datos.entidades.Dia;
+import datos.entidades.Entrada;
 import java.util.ArrayList;
 import java.util.List;
-import datos.entidades.Entrada;
 import javax.persistence.EntityManager;
 import javax.persistence.EntityManagerFactory;
 
@@ -37,9 +36,6 @@ public class DiaJpaController implements Serializable {
     }
 
     public void create(Dia dia) {
-        if (dia.getCiudadList() == null) {
-            dia.setCiudadList(new ArrayList<Ciudad>());
-        }
         if (dia.getEntradaList() == null) {
             dia.setEntradaList(new ArrayList<Entrada>());
         }
@@ -52,12 +48,6 @@ public class DiaJpaController implements Serializable {
                 idViaje = em.getReference(idViaje.getClass(), idViaje.getId());
                 dia.setIdViaje(idViaje);
             }
-            List<Ciudad> attachedCiudadList = new ArrayList<Ciudad>();
-            for (Ciudad ciudadListCiudadToAttach : dia.getCiudadList()) {
-                ciudadListCiudadToAttach = em.getReference(ciudadListCiudadToAttach.getClass(), ciudadListCiudadToAttach.getId());
-                attachedCiudadList.add(ciudadListCiudadToAttach);
-            }
-            dia.setCiudadList(attachedCiudadList);
             List<Entrada> attachedEntradaList = new ArrayList<Entrada>();
             for (Entrada entradaListEntradaToAttach : dia.getEntradaList()) {
                 entradaListEntradaToAttach = em.getReference(entradaListEntradaToAttach.getClass(), entradaListEntradaToAttach.getId());
@@ -68,10 +58,6 @@ public class DiaJpaController implements Serializable {
             if (idViaje != null) {
                 idViaje.getDiaList().add(dia);
                 idViaje = em.merge(idViaje);
-            }
-            for (Ciudad ciudadListCiudad : dia.getCiudadList()) {
-                ciudadListCiudad.getDiaList().add(dia);
-                ciudadListCiudad = em.merge(ciudadListCiudad);
             }
             for (Entrada entradaListEntrada : dia.getEntradaList()) {
                 Dia oldIdDiaOfEntradaListEntrada = entradaListEntrada.getIdDia();
@@ -98,8 +84,6 @@ public class DiaJpaController implements Serializable {
             Dia persistentDia = em.find(Dia.class, dia.getId());
             Viaje idViajeOld = persistentDia.getIdViaje();
             Viaje idViajeNew = dia.getIdViaje();
-            List<Ciudad> ciudadListOld = persistentDia.getCiudadList();
-            List<Ciudad> ciudadListNew = dia.getCiudadList();
             List<Entrada> entradaListOld = persistentDia.getEntradaList();
             List<Entrada> entradaListNew = dia.getEntradaList();
             List<String> illegalOrphanMessages = null;
@@ -118,13 +102,6 @@ public class DiaJpaController implements Serializable {
                 idViajeNew = em.getReference(idViajeNew.getClass(), idViajeNew.getId());
                 dia.setIdViaje(idViajeNew);
             }
-            List<Ciudad> attachedCiudadListNew = new ArrayList<Ciudad>();
-            for (Ciudad ciudadListNewCiudadToAttach : ciudadListNew) {
-                ciudadListNewCiudadToAttach = em.getReference(ciudadListNewCiudadToAttach.getClass(), ciudadListNewCiudadToAttach.getId());
-                attachedCiudadListNew.add(ciudadListNewCiudadToAttach);
-            }
-            ciudadListNew = attachedCiudadListNew;
-            dia.setCiudadList(ciudadListNew);
             List<Entrada> attachedEntradaListNew = new ArrayList<Entrada>();
             for (Entrada entradaListNewEntradaToAttach : entradaListNew) {
                 entradaListNewEntradaToAttach = em.getReference(entradaListNewEntradaToAttach.getClass(), entradaListNewEntradaToAttach.getId());
@@ -140,18 +117,6 @@ public class DiaJpaController implements Serializable {
             if (idViajeNew != null && !idViajeNew.equals(idViajeOld)) {
                 idViajeNew.getDiaList().add(dia);
                 idViajeNew = em.merge(idViajeNew);
-            }
-            for (Ciudad ciudadListOldCiudad : ciudadListOld) {
-                if (!ciudadListNew.contains(ciudadListOldCiudad)) {
-                    ciudadListOldCiudad.getDiaList().remove(dia);
-                    ciudadListOldCiudad = em.merge(ciudadListOldCiudad);
-                }
-            }
-            for (Ciudad ciudadListNewCiudad : ciudadListNew) {
-                if (!ciudadListOld.contains(ciudadListNewCiudad)) {
-                    ciudadListNewCiudad.getDiaList().add(dia);
-                    ciudadListNewCiudad = em.merge(ciudadListNewCiudad);
-                }
             }
             for (Entrada entradaListNewEntrada : entradaListNew) {
                 if (!entradaListOld.contains(entradaListNewEntrada)) {
@@ -208,11 +173,6 @@ public class DiaJpaController implements Serializable {
             if (idViaje != null) {
                 idViaje.getDiaList().remove(dia);
                 idViaje = em.merge(idViaje);
-            }
-            List<Ciudad> ciudadList = dia.getCiudadList();
-            for (Ciudad ciudadListCiudad : ciudadList) {
-                ciudadListCiudad.getDiaList().remove(dia);
-                ciudadListCiudad = em.merge(ciudadListCiudad);
             }
             em.remove(dia);
             em.getTransaction().commit();

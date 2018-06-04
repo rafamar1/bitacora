@@ -15,6 +15,7 @@ import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
+import javax.persistence.ManyToMany;
 import javax.persistence.ManyToOne;
 import javax.persistence.NamedQueries;
 import javax.persistence.NamedQuery;
@@ -57,12 +58,12 @@ public class Entrada implements Serializable {
     @Basic(optional = false)
     @Column(name = "img_miniatura")
     private String imgMiniatura;
+     @Basic(optional = false)
+    @Column(name = "puntuacion")
+    private int puntuacion;
     @Basic(optional = false)
     @Column(name = "tipo")
     private String tipo;    
-    @Basic(optional = false)
-    @Column(name = "puntuacion")
-    private Integer puntuacion;
     @Column(name = "precio")
     private Integer precio;
     // @Max(value=?)  @Min(value=?)//if you know range of your decimal fields consider using these annotations to enforce field validation
@@ -70,13 +71,13 @@ public class Entrada implements Serializable {
     private Double latitud;
     @Column(name = "longitud")
     private Double longitud;
-    @OneToMany(cascade = CascadeType.ALL, mappedBy = "idEntrada")
-    private List<Foto> fotoList;
     @JoinColumn(name = "id_dia", referencedColumnName = "id")
     @ManyToOne(optional = false)
     private Dia idDia;
     @OneToMany(cascade = CascadeType.ALL, mappedBy = "idEntrada")
-    private List<Opinion> opinionList;
+    private List<Opinion> opinionList;    
+    @ManyToMany(mappedBy = "entradaList")
+    private List<Ciudad> ciudadList;
 
     public Entrada() {
     }
@@ -142,14 +143,6 @@ public class Entrada implements Serializable {
         this.precio = precio;
     }
     
-    public Integer getPuntuacion() {
-        return puntuacion;
-    }
-
-    public void setPuntuacion(Integer puntuacion) {
-        this.puntuacion = puntuacion;
-    }
-
     public Double getLatitud() {
         return latitud;
     }
@@ -166,13 +159,12 @@ public class Entrada implements Serializable {
         this.longitud = longitud;
     }
 
-    @XmlTransient
-    public List<Foto> getFotoList() {
-        return fotoList;
+    public int getPuntuacion() {
+        return puntuacion;
     }
 
-    public void setFotoList(List<Foto> fotoList) {
-        this.fotoList = fotoList;
+    public void setPuntuacion(int puntuacion) {
+        this.puntuacion = puntuacion;
     }
 
     public Dia getIdDia() {
@@ -190,6 +182,15 @@ public class Entrada implements Serializable {
 
     public void setOpinionList(List<Opinion> opinionList) {
         this.opinionList = opinionList;
+    }
+
+    @XmlTransient
+    public List<Ciudad> getCiudadList() {
+        return ciudadList;
+    }
+
+    public void setCiudadList(List<Ciudad> ciudadList) {
+        this.ciudadList = ciudadList;
     }
 
     @Override

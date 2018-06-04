@@ -47,14 +47,14 @@ public class Ciudad implements Serializable {
     @Basic(optional = false)
     @Column(name = "nombre")
     private String nombre;
-    @JoinTable(name = "dia_ciudad", joinColumns = {
-        @JoinColumn(name = "id_ciudad", referencedColumnName = "id")}, inverseJoinColumns = {
-        @JoinColumn(name = "id_dia", referencedColumnName = "id")})
-    @ManyToMany
-    private List<Dia> diaList;
     @JoinColumn(name = "id_pais", referencedColumnName = "id")
     @ManyToOne
     private Pais idPais;
+    @JoinTable(name = "entrada_ciudad", joinColumns = {
+        @JoinColumn(name = "id_ciudad", referencedColumnName = "id")}, inverseJoinColumns = {
+        @JoinColumn(name = "id_entrada", referencedColumnName = "id")})
+    @ManyToMany
+    private List<Entrada> entradaList;
 
     public Ciudad() {
     }
@@ -84,15 +84,6 @@ public class Ciudad implements Serializable {
         this.nombre = nombre;
     }
 
-    @XmlTransient
-    public List<Dia> getDiaList() {
-        return diaList;
-    }
-
-    public void setDiaList(List<Dia> diaList) {
-        this.diaList = diaList;
-    }
-
     public Pais getIdPais() {
         return idPais;
     }
@@ -100,6 +91,16 @@ public class Ciudad implements Serializable {
     public void setIdPais(Pais idPais) {
         this.idPais = idPais;
     }
+
+    @XmlTransient
+    public List<Entrada> getEntradaList() {
+        return entradaList;
+    }
+
+    public void setEntradaList(List<Entrada> entradaList) {
+        this.entradaList = entradaList;
+    }
+    
 
     @Override
     public int hashCode() {

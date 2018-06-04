@@ -47,11 +47,13 @@ public class Dia implements Serializable {
     @Column(name = "id")
     private Integer id;
     @Basic(optional = false)
-    @Column(name = "fecha")
+    @Column(name = "fecha_creacion")
     @Temporal(TemporalType.TIMESTAMP)
-    private Date fecha;
-    @ManyToMany(mappedBy = "diaList")
-    private List<Ciudad> ciudadList;
+    private Date fechaCreacion;
+    @Basic(optional = false)
+    @Column(name = "fecha_modificacion")
+    @Temporal(TemporalType.TIMESTAMP)
+    private Date fechaModificacion;
     @OneToMany(cascade = CascadeType.ALL, mappedBy = "idDia")
     private List<Entrada> entradaList;
     @JoinColumn(name = "id_viaje", referencedColumnName = "id")
@@ -65,11 +67,6 @@ public class Dia implements Serializable {
         this.id = id;
     }
 
-    public Dia(Integer id, Date fecha) {
-        this.id = id;
-        this.fecha = fecha;
-    }
-
     public Integer getId() {
         return id;
     }
@@ -78,21 +75,28 @@ public class Dia implements Serializable {
         this.id = id;
     }
 
-    public Date getFecha() {
-        return fecha;
+    public Date getFechaCreacion() {
+        return fechaCreacion;
     }
 
-    public void setFecha(Date fecha) {
-        this.fecha = fecha;
+    public void setFechaCreacion(Date fechaCreacion) {
+        this.fechaCreacion = fechaCreacion;
     }
 
-    @XmlTransient
-    public List<Ciudad> getCiudadList() {
-        return ciudadList;
+    public Date getFechaModificacion() {
+        return fechaModificacion;
     }
 
-    public void setCiudadList(List<Ciudad> ciudadList) {
-        this.ciudadList = ciudadList;
+    public void setFechaModificacion(Date fechaModificacion) {
+        this.fechaModificacion = fechaModificacion;
+    }
+
+    public Viaje getIdViaje() {
+        return idViaje;
+    }
+
+    public void setIdViaje(Viaje idViaje) {
+        this.idViaje = idViaje;
     }
 
     @XmlTransient
@@ -102,14 +106,6 @@ public class Dia implements Serializable {
 
     public void setEntradaList(List<Entrada> entradaList) {
         this.entradaList = entradaList;
-    }
-
-    public Viaje getIdViaje() {
-        return idViaje;
-    }
-
-    public void setIdViaje(Viaje idViaje) {
-        this.idViaje = idViaje;
     }
 
     @Override

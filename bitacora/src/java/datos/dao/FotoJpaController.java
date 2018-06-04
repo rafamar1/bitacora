@@ -6,13 +6,13 @@
 package datos.dao;
 
 import datos.dao.exceptions.NonexistentEntityException;
+import datos.entidades.Foto;
 import java.io.Serializable;
 import javax.persistence.Query;
 import javax.persistence.EntityNotFoundException;
 import javax.persistence.criteria.CriteriaQuery;
 import javax.persistence.criteria.Root;
-import datos.entidades.Entrada;
-import datos.entidades.Foto;
+import datos.entidades.Viaje;
 import java.util.List;
 import javax.persistence.EntityManager;
 import javax.persistence.EntityManagerFactory;
@@ -37,15 +37,15 @@ public class FotoJpaController implements Serializable {
         try {
             em = getEntityManager();
             em.getTransaction().begin();
-            Entrada idEntrada = foto.getIdEntrada();
-            if (idEntrada != null) {
-                idEntrada = em.getReference(idEntrada.getClass(), idEntrada.getId());
-                foto.setIdEntrada(idEntrada);
+            Viaje idViaje = foto.getIdViaje();
+            if (idViaje != null) {
+                idViaje = em.getReference(idViaje.getClass(), idViaje.getId());
+                foto.setIdViaje(idViaje);
             }
             em.persist(foto);
-            if (idEntrada != null) {
-                idEntrada.getFotoList().add(foto);
-                idEntrada = em.merge(idEntrada);
+            if (idViaje != null) {
+                idViaje.getFotoList().add(foto);
+                idViaje = em.merge(idViaje);
             }
             em.getTransaction().commit();
         } finally {
@@ -61,20 +61,20 @@ public class FotoJpaController implements Serializable {
             em = getEntityManager();
             em.getTransaction().begin();
             Foto persistentFoto = em.find(Foto.class, foto.getId());
-            Entrada idEntradaOld = persistentFoto.getIdEntrada();
-            Entrada idEntradaNew = foto.getIdEntrada();
-            if (idEntradaNew != null) {
-                idEntradaNew = em.getReference(idEntradaNew.getClass(), idEntradaNew.getId());
-                foto.setIdEntrada(idEntradaNew);
+            Viaje idViajeOld = persistentFoto.getIdViaje();
+            Viaje idViajeNew = foto.getIdViaje();
+            if (idViajeNew != null) {
+                idViajeNew = em.getReference(idViajeNew.getClass(), idViajeNew.getId());
+                foto.setIdViaje(idViajeNew);
             }
             foto = em.merge(foto);
-            if (idEntradaOld != null && !idEntradaOld.equals(idEntradaNew)) {
-                idEntradaOld.getFotoList().remove(foto);
-                idEntradaOld = em.merge(idEntradaOld);
+            if (idViajeOld != null && !idViajeOld.equals(idViajeNew)) {
+                idViajeOld.getFotoList().remove(foto);
+                idViajeOld = em.merge(idViajeOld);
             }
-            if (idEntradaNew != null && !idEntradaNew.equals(idEntradaOld)) {
-                idEntradaNew.getFotoList().add(foto);
-                idEntradaNew = em.merge(idEntradaNew);
+            if (idViajeNew != null && !idViajeNew.equals(idViajeOld)) {
+                idViajeNew.getFotoList().add(foto);
+                idViajeNew = em.merge(idViajeNew);
             }
             em.getTransaction().commit();
         } catch (Exception ex) {
@@ -105,10 +105,10 @@ public class FotoJpaController implements Serializable {
             } catch (EntityNotFoundException enfe) {
                 throw new NonexistentEntityException("The foto with id " + id + " no longer exists.", enfe);
             }
-            Entrada idEntrada = foto.getIdEntrada();
-            if (idEntrada != null) {
-                idEntrada.getFotoList().remove(foto);
-                idEntrada = em.merge(idEntrada);
+            Viaje idViaje = foto.getIdViaje();
+            if (idViaje != null) {
+                idViaje.getFotoList().remove(foto);
+                idViaje = em.merge(idViaje);
             }
             em.remove(foto);
             em.getTransaction().commit();

@@ -45,9 +45,9 @@ public class Foto implements Serializable {
     @Basic(optional = false)
     @Column(name = "titulo")
     private String titulo;
-    @JoinColumn(name = "id_entrada", referencedColumnName = "id")
+    @JoinColumn(name = "id_viaje", referencedColumnName = "id")
     @ManyToOne(optional = false)
-    private Entrada idEntrada;
+    private Viaje idViaje;
 
     public Foto() {
     }
@@ -85,13 +85,13 @@ public class Foto implements Serializable {
     public void setTitulo(String titulo) {
         this.titulo = titulo;
     }
-
-    public Entrada getIdEntrada() {
-        return idEntrada;
+    
+    public Viaje getIdViaje() {
+        return idViaje;
     }
 
-    public void setIdEntrada(Entrada idEntrada) {
-        this.idEntrada = idEntrada;
+    public void setIdViaje(Viaje idViaje) {
+        this.idViaje = idViaje;
     }
 
     @Override

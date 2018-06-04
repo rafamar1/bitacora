@@ -5,6 +5,7 @@
  */
 package datos.dao;
 
+import datos.dao.exceptions.IllegalOrphanException;
 import datos.dao.exceptions.NonexistentEntityException;
 import datos.dao.exceptions.PreexistingEntityException;
 import java.io.Serializable;
@@ -15,6 +16,8 @@ import javax.persistence.criteria.Root;
 import datos.entidades.Usuario;
 import java.util.ArrayList;
 import java.util.List;
+import datos.entidades.Viaje;
+import datos.entidades.Opinion;
 import javax.persistence.EntityManager;
 import javax.persistence.EntityManagerFactory;
 
@@ -40,6 +43,12 @@ public class UsuarioJpaController implements Serializable {
         if (usuario.getUsuarioList1() == null) {
             usuario.setUsuarioList1(new ArrayList<Usuario>());
         }
+        if (usuario.getViajeList() == null) {
+            usuario.setViajeList(new ArrayList<Viaje>());
+        }
+        if (usuario.getOpinionList() == null) {
+            usuario.setOpinionList(new ArrayList<Opinion>());
+        }
         EntityManager em = null;
         try {
             em = getEntityManager();
@@ -56,6 +65,18 @@ public class UsuarioJpaController implements Serializable {
                 attachedUsuarioList1.add(usuarioList1UsuarioToAttach);
             }
             usuario.setUsuarioList1(attachedUsuarioList1);
+            List<Viaje> attachedViajeList = new ArrayList<Viaje>();
+            for (Viaje viajeListViajeToAttach : usuario.getViajeList()) {
+                viajeListViajeToAttach = em.getReference(viajeListViajeToAttach.getClass(), viajeListViajeToAttach.getId());
+                attachedViajeList.add(viajeListViajeToAttach);
+            }
+            usuario.setViajeList(attachedViajeList);
+            List<Opinion> attachedOpinionList = new ArrayList<Opinion>();
+            for (Opinion opinionListOpinionToAttach : usuario.getOpinionList()) {
+                opinionListOpinionToAttach = em.getReference(opinionListOpinionToAttach.getClass(), opinionListOpinionToAttach.getId());
+                attachedOpinionList.add(opinionListOpinionToAttach);
+            }
+            usuario.setOpinionList(attachedOpinionList);
             em.persist(usuario);
             for (Usuario usuarioListUsuario : usuario.getUsuarioList()) {
                 usuarioListUsuario.getUsuarioList().add(usuario);
@@ -64,6 +85,24 @@ public class UsuarioJpaController implements Serializable {
             for (Usuario usuarioList1Usuario : usuario.getUsuarioList1()) {
                 usuarioList1Usuario.getUsuarioList().add(usuario);
                 usuarioList1Usuario = em.merge(usuarioList1Usuario);
+            }
+            for (Viaje viajeListViaje : usuario.getViajeList()) {
+                Usuario oldUsuarioOfViajeListViaje = viajeListViaje.getUsuario();
+                viajeListViaje.setUsuario(usuario);
+                viajeListViaje = em.merge(viajeListViaje);
+                if (oldUsuarioOfViajeListViaje != null) {
+                    oldUsuarioOfViajeListViaje.getViajeList().remove(viajeListViaje);
+                    oldUsuarioOfViajeListViaje = em.merge(oldUsuarioOfViajeListViaje);
+                }
+            }
+            for (Opinion opinionListOpinion : usuario.getOpinionList()) {
+                Usuario oldIdUsuarioOfOpinionListOpinion = opinionListOpinion.getIdUsuario();
+                opinionListOpinion.setIdUsuario(usuario);
+                opinionListOpinion = em.merge(opinionListOpinion);
+                if (oldIdUsuarioOfOpinionListOpinion != null) {
+                    oldIdUsuarioOfOpinionListOpinion.getOpinionList().remove(opinionListOpinion);
+                    oldIdUsuarioOfOpinionListOpinion = em.merge(oldIdUsuarioOfOpinionListOpinion);
+                }
             }
             em.getTransaction().commit();
         } catch (Exception ex) {
@@ -78,7 +117,7 @@ public class UsuarioJpaController implements Serializable {
         }
     }
 
-    public void edit(Usuario usuario) throws NonexistentEntityException, Exception {
+    public void edit(Usuario usuario) throws IllegalOrphanException, NonexistentEntityException, Exception {
         EntityManager em = null;
         try {
             em = getEntityManager();
@@ -88,6 +127,30 @@ public class UsuarioJpaController implements Serializable {
             List<Usuario> usuarioListNew = usuario.getUsuarioList();
             List<Usuario> usuarioList1Old = persistentUsuario.getUsuarioList1();
             List<Usuario> usuarioList1New = usuario.getUsuarioList1();
+            List<Viaje> viajeListOld = persistentUsuario.getViajeList();
+            List<Viaje> viajeListNew = usuario.getViajeList();
+            List<Opinion> opinionListOld = persistentUsuario.getOpinionList();
+            List<Opinion> opinionListNew = usuario.getOpinionList();
+            List<String> illegalOrphanMessages = null;
+            for (Viaje viajeListOldViaje : viajeListOld) {
+                if (!viajeListNew.contains(viajeListOldViaje)) {
+                    if (illegalOrphanMessages == null) {
+                        illegalOrphanMessages = new ArrayList<>();
+                    }
+                    illegalOrphanMessages.add("You must retain Viaje " + viajeListOldViaje + " since its usuario field is not nullable.");
+                }
+            }
+            for (Opinion opinionListOldOpinion : opinionListOld) {
+                if (!opinionListNew.contains(opinionListOldOpinion)) {
+                    if (illegalOrphanMessages == null) {
+                        illegalOrphanMessages = new ArrayList<>();
+                    }
+                    illegalOrphanMessages.add("You must retain Opinion " + opinionListOldOpinion + " since its idUsuario field is not nullable.");
+                }
+            }
+            if (illegalOrphanMessages != null) {
+                throw new IllegalOrphanException(illegalOrphanMessages);
+            }
             List<Usuario> attachedUsuarioListNew = new ArrayList<Usuario>();
             for (Usuario usuarioListNewUsuarioToAttach : usuarioListNew) {
                 usuarioListNewUsuarioToAttach = em.getReference(usuarioListNewUsuarioToAttach.getClass(), usuarioListNewUsuarioToAttach.getNombreUsuario());
@@ -102,6 +165,20 @@ public class UsuarioJpaController implements Serializable {
             }
             usuarioList1New = attachedUsuarioList1New;
             usuario.setUsuarioList1(usuarioList1New);
+            List<Viaje> attachedViajeListNew = new ArrayList<Viaje>();
+            for (Viaje viajeListNewViajeToAttach : viajeListNew) {
+                viajeListNewViajeToAttach = em.getReference(viajeListNewViajeToAttach.getClass(), viajeListNewViajeToAttach.getId());
+                attachedViajeListNew.add(viajeListNewViajeToAttach);
+            }
+            viajeListNew = attachedViajeListNew;
+            usuario.setViajeList(viajeListNew);
+            List<Opinion> attachedOpinionListNew = new ArrayList<Opinion>();
+            for (Opinion opinionListNewOpinionToAttach : opinionListNew) {
+                opinionListNewOpinionToAttach = em.getReference(opinionListNewOpinionToAttach.getClass(), opinionListNewOpinionToAttach.getId());
+                attachedOpinionListNew.add(opinionListNewOpinionToAttach);
+            }
+            opinionListNew = attachedOpinionListNew;
+            usuario.setOpinionList(opinionListNew);
             usuario = em.merge(usuario);
             for (Usuario usuarioListOldUsuario : usuarioListOld) {
                 if (!usuarioListNew.contains(usuarioListOldUsuario)) {
@@ -127,6 +204,28 @@ public class UsuarioJpaController implements Serializable {
                     usuarioList1NewUsuario = em.merge(usuarioList1NewUsuario);
                 }
             }
+            for (Viaje viajeListNewViaje : viajeListNew) {
+                if (!viajeListOld.contains(viajeListNewViaje)) {
+                    Usuario oldUsuarioOfViajeListNewViaje = viajeListNewViaje.getUsuario();
+                    viajeListNewViaje.setUsuario(usuario);
+                    viajeListNewViaje = em.merge(viajeListNewViaje);
+                    if (oldUsuarioOfViajeListNewViaje != null && !oldUsuarioOfViajeListNewViaje.equals(usuario)) {
+                        oldUsuarioOfViajeListNewViaje.getViajeList().remove(viajeListNewViaje);
+                        oldUsuarioOfViajeListNewViaje = em.merge(oldUsuarioOfViajeListNewViaje);
+                    }
+                }
+            }
+            for (Opinion opinionListNewOpinion : opinionListNew) {
+                if (!opinionListOld.contains(opinionListNewOpinion)) {
+                    Usuario oldIdUsuarioOfOpinionListNewOpinion = opinionListNewOpinion.getIdUsuario();
+                    opinionListNewOpinion.setIdUsuario(usuario);
+                    opinionListNewOpinion = em.merge(opinionListNewOpinion);
+                    if (oldIdUsuarioOfOpinionListNewOpinion != null && !oldIdUsuarioOfOpinionListNewOpinion.equals(usuario)) {
+                        oldIdUsuarioOfOpinionListNewOpinion.getOpinionList().remove(opinionListNewOpinion);
+                        oldIdUsuarioOfOpinionListNewOpinion = em.merge(oldIdUsuarioOfOpinionListNewOpinion);
+                    }
+                }
+            }
             em.getTransaction().commit();
         } catch (Exception ex) {
             String msg = ex.getLocalizedMessage();
@@ -144,7 +243,7 @@ public class UsuarioJpaController implements Serializable {
         }
     }
 
-    public void destroy(String id) throws NonexistentEntityException {
+    public void destroy(String id) throws IllegalOrphanException, NonexistentEntityException {
         EntityManager em = null;
         try {
             em = getEntityManager();
@@ -155,6 +254,24 @@ public class UsuarioJpaController implements Serializable {
                 usuario.getNombreUsuario();
             } catch (EntityNotFoundException enfe) {
                 throw new NonexistentEntityException("The usuario with id " + id + " no longer exists.", enfe);
+            }
+            List<String> illegalOrphanMessages = null;
+            List<Viaje> viajeListOrphanCheck = usuario.getViajeList();
+            for (Viaje viajeListOrphanCheckViaje : viajeListOrphanCheck) {
+                if (illegalOrphanMessages == null) {
+                    illegalOrphanMessages = new ArrayList<String>();
+                }
+                illegalOrphanMessages.add("This Usuario (" + usuario + ") cannot be destroyed since the Viaje " + viajeListOrphanCheckViaje + " in its viajeList field has a non-nullable usuario field.");
+            }
+            List<Opinion> opinionListOrphanCheck = usuario.getOpinionList();
+            for (Opinion opinionListOrphanCheckOpinion : opinionListOrphanCheck) {
+                if (illegalOrphanMessages == null) {
+                    illegalOrphanMessages = new ArrayList<String>();
+                }
+                illegalOrphanMessages.add("This Usuario (" + usuario + ") cannot be destroyed since the Opinion " + opinionListOrphanCheckOpinion + " in its opinionList field has a non-nullable idUsuario field.");
+            }
+            if (illegalOrphanMessages != null) {
+                throw new IllegalOrphanException(illegalOrphanMessages);
             }
             List<Usuario> usuarioList = usuario.getUsuarioList();
             for (Usuario usuarioListUsuario : usuarioList) {
