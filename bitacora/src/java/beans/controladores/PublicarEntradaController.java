@@ -52,14 +52,6 @@ public class PublicarEntradaController implements Serializable {
     private boolean primeraEntrada = true;
     private Integer pruebaId;
 
-    public Integer getPruebaId() {
-        return pruebaId;
-    }
-
-    public void setPruebaId(Integer pruebaId) {
-        this.pruebaId = pruebaId;
-    }
-
     public PublicarEntradaController() {
         emf = Persistence.createEntityManagerFactory("bitacoraPU");
         listaCiudades = new ArrayList<>();
@@ -113,6 +105,14 @@ public class PublicarEntradaController implements Serializable {
     public void setResultadoCiudad(String resultadoCiudad) {
         this.resultadoCiudad = resultadoCiudad;
     }
+    
+    public Integer getPruebaId() {
+        return pruebaId;
+    }
+
+    public void setPruebaId(Integer pruebaId) {
+        this.pruebaId = pruebaId;
+    }
 
     public String publicar() {        
         
@@ -143,35 +143,13 @@ public class PublicarEntradaController implements Serializable {
         return "ok";
     }
 
-    public void probarShit() {
-        Integer laCity = this.pruebaId;
-        this.busquedaCiudad = "laCity";
-//        return "ok";
-    }
-
-    public void manejaEvento() {
-        if (busquedaCiudad.length() >= 3) {
-            CiudadJpaController ciudadController = new CiudadJpaController(emf);
-            this.listaCiudades = ciudadController.dameListaCiudadesLikeNombre(busquedaCiudad);
-        }
-    }
-
     public List<Ciudad> completeText(String query) {
 
-        if (query.length() >= 3) {
+        if (query.length() > 2) {
             CiudadJpaController ciudadController = new CiudadJpaController(emf);
             this.listaCiudades = ciudadController.dameListaCiudadesLikeNombre(query);
         }
         return this.listaCiudades;
-    }
-
-    public void ponLaPutaSity() {
-        this.resultadoCiudad = publicarEntradaBean.getCiudad();
-    }
-
-    public void valueChanged(AjaxBehaviorEvent e) {
-        String name = (String) ((UIOutput) e.getSource()).getValue();
-        this.resultadoCiudad = name;
     }
 
     public void subirFoto() throws IOException {
