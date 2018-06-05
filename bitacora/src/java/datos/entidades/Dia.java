@@ -37,7 +37,8 @@ import javax.xml.bind.annotation.XmlTransient;
 @NamedQueries({
     @NamedQuery(name = "Dia.findAll", query = "SELECT d FROM Dia d")
     , @NamedQuery(name = "Dia.findById", query = "SELECT d FROM Dia d WHERE d.id = :id")
-    , @NamedQuery(name = "Dia.findByFecha", query = "SELECT d FROM Dia d WHERE d.fecha = :fecha")})
+    , @NamedQuery(name = "Dia.findByFechaCreacion", query = "SELECT d FROM Dia d WHERE d.fechaCreacion = :fechaCreacion")
+    , @NamedQuery(name = "Dia.findByFechaModificacion", query = "SELECT d FROM Dia d WHERE d.fechaModificacion = :fechaModificacion")})
 public class Dia implements Serializable {
 
     private static final long serialVersionUID = 1L;
