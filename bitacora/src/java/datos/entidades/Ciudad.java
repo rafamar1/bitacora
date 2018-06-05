@@ -8,17 +8,17 @@ package datos.entidades;
 import java.io.Serializable;
 import java.util.List;
 import javax.persistence.Basic;
+import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
-import javax.persistence.JoinTable;
-import javax.persistence.ManyToMany;
 import javax.persistence.ManyToOne;
 import javax.persistence.NamedQueries;
 import javax.persistence.NamedQuery;
+import javax.persistence.OneToMany;
 import javax.persistence.Table;
 import javax.xml.bind.annotation.XmlRootElement;
 import javax.xml.bind.annotation.XmlTransient;
@@ -50,12 +50,9 @@ public class Ciudad implements Serializable {
     @JoinColumn(name = "id_pais", referencedColumnName = "id")
     @ManyToOne
     private Pais idPais;
-    @JoinTable(name = "entrada_ciudad", joinColumns = {
-        @JoinColumn(name = "id_ciudad", referencedColumnName = "id")}, inverseJoinColumns = {
-        @JoinColumn(name = "id_entrada", referencedColumnName = "id")})
-    @ManyToMany
+    @OneToMany(cascade = CascadeType.ALL, mappedBy = "idCiudad")
     private List<Entrada> entradaList;
-
+    
     public Ciudad() {
     }
 

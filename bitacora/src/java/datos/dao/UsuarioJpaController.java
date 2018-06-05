@@ -135,7 +135,7 @@ public class UsuarioJpaController implements Serializable {
             for (Viaje viajeListOldViaje : viajeListOld) {
                 if (!viajeListNew.contains(viajeListOldViaje)) {
                     if (illegalOrphanMessages == null) {
-                        illegalOrphanMessages = new ArrayList<>();
+                        illegalOrphanMessages = new ArrayList<String>();
                     }
                     illegalOrphanMessages.add("You must retain Viaje " + viajeListOldViaje + " since its usuario field is not nullable.");
                 }
@@ -143,7 +143,7 @@ public class UsuarioJpaController implements Serializable {
             for (Opinion opinionListOldOpinion : opinionListOld) {
                 if (!opinionListNew.contains(opinionListOldOpinion)) {
                     if (illegalOrphanMessages == null) {
-                        illegalOrphanMessages = new ArrayList<>();
+                        illegalOrphanMessages = new ArrayList<String>();
                     }
                     illegalOrphanMessages.add("You must retain Opinion " + opinionListOldOpinion + " since its idUsuario field is not nullable.");
                 }

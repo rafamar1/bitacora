@@ -13,11 +13,11 @@ import javax.persistence.EntityNotFoundException;
 import javax.persistence.criteria.CriteriaQuery;
 import javax.persistence.criteria.Root;
 import datos.entidades.Dia;
+import datos.entidades.Ciudad;
+import datos.entidades.Entrada;
 import datos.entidades.Opinion;
 import java.util.ArrayList;
 import java.util.List;
-import datos.entidades.Ciudad;
-import datos.entidades.Entrada;
 import javax.persistence.EntityManager;
 import javax.persistence.EntityManagerFactory;
 
@@ -40,9 +40,6 @@ public class EntradaJpaController implements Serializable {
         if (entrada.getOpinionList() == null) {
             entrada.setOpinionList(new ArrayList<Opinion>());
         }
-        if (entrada.getCiudadList() == null) {
-            entrada.setCiudadList(new ArrayList<Ciudad>());
-        }
         EntityManager em = null;
         try {
             em = getEntityManager();
@@ -52,22 +49,25 @@ public class EntradaJpaController implements Serializable {
                 idDia = em.getReference(idDia.getClass(), idDia.getId());
                 entrada.setIdDia(idDia);
             }
+            Ciudad idCiudad = entrada.getIdCiudad();
+            if (idCiudad != null) {
+                idCiudad = em.getReference(idCiudad.getClass(), idCiudad.getId());
+                entrada.setIdCiudad(idCiudad);
+            }
             List<Opinion> attachedOpinionList = new ArrayList<Opinion>();
             for (Opinion opinionListOpinionToAttach : entrada.getOpinionList()) {
                 opinionListOpinionToAttach = em.getReference(opinionListOpinionToAttach.getClass(), opinionListOpinionToAttach.getId());
                 attachedOpinionList.add(opinionListOpinionToAttach);
             }
             entrada.setOpinionList(attachedOpinionList);
-            List<Ciudad> attachedCiudadList = new ArrayList<Ciudad>();
-            for (Ciudad ciudadListCiudadToAttach : entrada.getCiudadList()) {
-                ciudadListCiudadToAttach = em.getReference(ciudadListCiudadToAttach.getClass(), ciudadListCiudadToAttach.getId());
-                attachedCiudadList.add(ciudadListCiudadToAttach);
-            }
-            entrada.setCiudadList(attachedCiudadList);
             em.persist(entrada);
             if (idDia != null) {
                 idDia.getEntradaList().add(entrada);
                 idDia = em.merge(idDia);
+            }
+            if (idCiudad != null) {
+                idCiudad.getEntradaList().add(entrada);
+                idCiudad = em.merge(idCiudad);
             }
             for (Opinion opinionListOpinion : entrada.getOpinionList()) {
                 Entrada oldIdEntradaOfOpinionListOpinion = opinionListOpinion.getIdEntrada();
@@ -77,10 +77,6 @@ public class EntradaJpaController implements Serializable {
                     oldIdEntradaOfOpinionListOpinion.getOpinionList().remove(opinionListOpinion);
                     oldIdEntradaOfOpinionListOpinion = em.merge(oldIdEntradaOfOpinionListOpinion);
                 }
-            }
-            for (Ciudad ciudadListCiudad : entrada.getCiudadList()) {
-                ciudadListCiudad.getEntradaList().add(entrada);
-                ciudadListCiudad = em.merge(ciudadListCiudad);
             }
             em.getTransaction().commit();
         } finally {
@@ -98,10 +94,10 @@ public class EntradaJpaController implements Serializable {
             Entrada persistentEntrada = em.find(Entrada.class, entrada.getId());
             Dia idDiaOld = persistentEntrada.getIdDia();
             Dia idDiaNew = entrada.getIdDia();
+            Ciudad idCiudadOld = persistentEntrada.getIdCiudad();
+            Ciudad idCiudadNew = entrada.getIdCiudad();
             List<Opinion> opinionListOld = persistentEntrada.getOpinionList();
             List<Opinion> opinionListNew = entrada.getOpinionList();
-            List<Ciudad> ciudadListOld = persistentEntrada.getCiudadList();
-            List<Ciudad> ciudadListNew = entrada.getCiudadList();
             List<String> illegalOrphanMessages = null;
             for (Opinion opinionListOldOpinion : opinionListOld) {
                 if (!opinionListNew.contains(opinionListOldOpinion)) {
@@ -118,6 +114,10 @@ public class EntradaJpaController implements Serializable {
                 idDiaNew = em.getReference(idDiaNew.getClass(), idDiaNew.getId());
                 entrada.setIdDia(idDiaNew);
             }
+            if (idCiudadNew != null) {
+                idCiudadNew = em.getReference(idCiudadNew.getClass(), idCiudadNew.getId());
+                entrada.setIdCiudad(idCiudadNew);
+            }
             List<Opinion> attachedOpinionListNew = new ArrayList<Opinion>();
             for (Opinion opinionListNewOpinionToAttach : opinionListNew) {
                 opinionListNewOpinionToAttach = em.getReference(opinionListNewOpinionToAttach.getClass(), opinionListNewOpinionToAttach.getId());
@@ -125,13 +125,6 @@ public class EntradaJpaController implements Serializable {
             }
             opinionListNew = attachedOpinionListNew;
             entrada.setOpinionList(opinionListNew);
-            List<Ciudad> attachedCiudadListNew = new ArrayList<Ciudad>();
-            for (Ciudad ciudadListNewCiudadToAttach : ciudadListNew) {
-                ciudadListNewCiudadToAttach = em.getReference(ciudadListNewCiudadToAttach.getClass(), ciudadListNewCiudadToAttach.getId());
-                attachedCiudadListNew.add(ciudadListNewCiudadToAttach);
-            }
-            ciudadListNew = attachedCiudadListNew;
-            entrada.setCiudadList(ciudadListNew);
             entrada = em.merge(entrada);
             if (idDiaOld != null && !idDiaOld.equals(idDiaNew)) {
                 idDiaOld.getEntradaList().remove(entrada);
@@ -140,6 +133,14 @@ public class EntradaJpaController implements Serializable {
             if (idDiaNew != null && !idDiaNew.equals(idDiaOld)) {
                 idDiaNew.getEntradaList().add(entrada);
                 idDiaNew = em.merge(idDiaNew);
+            }
+            if (idCiudadOld != null && !idCiudadOld.equals(idCiudadNew)) {
+                idCiudadOld.getEntradaList().remove(entrada);
+                idCiudadOld = em.merge(idCiudadOld);
+            }
+            if (idCiudadNew != null && !idCiudadNew.equals(idCiudadOld)) {
+                idCiudadNew.getEntradaList().add(entrada);
+                idCiudadNew = em.merge(idCiudadNew);
             }
             for (Opinion opinionListNewOpinion : opinionListNew) {
                 if (!opinionListOld.contains(opinionListNewOpinion)) {
@@ -150,18 +151,6 @@ public class EntradaJpaController implements Serializable {
                         oldIdEntradaOfOpinionListNewOpinion.getOpinionList().remove(opinionListNewOpinion);
                         oldIdEntradaOfOpinionListNewOpinion = em.merge(oldIdEntradaOfOpinionListNewOpinion);
                     }
-                }
-            }
-            for (Ciudad ciudadListOldCiudad : ciudadListOld) {
-                if (!ciudadListNew.contains(ciudadListOldCiudad)) {
-                    ciudadListOldCiudad.getEntradaList().remove(entrada);
-                    ciudadListOldCiudad = em.merge(ciudadListOldCiudad);
-                }
-            }
-            for (Ciudad ciudadListNewCiudad : ciudadListNew) {
-                if (!ciudadListOld.contains(ciudadListNewCiudad)) {
-                    ciudadListNewCiudad.getEntradaList().add(entrada);
-                    ciudadListNewCiudad = em.merge(ciudadListNewCiudad);
                 }
             }
             em.getTransaction().commit();
@@ -209,10 +198,10 @@ public class EntradaJpaController implements Serializable {
                 idDia.getEntradaList().remove(entrada);
                 idDia = em.merge(idDia);
             }
-            List<Ciudad> ciudadList = entrada.getCiudadList();
-            for (Ciudad ciudadListCiudad : ciudadList) {
-                ciudadListCiudad.getEntradaList().remove(entrada);
-                ciudadListCiudad = em.merge(ciudadListCiudad);
+            Ciudad idCiudad = entrada.getIdCiudad();
+            if (idCiudad != null) {
+                idCiudad.getEntradaList().remove(entrada);
+                idCiudad = em.merge(idCiudad);
             }
             em.remove(entrada);
             em.getTransaction().commit();

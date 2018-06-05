@@ -75,9 +75,10 @@ public class Entrada implements Serializable {
     @ManyToOne(optional = false)
     private Dia idDia;
     @OneToMany(cascade = CascadeType.ALL, mappedBy = "idEntrada")
-    private List<Opinion> opinionList;    
-    @ManyToMany(mappedBy = "entradaList")
-    private List<Ciudad> ciudadList;
+    private List<Opinion> opinionList; 
+    @JoinColumn(name = "id_ciudad", referencedColumnName = "id")
+    @ManyToOne(optional = false)
+    private Ciudad idCiudad;
 
     public Entrada() {
     }
@@ -173,6 +174,14 @@ public class Entrada implements Serializable {
 
     public void setIdDia(Dia idDia) {
         this.idDia = idDia;
+    }   
+
+    public Ciudad getIdCiudad() {
+        return idCiudad;
+    }
+
+    public void setIdCiudad(Ciudad idCiudad) {
+        this.idCiudad = idCiudad;
     }
 
     @XmlTransient
@@ -182,15 +191,6 @@ public class Entrada implements Serializable {
 
     public void setOpinionList(List<Opinion> opinionList) {
         this.opinionList = opinionList;
-    }
-
-    @XmlTransient
-    public List<Ciudad> getCiudadList() {
-        return ciudadList;
-    }
-
-    public void setCiudadList(List<Ciudad> ciudadList) {
-        this.ciudadList = ciudadList;
     }
 
     @Override

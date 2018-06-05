@@ -5,6 +5,7 @@
  */
 package datos.dao;
 
+import datos.dao.exceptions.IllegalOrphanException;
 import datos.dao.exceptions.NonexistentEntityException;
 import datos.entidades.Ciudad;
 import java.io.Serializable;
@@ -60,8 +61,13 @@ public class CiudadJpaController implements Serializable {
                 idPais = em.merge(idPais);
             }
             for (Entrada entradaListEntrada : ciudad.getEntradaList()) {
-                entradaListEntrada.getCiudadList().add(ciudad);
+                Ciudad oldIdCiudadOfEntradaListEntrada = entradaListEntrada.getIdCiudad();
+                entradaListEntrada.setIdCiudad(ciudad);
                 entradaListEntrada = em.merge(entradaListEntrada);
+                if (oldIdCiudadOfEntradaListEntrada != null) {
+                    oldIdCiudadOfEntradaListEntrada.getEntradaList().remove(entradaListEntrada);
+                    oldIdCiudadOfEntradaListEntrada = em.merge(oldIdCiudadOfEntradaListEntrada);
+                }
             }
             em.getTransaction().commit();
         } finally {
@@ -71,7 +77,7 @@ public class CiudadJpaController implements Serializable {
         }
     }
 
-    public void edit(Ciudad ciudad) throws NonexistentEntityException, Exception {
+    public void edit(Ciudad ciudad) throws IllegalOrphanException, NonexistentEntityException, Exception {
         EntityManager em = null;
         try {
             em = getEntityManager();
@@ -81,6 +87,18 @@ public class CiudadJpaController implements Serializable {
             Pais idPaisNew = ciudad.getIdPais();
             List<Entrada> entradaListOld = persistentCiudad.getEntradaList();
             List<Entrada> entradaListNew = ciudad.getEntradaList();
+            List<String> illegalOrphanMessages = null;
+            for (Entrada entradaListOldEntrada : entradaListOld) {
+                if (!entradaListNew.contains(entradaListOldEntrada)) {
+                    if (illegalOrphanMessages == null) {
+                        illegalOrphanMessages = new ArrayList<String>();
+                    }
+                    illegalOrphanMessages.add("You must retain Entrada " + entradaListOldEntrada + " since its idCiudad field is not nullable.");
+                }
+            }
+            if (illegalOrphanMessages != null) {
+                throw new IllegalOrphanException(illegalOrphanMessages);
+            }
             if (idPaisNew != null) {
                 idPaisNew = em.getReference(idPaisNew.getClass(), idPaisNew.getId());
                 ciudad.setIdPais(idPaisNew);
@@ -101,16 +119,15 @@ public class CiudadJpaController implements Serializable {
                 idPaisNew.getCiudadList().add(ciudad);
                 idPaisNew = em.merge(idPaisNew);
             }
-            for (Entrada entradaListOldEntrada : entradaListOld) {
-                if (!entradaListNew.contains(entradaListOldEntrada)) {
-                    entradaListOldEntrada.getCiudadList().remove(ciudad);
-                    entradaListOldEntrada = em.merge(entradaListOldEntrada);
-                }
-            }
             for (Entrada entradaListNewEntrada : entradaListNew) {
                 if (!entradaListOld.contains(entradaListNewEntrada)) {
-                    entradaListNewEntrada.getCiudadList().add(ciudad);
+                    Ciudad oldIdCiudadOfEntradaListNewEntrada = entradaListNewEntrada.getIdCiudad();
+                    entradaListNewEntrada.setIdCiudad(ciudad);
                     entradaListNewEntrada = em.merge(entradaListNewEntrada);
+                    if (oldIdCiudadOfEntradaListNewEntrada != null && !oldIdCiudadOfEntradaListNewEntrada.equals(ciudad)) {
+                        oldIdCiudadOfEntradaListNewEntrada.getEntradaList().remove(entradaListNewEntrada);
+                        oldIdCiudadOfEntradaListNewEntrada = em.merge(oldIdCiudadOfEntradaListNewEntrada);
+                    }
                 }
             }
             em.getTransaction().commit();
@@ -130,7 +147,7 @@ public class CiudadJpaController implements Serializable {
         }
     }
 
-    public void destroy(Integer id) throws NonexistentEntityException {
+    public void destroy(Integer id) throws IllegalOrphanException, NonexistentEntityException {
         EntityManager em = null;
         try {
             em = getEntityManager();
@@ -142,15 +159,21 @@ public class CiudadJpaController implements Serializable {
             } catch (EntityNotFoundException enfe) {
                 throw new NonexistentEntityException("The ciudad with id " + id + " no longer exists.", enfe);
             }
+            List<String> illegalOrphanMessages = null;
+            List<Entrada> entradaListOrphanCheck = ciudad.getEntradaList();
+            for (Entrada entradaListOrphanCheckEntrada : entradaListOrphanCheck) {
+                if (illegalOrphanMessages == null) {
+                    illegalOrphanMessages = new ArrayList<String>();
+                }
+                illegalOrphanMessages.add("This Ciudad (" + ciudad + ") cannot be destroyed since the Entrada " + entradaListOrphanCheckEntrada + " in its entradaList field has a non-nullable idCiudad field.");
+            }
+            if (illegalOrphanMessages != null) {
+                throw new IllegalOrphanException(illegalOrphanMessages);
+            }
             Pais idPais = ciudad.getIdPais();
             if (idPais != null) {
                 idPais.getCiudadList().remove(ciudad);
                 idPais = em.merge(idPais);
-            }
-            List<Entrada> entradaList = ciudad.getEntradaList();
-            for (Entrada entradaListEntrada : entradaList) {
-                entradaListEntrada.getCiudadList().remove(ciudad);
-                entradaListEntrada = em.merge(entradaListEntrada);
             }
             em.remove(ciudad);
             em.getTransaction().commit();
@@ -206,13 +229,13 @@ public class CiudadJpaController implements Serializable {
             em.close();
         }
     }
-
+    
     public List<Ciudad> dameListaCiudadesDadoIdPais(int idPais) {
         EntityManager em = emf.createEntityManager();
         TypedQuery<List> query = em.createNamedQuery("Ciudad.findByIdPais", List.class);
         List lista = query.setParameter("idPais", idPais).getResultList();
         return lista;
-    }
+}
 
     public List<Ciudad> dameListaCiudadesLikeNombre(String nombre) {
         EntityManager em = emf.createEntityManager();
