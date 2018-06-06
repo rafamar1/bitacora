@@ -44,10 +44,7 @@ public class PublicarEntradaController implements Serializable {
     private final EntityManagerFactory emf;
     private List<Ciudad> listaCiudades;
     private List<String> listaEtiquetas;
-    private String busquedaCiudad;
-    private String resultadoCiudad;
     private boolean primeraEntrada = true;
-    private Integer pruebaId;
 
     public PublicarEntradaController() {
         emf = Persistence.createEntityManagerFactory("bitacoraPU");
@@ -71,14 +68,6 @@ public class PublicarEntradaController implements Serializable {
         this.listaCiudades = listaCiudades;
     }
 
-    public String getBusquedaCiudad() {
-        return busquedaCiudad;
-    }
-
-    public void setBusquedaCiudad(String busquedaCiudad) {
-        this.busquedaCiudad = busquedaCiudad;
-    }
-
     public boolean isPrimeraEntrada() {
         return primeraEntrada;
     }
@@ -94,57 +83,52 @@ public class PublicarEntradaController implements Serializable {
     public void setListaEtiquetas(List<String> listaEtiquetas) {
         this.listaEtiquetas = listaEtiquetas;
     }
-
-    public String getResultadoCiudad() {
-        return resultadoCiudad;
-    }
-
-    public void setResultadoCiudad(String resultadoCiudad) {
-        this.resultadoCiudad = resultadoCiudad;
-    }
     
-    public Integer getPruebaId() {
-        return pruebaId;
-    }
-
-    public void setPruebaId(Integer pruebaId) {
-        this.pruebaId = pruebaId;
-    }
-
     public String publicar() {        
         
-        DiaJpaController diaController = new DiaJpaController(emf);
-        Dia primerDia = diaController.findDia((Integer)Session.getInstance().getAttribute("idDiaSeleccionado"));
+        Entrada newEntrada = setearValoresEntrada();
+        EntradaJpaController entradaControl = new EntradaJpaController(emf);
+        entradaControl.create(newEntrada);
+        
         try {
             subirFoto();
         } catch (IOException ex) {
             Logger.getLogger(PublicarEntradaController.class.getName()).log(Level.SEVERE, null, ex);
             return "error"; //TODO revisar control de excepciones
         }
+                
+        //TODO gestionar la imagen tanto las individuales como las de la galería
+        
+        return "ok";
+    }
+
+    private Entrada setearValoresEntrada() {
+        DiaJpaController diaController = new DiaJpaController(emf);
+        CiudadJpaController controllerCiudad = new CiudadJpaController(emf);
+        Dia primerDia = diaController.findDia((Integer)Session.getInstance().getAttribute("idDiaSeleccionado"));
+        
         Entrada newEntrada = new Entrada();
         newEntrada.setTitulo(publicarEntradaBean.getTitulo());
         newEntrada.setDescripcion(publicarEntradaBean.getDescripcion());
         newEntrada.setIdDia(primerDia);
+        
+        newEntrada.setIdCiudad(controllerCiudad.findCiudad(publicarEntradaBean.getIdCiudad()));
         newEntrada.setImgMiniatura(publicarEntradaBean.getImagen().getFileName());
         newEntrada.setPuntuacion(publicarEntradaBean.getPuntuacion());
         newEntrada.setTipo(publicarEntradaBean.getTipo());
         
-        //TODO gestionar la imagen tanto las individuales como las de la galería
-        
         if(publicarEntradaBean.getPrecio() != null){
             newEntrada.setPrecio(publicarEntradaBean.getPrecio());
-        }        
-        EntradaJpaController entradaControl = new EntradaJpaController(emf);
-        entradaControl.create(newEntrada);
-                
-        return "ok";
+        }  
+        
+        return newEntrada;
     }
 
-    public List<Ciudad> completeText(String query) {
+    public List<Ciudad> autocompletadoCiudades(String query) {
 
         if (query.length() > 2) {
             CiudadJpaController ciudadController = new CiudadJpaController(emf);
-            this.listaCiudades = ciudadController.dameListaCiudadesLikeNombre(query);
+            return ciudadController.dameListaCiudadesLikeNombre(query);
         }
         return this.listaCiudades;
     }

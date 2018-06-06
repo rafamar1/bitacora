@@ -18,8 +18,8 @@
                     <h:form  enctype="multipart/form-data">     
 
                         <c:if test="#{publicarEntradaController.primeraEntrada}">                      
-                            <p:autoComplete id="themeCustom" value="#{publicarEntradaController.pruebaId}" placeholder="Buscar ciudad"
-                                    completeMethod="#{publicarEntradaController.completeText}"
+                            <p:autoComplete id="themeCustom" value="#{publicarEntradaBean.idCiudad}" placeholder="Buscar ciudad"
+                                    completeMethod="#{publicarEntradaController.autocompletadoCiudades}"
                                     var="ciudad" itemLabel="#{ciudad}" itemValue="#{ciudad.id}"
                                     scrollHeight="200" forceSelection="true"/>
                         </c:if>
