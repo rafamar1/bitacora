@@ -18,7 +18,6 @@ import java.io.File;
 import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.Serializable;
-import java.sql.SQLException;
 import java.util.Calendar;
 import java.util.logging.Level;
 import java.util.logging.Logger;
@@ -27,14 +26,13 @@ import javax.faces.bean.ManagedProperty;
 import javax.faces.bean.RequestScoped;
 import javax.persistence.EntityManagerFactory;
 import javax.persistence.Persistence;
-import org.apache.commons.io.FilenameUtils;
 import org.primefaces.model.UploadedFile;
 
 /**
  *
  * @author rfmarquez
  */
-//TODO revisar si esta refactorizacion de anotaciones funciona correctamente
+
 @ManagedBean
 @RequestScoped
 public class PublicarViajeController implements Serializable {
@@ -55,7 +53,7 @@ public class PublicarViajeController implements Serializable {
         this.publicarViajeBean = publicarViajeBean;
     }
 
-    public String publicar() {
+    public String publicarViaje() {
 
         Viaje newViaje = setearValoresNuevoViaje();
         //TODO gestionar la imagen tanto las individuales como las de la galería
@@ -117,7 +115,7 @@ public class PublicarViajeController implements Serializable {
 
         if (null != uploadedPhoto) {
             //String rutaFaces = FacesContext.getCurrentInstance().getExternalContext().getRealPath("/");
-            String rutaRaiz = "C:/bitacora/usuarios/"; // main location for uploads
+            String rutaRaiz = "C:/bitacora/usuarios"; // main location for uploads
             if (((Usuario) Session.getInstance().getAttribute("usuario")).getNombreUsuario() != null
                     && Session.getInstance().getAttribute("idViajeSeleccionado") != null) {
                 String nombreUsuario = ((Usuario) Session.getInstance().getAttribute("usuario")).getNombreUsuario();

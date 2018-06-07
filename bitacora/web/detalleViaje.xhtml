@@ -17,14 +17,29 @@
                 <f:view>
                     <h:form>                        
 
-                        <p>Usuario -> #{detalleViajeController.viaje.usuario}</p>
+                        <p>Usuario -> #{detalleViajeController.viaje.usuario.nombreUsuario}</p>
                         <p>Titulo -> #{detalleViajeController.viaje.titulo}</p>
                         <p>Descripcion -> #{detalleViajeController.viaje.descripcion}</p>
 
                         <p:commandButton action="publicarEntrada.xhtml" value="Nueva Entrada" />
                         <p:commandButton style="float: right;" action="miPerfil.xhtml" value="Nuevo día" rendered="#{sessionScope.usuarioLogeado}"/>
-                        
-                        
+
+                        <c:forEach items="#{detalleViajeController.viaje.diaList}" var="dia" varStatus="indice">
+                            Dia numero -> #{indice.index}
+                            <c:forEach items="#{dia.entradaList}" var="entrada" varStatus="indiceEntrada">
+                                <p>Descripcion -> #{entrada.descripcion}</p>
+                                <p>Titulo -> #{entrada.titulo}</p>
+                                <p>Puntuacion -> #{entrada.puntuacion}</p>
+                                <p>RUTA -> HAY QUE REFERENCIARLA AL PROYECTO #{detalleViajeController.obtenerRuta(entrada)}</p>
+                                <img src="#{detalleViajeController.obtenerRuta(entrada)}"/>
+                                <img src="/bitacora/usuarios/kendrick/4/5/8.jpg"/>
+                                <p:graphicImage width="150"  url="#{detalleViajeController.obtenerRuta(entrada)}"/>
+                                <p:graphicImage width="150" value="#{entrada.imgMiniatura}"/>
+                            </c:forEach>
+                            
+                        </c:forEach>
+
+
                     </h:form>
                 </f:view>
 

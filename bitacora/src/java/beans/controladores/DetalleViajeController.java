@@ -8,6 +8,8 @@ package beans.controladores;
 import beans.modelos.DetalleViajeBean;
 import beans.respaldo.Session;
 import datos.dao.ViajeJpaController;
+import datos.entidades.Entrada;
+import datos.entidades.Usuario;
 import datos.entidades.Viaje;
 import java.io.Serializable;
 import javax.faces.bean.ManagedBean;
@@ -50,12 +52,19 @@ public class DetalleViajeController implements Serializable {
     public void setViaje(Viaje viaje) {
         this.viaje = viaje;
     }
-    
-    private Viaje cargarViaje(){
+
+    private Viaje cargarViaje() {
         ViajeJpaController controlViaje = new ViajeJpaController(emf);
-        return controlViaje.findViaje((int)Session.getInstance().getAttribute("idViajeSeleccionado"));
+        return controlViaje.findViaje((int) Session.getInstance().getAttribute("idViajeSeleccionado"));
     }
-    
-    
-    
+
+    public String obtenerRuta(Entrada entrada) {
+        String rutaFichero = "C:/bitacora/usuarios";
+        String nombreUsuario = ((Usuario) Session.getInstance().getAttribute("usuario")).getNombreUsuario();
+        String idViajeSeleccionado = String.valueOf(Session.getInstance().getAttribute("idViajeSeleccionado"));
+        String idDiaSeleccionado = String.valueOf(Session.getInstance().getAttribute("idDiaSeleccionado"));
+        return rutaFichero + "/" + nombreUsuario + "/" + idViajeSeleccionado + "/" + idDiaSeleccionado + "/" + entrada.getImgMiniatura();
+
+    }
+
 }

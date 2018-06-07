@@ -10,10 +10,13 @@ import beans.respaldo.Session;
 import datos.dao.CiudadJpaController;
 import datos.dao.DiaJpaController;
 import datos.dao.EntradaJpaController;
+import datos.dao.ViajeJpaController;
+import datos.dao.exceptions.NonexistentEntityException;
 import datos.entidades.Ciudad;
 import datos.entidades.Dia;
 import datos.entidades.Entrada;
 import datos.entidades.Usuario;
+import datos.entidades.Viaje;
 import java.io.BufferedOutputStream;
 import java.io.File;
 import java.io.FileOutputStream;
@@ -43,13 +46,14 @@ public class PublicarEntradaController implements Serializable {
     private PublicarEntradaBean publicarEntradaBean;
     private final EntityManagerFactory emf;
     private List<Ciudad> listaCiudades;
-    private List<String> listaEtiquetas;
+    private List<String> listaCategorias;
     private boolean primeraEntrada = true;
+    private Integer idEntrada;
 
     public PublicarEntradaController() {
         emf = Persistence.createEntityManagerFactory("bitacoraPU");
         listaCiudades = new ArrayList<>();
-        listaEtiquetas = cargaListaEtiquetas();
+        listaCategorias = cargaListaCategorias();
     }
 
     public PublicarEntradaBean getPublicarEntradaBean() {
@@ -76,30 +80,48 @@ public class PublicarEntradaController implements Serializable {
         this.primeraEntrada = primeraEntrada;
     }
 
-    public List<String> getListaEtiquetas() {
-        return listaEtiquetas;
+    public List<String> getListaCategorias() {
+        return listaCategorias;
     }
 
-    public void setListaEtiquetas(List<String> listaEtiquetas) {
-        this.listaEtiquetas = listaEtiquetas;
+    public void setListaCategorias(List<String> listaCategorias) {
+        this.listaCategorias = listaCategorias;
+    }
+
+    public Integer getIdEntrada() {
+        return idEntrada;
+    }
+
+    public void setIdEntrada(Integer idEntrada) {
+        this.idEntrada = idEntrada;
     }
     
-    public String publicar() {        
+    public String publicarEntrada() {        
         
         Entrada newEntrada = setearValoresEntrada();
-        EntradaJpaController entradaControl = new EntradaJpaController(emf);
-        entradaControl.create(newEntrada);
         
         try {
+            cambiarNombreImagenPorIdEntrada(newEntrada);
             subirFoto();
         } catch (IOException ex) {
             Logger.getLogger(PublicarEntradaController.class.getName()).log(Level.SEVERE, null, ex);
             return "error"; //TODO revisar control de excepciones
-        }
-                
+        } catch (Exception ex) {
+            Logger.getLogger(PublicarEntradaController.class.getName()).log(Level.SEVERE, null, ex);
+            return "error"; //
+        }                
         //TODO gestionar la imagen tanto las individuales como las de la galería
         
         return "ok";
+    }
+    
+     private void cambiarNombreImagenPorIdEntrada(Entrada newEntrada) throws NonexistentEntityException, Exception {
+        EntradaJpaController entradaControl = new EntradaJpaController(emf);
+        entradaControl.create(newEntrada);
+        Integer idEntradaInsert = newEntrada.getId();
+        newEntrada.setImgMiniatura(String.valueOf(idEntradaInsert) + ".jpg");
+        entradaControl.edit(newEntrada);
+        this.idEntrada = idEntradaInsert;
     }
 
     private Entrada setearValoresEntrada() {
@@ -135,34 +157,40 @@ public class PublicarEntradaController implements Serializable {
 
     public void subirFoto() throws IOException {
         UploadedFile uploadedPhoto = publicarEntradaBean.getImagen();
-        //String filePath = "c:/bitacora";
         byte[] bytes = null;
-
+        
         if (null != uploadedPhoto) {
             //String rutaFaces = FacesContext.getCurrentInstance().getExternalContext().getRealPath("/");
-            String ruta = "C:/bitacora/usuarios/";
-            //TODO extraer de la sesión o extraer del propio Viaje??
-            String nombreUsuario = ((Usuario) Session.getInstance().getAttribute("usuario")).getNombreUsuario();
-            String filename = FilenameUtils.getName(uploadedPhoto.getFileName());
-            File theFile = new File(ruta + "/" + nombreUsuario + "/VIAJETAL");
-            theFile.mkdirs(); //Creación de carpetas
+            String rutaRaiz = "C:/bitacora/usuarios"; 
+            if (((Usuario) Session.getInstance().getAttribute("usuario")).getNombreUsuario() != null
+                    && Session.getInstance().getAttribute("idViajeSeleccionado") != null
+                    && Session.getInstance().getAttribute("idDiaSeleccionado") != null
+                    && this.idEntrada != null) {
+                String nombreUsuario = ((Usuario) Session.getInstance().getAttribute("usuario")).getNombreUsuario();
+                String idViajeSeleccionado = String.valueOf(Session.getInstance().getAttribute("idViajeSeleccionado"));
+                String idDiaSeleccionado = String.valueOf(Session.getInstance().getAttribute("idDiaSeleccionado"));
+                String rutaFichero = rutaRaiz + "/" + nombreUsuario + "/" + idViajeSeleccionado + "/" + idDiaSeleccionado;
+                File theFile = new File(rutaFichero);
+                theFile.mkdirs();
 
-            bytes = uploadedPhoto.getContents();
-//          BufferedOutputStream stream = new BufferedOutputStream(new FileOutputStream(new File(ruta + filename)));
-            BufferedOutputStream stream = new BufferedOutputStream(new FileOutputStream(ruta + "/" + nombreUsuario + "/VIAJETAL" + "/" + filename)); // cannot find path when adding username atm
+                bytes = uploadedPhoto.getContents();
 
-            stream.write(bytes);
-            stream.close();
+                FileOutputStream nuevoFichero = new FileOutputStream(rutaFichero + "/" + this.idEntrada + ".jpg");
+                BufferedOutputStream stream = new BufferedOutputStream(nuevoFichero);
+
+                stream.write(bytes);
+                stream.close();
+            }
         }
 
     }
 
-    private List<String> cargaListaEtiquetas() {
+    private List<String> cargaListaCategorias() {
         List<String> tagList = new ArrayList<>();
-        tagList.add("Alojamiento");
         tagList.add("Restaurante");
-        tagList.add("Espectaculos");
+        tagList.add("Espectáculo");
         tagList.add("Ocio");
+        tagList.add("Alojamiento");
 
         return tagList;
     }

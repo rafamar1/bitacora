@@ -40,13 +40,17 @@
                         </p>
 
                         <p>
-                            Selecciona una etiqueta para tu entrada: 
+                            Selecciona una categoría para tu entrada: 
                             <p:selectOneMenu value="#{publicarEntradaBean.tipo}">
-                                <f:selectItems value="#{publicarEntradaController.listaEtiquetas}" var="etiqueta"
-                                               itemValue="#{etiqueta}" itemLabel="#{etiqueta}"/>       
+                                <f:selectItems value="#{publicarEntradaController.listaCategorias}" var="categoria"
+                                               itemValue="#{categoria}" itemLabel="#{categoria}"/>       
                             </p:selectOneMenu>
                         </p>
-                        <p:commandButton value="Publicar Entrada" ajax="false" action="#{publicarEntradaController.publicar}"/> 
+                        
+                        <p>
+                            Gasto aproximado (opcional): <p:inputNumber value="#{publicarEntradaBean.precio}" />
+                        </p>
+                        <p:commandButton value="Publicar Entrada" ajax="false" action="#{publicarEntradaController.publicarEntrada}"/> 
 
                     </h:form>
                 </f:view>
