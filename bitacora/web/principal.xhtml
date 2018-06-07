@@ -9,26 +9,9 @@
     <body>
 
         <ui:composition template="./templates/principal.xhtml">
-
-            <ui:define name="content">
-
-                <f:view>
-                    <section id="panel_busqueda">
-                        ESTO SERIA LA PAGINA PRINCIPAL, YA ESTA USTED LOGEADO!
-                        <h:form>
-                            <p:commandButton action="publicarViaje.xhtml" value="Publicar Viaje" rendered="#{sessionScope.usuarioLogeado}"/>
-                            <p:commandButton action="miPerfil.xhtml" value="Mis Viajes"/>
-                        </h:form>
-
-                        DE AQUI HACIA ABAJO HAY QUE CAMBIARLO 
-                        *************-----------------------------------------------------------********************
-                        <h1>Únete y descubre lugares increíbles</h1>
-                        <h2>Comparte tus experiencias con miles de usuarios</h2>
-
-
-                    </section>
-
-                    <section id="paises_continent_grid">
+            
+            <ui:define name="left">
+                        <section id="paises_continent_grid">
                         <h1>¡Tenemos el lugar ideal para ti!</h1>
                         <a href=""><img src="imagenSpain.jpg" alt="Spain"/></a>
                         <a href=""><img src="Europa.jpg" alt="Europa"/></a>
@@ -40,6 +23,28 @@
                     <section id="usuarios_destacados">
                         <h1>La clave es compartir</h1>
                     </section>
+                    </ui:define>
+            
+            <ui:define name="content">
+
+                <f:view>
+                    <section id="panel_busqueda">
+                        ESTO SERIA LA PAGINA PRINCIPAL, YA ESTA USTED LOGEADO!
+                        <h:form>
+                            <p:commandButton action="publicarViaje.xhtml" value="Publicar Viaje" rendered="#{sessionScope.usuarioLogeado}"/>
+                            <p:commandButton action="miPerfil.xhtml" value="Mis Viajes"/>
+                        </h:form>
+
+                        DE AQUI HACIA ABAJO HAY QUE CAMBIARLO 
+                        <p>
+                        *************-----------------------------------------------------------********************
+                        </p>
+                        <h1>Únete y descubre lugares increíbles</h1>
+                        <h2>Comparte tus experiencias con miles de usuarios</h2>
+
+
+                    </section>
+                    
                 </f:view>
 
             </ui:define>
