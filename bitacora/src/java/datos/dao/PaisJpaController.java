@@ -187,8 +187,8 @@ public class PaisJpaController implements Serializable {
             em.close();
         }
     }
-    
-    public int dameIDdadoNombrePais(String nombrePais){
+
+    public int dameIDdadoNombrePais(String nombrePais) {
         EntityManager em = emf.createEntityManager();
         TypedQuery<Pais> query = em.createNamedQuery("Pais.findByNombre", Pais.class);
         Pais pais = query.setParameter("nombre", nombrePais).getSingleResult();

@@ -117,7 +117,7 @@ public class Pais implements Serializable {
 
     @Override
     public String toString() {
-        return nombre;
+        return "datos.entidades.Pais[ id=" + id + " ]";
     }
     
 }

@@ -22,6 +22,14 @@
                                 <f:validateLength minimum="3" />
                             </p:inputText>
                             <p:commandButton action="buscar" value="#{messages.buscar}"/>
+                            <p:commandButton action="#{indexController.followKendrick}" value="Rafamar sigue a Kendrick"/>
+                            <p:commandButton action="#{indexController.followLitro}" value="Kendrick sigue a Rafamar"/>
+                        
+                            <p>
+                            <p:commandButton action="#{indexController.unfollowKendrick}" value="Dejar de seguir a Kendrick"/>
+                            <p:commandButton action="#{indexController.unfollowLitro}" value="Dejar de seguir a Rafamar"/>
+                            </p>
+                            
                         </h:form>
 
                         <h1>#{messages.mensajePrincipalIndex}</h1>

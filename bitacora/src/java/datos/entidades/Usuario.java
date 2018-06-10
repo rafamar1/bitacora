@@ -54,13 +54,13 @@ public class Usuario implements Serializable {
     private String email;
     @Column(name = "publico")
     private Integer publico;
-    @JoinTable(name = "usuario_sigue", joinColumns = {
-        @JoinColumn(name = "usuario", referencedColumnName = "nombre_usuario")}, inverseJoinColumns = {
-        @JoinColumn(name = "usuario_seguido", referencedColumnName = "nombre_usuario")})
+    @JoinTable(name = "usuario_sigue",
+            joinColumns = {@JoinColumn(name = "usuario", referencedColumnName = "nombre_usuario")},
+            inverseJoinColumns = {@JoinColumn(name = "usuario_seguido", referencedColumnName = "nombre_usuario")})
     @ManyToMany
-    private List<Usuario> usuarioList;
-    @ManyToMany(mappedBy = "usuarioList")
-    private List<Usuario> usuarioList1;
+    private List<Usuario> listaUsuarioSeguido;
+    @ManyToMany(mappedBy = "listaUsuarioSeguido")
+    private List<Usuario> listaUsuarioTeSigue;
     @OneToMany(cascade = CascadeType.ALL, mappedBy = "usuario")
     private List<Viaje> viajeList;
     @OneToMany(cascade = CascadeType.ALL, mappedBy = "idUsuario")
@@ -121,21 +121,21 @@ public class Usuario implements Serializable {
     }
 
     @XmlTransient
-    public List<Usuario> getUsuarioList() {
-        return usuarioList;
+    public List<Usuario> getListaUsuarioSeguido() {
+        return listaUsuarioSeguido;
     }
 
-    public void setUsuarioList(List<Usuario> usuarioList) {
-        this.usuarioList = usuarioList;
+    public void setListaUsuarioSeguido(List<Usuario> listaUsuarioSeguido) {
+        this.listaUsuarioSeguido = listaUsuarioSeguido;
     }
 
     @XmlTransient
-    public List<Usuario> getUsuarioList1() {
-        return usuarioList1;
+    public List<Usuario> getListaUsuarioTeSigue() {
+        return listaUsuarioTeSigue;
     }
 
-    public void setUsuarioList1(List<Usuario> usuarioList1) {
-        this.usuarioList1 = usuarioList1;
+    public void setListaUsuarioTeSigue(List<Usuario> listaUsuarioTeSigue) {
+        this.listaUsuarioTeSigue = listaUsuarioTeSigue;
     }
 
     @XmlTransient
@@ -171,7 +171,7 @@ public class Usuario implements Serializable {
         }
         Usuario other = (Usuario) object;
         return !((this.nombreUsuario == null && other.nombreUsuario != null) || (this.nombreUsuario != null && !this.nombreUsuario.equals(other.nombreUsuario)));
-    }
+    }  
 
     @Override
     public String toString() {

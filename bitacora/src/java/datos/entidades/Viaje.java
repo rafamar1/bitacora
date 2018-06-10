@@ -58,7 +58,7 @@ public class Viaje implements Serializable {
     private List<Dia> diaList;
     @OneToMany(cascade = CascadeType.ALL, mappedBy = "idViaje")
     private List<Foto> fotoList;
-    
+
     public Viaje() {
     }
 
@@ -152,7 +152,7 @@ public class Viaje implements Serializable {
 
     @Override
     public String toString() {
-        return "DTO.Viaje[ id=" + id + " ]";
+        return "datos.entidades.Viaje[ id=" + id + " ]";
     }
     
 }

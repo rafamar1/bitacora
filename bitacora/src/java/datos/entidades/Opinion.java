@@ -127,7 +127,7 @@ public class Opinion implements Serializable {
 
     @Override
     public String toString() {
-        return "DTO.Opinion[ id=" + id + " ]";
+        return "datos.entidades.Opinion[ id=" + id + " ]";
     }
     
 }

@@ -15,7 +15,6 @@ import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
-import javax.persistence.ManyToMany;
 import javax.persistence.ManyToOne;
 import javax.persistence.NamedQueries;
 import javax.persistence.NamedQuery;
@@ -38,6 +37,7 @@ import javax.xml.bind.annotation.XmlTransient;
     , @NamedQuery(name = "Entrada.findByDescripcion", query = "SELECT e FROM Entrada e WHERE e.descripcion = :descripcion")
     , @NamedQuery(name = "Entrada.findByImgMiniatura", query = "SELECT e FROM Entrada e WHERE e.imgMiniatura = :imgMiniatura")
     , @NamedQuery(name = "Entrada.findByTipo", query = "SELECT e FROM Entrada e WHERE e.tipo = :tipo")
+    , @NamedQuery(name = "Entrada.findByPuntuacion", query = "SELECT e FROM Entrada e WHERE e.puntuacion = :puntuacion")
     , @NamedQuery(name = "Entrada.findByPrecio", query = "SELECT e FROM Entrada e WHERE e.precio = :precio")
     , @NamedQuery(name = "Entrada.findByLatitud", query = "SELECT e FROM Entrada e WHERE e.latitud = :latitud")
     , @NamedQuery(name = "Entrada.findByLongitud", query = "SELECT e FROM Entrada e WHERE e.longitud = :longitud")})
@@ -58,12 +58,12 @@ public class Entrada implements Serializable {
     @Basic(optional = false)
     @Column(name = "img_miniatura")
     private String imgMiniatura;
-     @Basic(optional = false)
-    @Column(name = "puntuacion")
-    private int puntuacion;
     @Basic(optional = false)
     @Column(name = "tipo")
-    private String tipo;    
+    private String tipo;
+    @Basic(optional = false)
+    @Column(name = "puntuacion")
+    private Integer puntuacion;
     @Column(name = "precio")
     private Integer precio;
     // @Max(value=?)  @Min(value=?)//if you know range of your decimal fields consider using these annotations to enforce field validation
@@ -71,14 +71,14 @@ public class Entrada implements Serializable {
     private Double latitud;
     @Column(name = "longitud")
     private Double longitud;
+    @JoinColumn(name = "id_ciudad", referencedColumnName = "id")
+    @ManyToOne(optional = false)
+    private Ciudad idCiudad;
     @JoinColumn(name = "id_dia", referencedColumnName = "id")
     @ManyToOne(optional = false)
     private Dia idDia;
     @OneToMany(cascade = CascadeType.ALL, mappedBy = "idEntrada")
-    private List<Opinion> opinionList; 
-    @JoinColumn(name = "id_ciudad", referencedColumnName = "id")
-    @ManyToOne(optional = false)
-    private Ciudad idCiudad;
+    private List<Opinion> opinionList;
 
     public Entrada() {
     }
@@ -87,13 +87,13 @@ public class Entrada implements Serializable {
         this.id = id;
     }
 
-    public Entrada(Integer id, String titulo, String descripcion, String imgMiniatura, String tipo,Integer puntuacion) {
+    public Entrada(Integer id, String titulo, String descripcion, String imgMiniatura, String tipo, Integer puntuacion) {
         this.id = id;
         this.titulo = titulo;
         this.descripcion = descripcion;
         this.imgMiniatura = imgMiniatura;
-        this.puntuacion = puntuacion;
         this.tipo = tipo;
+        this.puntuacion = puntuacion;
     }
 
     public Integer getId() {
@@ -143,7 +143,7 @@ public class Entrada implements Serializable {
     public void setPrecio(Integer precio) {
         this.precio = precio;
     }
-    
+
     public Double getLatitud() {
         return latitud;
     }
@@ -160,11 +160,11 @@ public class Entrada implements Serializable {
         this.longitud = longitud;
     }
 
-    public int getPuntuacion() {
+    public Integer getPuntuacion() {
         return puntuacion;
     }
 
-    public void setPuntuacion(int puntuacion) {
+    public void setPuntuacion(Integer puntuacion) {
         this.puntuacion = puntuacion;
     }
 
@@ -174,7 +174,7 @@ public class Entrada implements Serializable {
 
     public void setIdDia(Dia idDia) {
         this.idDia = idDia;
-    }   
+    }
 
     public Ciudad getIdCiudad() {
         return idCiudad;
@@ -215,7 +215,7 @@ public class Entrada implements Serializable {
 
     @Override
     public String toString() {
-        return "DTO.Entrada[ id=" + id + " ]";
+        return "datos.entidades.Entrada[ id=" + id + " ]";
     }
     
 }

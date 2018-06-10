@@ -67,6 +67,12 @@ public class Dia implements Serializable {
         this.id = id;
     }
 
+    public Dia(Integer id, Date fechaCreacion, Date fechaModificacion) {
+        this.id = id;
+        this.fechaCreacion = fechaCreacion;
+        this.fechaModificacion = fechaModificacion;
+    }
+
     public Integer getId() {
         return id;
     }

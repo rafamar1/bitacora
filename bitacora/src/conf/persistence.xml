@@ -10,6 +10,7 @@
     <class>datos.entidades.Foto</class>
     <class>datos.entidades.Pais</class>
     <class>datos.entidades.Opinion</class>
+    <class>datos.entidades.UsuarioSigue</class>
     <exclude-unlisted-classes>false</exclude-unlisted-classes>
     <properties>
       <property name="javax.persistence.jdbc.url" value="jdbc:mysql://localhost:3306/bitacora"/>

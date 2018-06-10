@@ -37,11 +37,11 @@ public class UsuarioJpaController implements Serializable {
     }
 
     public void create(Usuario usuario) throws PreexistingEntityException, Exception {
-        if (usuario.getUsuarioList() == null) {
-            usuario.setUsuarioList(new ArrayList<Usuario>());
+        if (usuario.getListaUsuarioSeguido() == null) {
+            usuario.setListaUsuarioSeguido(new ArrayList<Usuario>());
         }
-        if (usuario.getUsuarioList1() == null) {
-            usuario.setUsuarioList1(new ArrayList<Usuario>());
+        if (usuario.getListaUsuarioTeSigue() == null) {
+            usuario.setListaUsuarioTeSigue(new ArrayList<Usuario>());
         }
         if (usuario.getViajeList() == null) {
             usuario.setViajeList(new ArrayList<Viaje>());
@@ -53,18 +53,18 @@ public class UsuarioJpaController implements Serializable {
         try {
             em = getEntityManager();
             em.getTransaction().begin();
-            List<Usuario> attachedUsuarioList = new ArrayList<Usuario>();
-            for (Usuario usuarioListUsuarioToAttach : usuario.getUsuarioList()) {
-                usuarioListUsuarioToAttach = em.getReference(usuarioListUsuarioToAttach.getClass(), usuarioListUsuarioToAttach.getNombreUsuario());
-                attachedUsuarioList.add(usuarioListUsuarioToAttach);
+            List<Usuario> attachedListaUsuarioSeguido = new ArrayList<Usuario>();
+            for (Usuario listaUsuarioSeguidoUsuarioToAttach : usuario.getListaUsuarioSeguido()) {
+                listaUsuarioSeguidoUsuarioToAttach = em.getReference(listaUsuarioSeguidoUsuarioToAttach.getClass(), listaUsuarioSeguidoUsuarioToAttach.getNombreUsuario());
+                attachedListaUsuarioSeguido.add(listaUsuarioSeguidoUsuarioToAttach);
             }
-            usuario.setUsuarioList(attachedUsuarioList);
-            List<Usuario> attachedUsuarioList1 = new ArrayList<Usuario>();
-            for (Usuario usuarioList1UsuarioToAttach : usuario.getUsuarioList1()) {
-                usuarioList1UsuarioToAttach = em.getReference(usuarioList1UsuarioToAttach.getClass(), usuarioList1UsuarioToAttach.getNombreUsuario());
-                attachedUsuarioList1.add(usuarioList1UsuarioToAttach);
+            usuario.setListaUsuarioSeguido(attachedListaUsuarioSeguido);
+            List<Usuario> attachedListaUsuarioTeSigue = new ArrayList<Usuario>();
+            for (Usuario listaUsuarioTeSigueUsuarioToAttach : usuario.getListaUsuarioTeSigue()) {
+                listaUsuarioTeSigueUsuarioToAttach = em.getReference(listaUsuarioTeSigueUsuarioToAttach.getClass(), listaUsuarioTeSigueUsuarioToAttach.getNombreUsuario());
+                attachedListaUsuarioTeSigue.add(listaUsuarioTeSigueUsuarioToAttach);
             }
-            usuario.setUsuarioList1(attachedUsuarioList1);
+            usuario.setListaUsuarioTeSigue(attachedListaUsuarioTeSigue);
             List<Viaje> attachedViajeList = new ArrayList<Viaje>();
             for (Viaje viajeListViajeToAttach : usuario.getViajeList()) {
                 viajeListViajeToAttach = em.getReference(viajeListViajeToAttach.getClass(), viajeListViajeToAttach.getId());
@@ -78,13 +78,13 @@ public class UsuarioJpaController implements Serializable {
             }
             usuario.setOpinionList(attachedOpinionList);
             em.persist(usuario);
-            for (Usuario usuarioListUsuario : usuario.getUsuarioList()) {
-                usuarioListUsuario.getUsuarioList().add(usuario);
-                usuarioListUsuario = em.merge(usuarioListUsuario);
+            for (Usuario listaUsuarioSeguidoUsuario : usuario.getListaUsuarioSeguido()) {
+                listaUsuarioSeguidoUsuario.getListaUsuarioSeguido().add(usuario);
+                listaUsuarioSeguidoUsuario = em.merge(listaUsuarioSeguidoUsuario);
             }
-            for (Usuario usuarioList1Usuario : usuario.getUsuarioList1()) {
-                usuarioList1Usuario.getUsuarioList().add(usuario);
-                usuarioList1Usuario = em.merge(usuarioList1Usuario);
+            for (Usuario listaUsuarioTeSigueUsuario : usuario.getListaUsuarioTeSigue()) {
+                listaUsuarioTeSigueUsuario.getListaUsuarioSeguido().add(usuario);
+                listaUsuarioTeSigueUsuario = em.merge(listaUsuarioTeSigueUsuario);
             }
             for (Viaje viajeListViaje : usuario.getViajeList()) {
                 Usuario oldUsuarioOfViajeListViaje = viajeListViaje.getUsuario();
@@ -123,10 +123,10 @@ public class UsuarioJpaController implements Serializable {
             em = getEntityManager();
             em.getTransaction().begin();
             Usuario persistentUsuario = em.find(Usuario.class, usuario.getNombreUsuario());
-            List<Usuario> usuarioListOld = persistentUsuario.getUsuarioList();
-            List<Usuario> usuarioListNew = usuario.getUsuarioList();
-            List<Usuario> usuarioList1Old = persistentUsuario.getUsuarioList1();
-            List<Usuario> usuarioList1New = usuario.getUsuarioList1();
+            List<Usuario> listaUsuarioSeguidoOld = persistentUsuario.getListaUsuarioSeguido();
+            List<Usuario> listaUsuarioSeguidoNew = usuario.getListaUsuarioSeguido();
+            List<Usuario> listaUsuarioTeSigueOld = persistentUsuario.getListaUsuarioTeSigue();
+            List<Usuario> listaUsuarioTeSigueNew = usuario.getListaUsuarioTeSigue();
             List<Viaje> viajeListOld = persistentUsuario.getViajeList();
             List<Viaje> viajeListNew = usuario.getViajeList();
             List<Opinion> opinionListOld = persistentUsuario.getOpinionList();
@@ -151,20 +151,20 @@ public class UsuarioJpaController implements Serializable {
             if (illegalOrphanMessages != null) {
                 throw new IllegalOrphanException(illegalOrphanMessages);
             }
-            List<Usuario> attachedUsuarioListNew = new ArrayList<Usuario>();
-            for (Usuario usuarioListNewUsuarioToAttach : usuarioListNew) {
-                usuarioListNewUsuarioToAttach = em.getReference(usuarioListNewUsuarioToAttach.getClass(), usuarioListNewUsuarioToAttach.getNombreUsuario());
-                attachedUsuarioListNew.add(usuarioListNewUsuarioToAttach);
+            List<Usuario> attachedListaUsuarioSeguidoNew = new ArrayList<Usuario>();
+            for (Usuario listaUsuarioSeguidoNewUsuarioToAttach : listaUsuarioSeguidoNew) {
+                listaUsuarioSeguidoNewUsuarioToAttach = em.getReference(listaUsuarioSeguidoNewUsuarioToAttach.getClass(), listaUsuarioSeguidoNewUsuarioToAttach.getNombreUsuario());
+                attachedListaUsuarioSeguidoNew.add(listaUsuarioSeguidoNewUsuarioToAttach);
             }
-            usuarioListNew = attachedUsuarioListNew;
-            usuario.setUsuarioList(usuarioListNew);
-            List<Usuario> attachedUsuarioList1New = new ArrayList<Usuario>();
-            for (Usuario usuarioList1NewUsuarioToAttach : usuarioList1New) {
-                usuarioList1NewUsuarioToAttach = em.getReference(usuarioList1NewUsuarioToAttach.getClass(), usuarioList1NewUsuarioToAttach.getNombreUsuario());
-                attachedUsuarioList1New.add(usuarioList1NewUsuarioToAttach);
+            listaUsuarioSeguidoNew = attachedListaUsuarioSeguidoNew;
+            usuario.setListaUsuarioSeguido(listaUsuarioSeguidoNew);
+            List<Usuario> attachedListaUsuarioTeSigueNew = new ArrayList<Usuario>();
+            for (Usuario listaUsuarioTeSigueNewUsuarioToAttach : listaUsuarioTeSigueNew) {
+                listaUsuarioTeSigueNewUsuarioToAttach = em.getReference(listaUsuarioTeSigueNewUsuarioToAttach.getClass(), listaUsuarioTeSigueNewUsuarioToAttach.getNombreUsuario());
+                attachedListaUsuarioTeSigueNew.add(listaUsuarioTeSigueNewUsuarioToAttach);
             }
-            usuarioList1New = attachedUsuarioList1New;
-            usuario.setUsuarioList1(usuarioList1New);
+            listaUsuarioTeSigueNew = attachedListaUsuarioTeSigueNew;
+            usuario.setListaUsuarioTeSigue(listaUsuarioTeSigueNew);
             List<Viaje> attachedViajeListNew = new ArrayList<Viaje>();
             for (Viaje viajeListNewViajeToAttach : viajeListNew) {
                 viajeListNewViajeToAttach = em.getReference(viajeListNewViajeToAttach.getClass(), viajeListNewViajeToAttach.getId());
@@ -180,28 +180,28 @@ public class UsuarioJpaController implements Serializable {
             opinionListNew = attachedOpinionListNew;
             usuario.setOpinionList(opinionListNew);
             usuario = em.merge(usuario);
-            for (Usuario usuarioListOldUsuario : usuarioListOld) {
-                if (!usuarioListNew.contains(usuarioListOldUsuario)) {
-                    usuarioListOldUsuario.getUsuarioList().remove(usuario);
-                    usuarioListOldUsuario = em.merge(usuarioListOldUsuario);
+            for (Usuario listaUsuarioSeguidoOldUsuario : listaUsuarioSeguidoOld) {
+                if (!listaUsuarioSeguidoNew.contains(listaUsuarioSeguidoOldUsuario)) {
+                    listaUsuarioSeguidoOldUsuario.getListaUsuarioSeguido().remove(usuario);
+                    listaUsuarioSeguidoOldUsuario = em.merge(listaUsuarioSeguidoOldUsuario);
                 }
             }
-            for (Usuario usuarioListNewUsuario : usuarioListNew) {
-                if (!usuarioListOld.contains(usuarioListNewUsuario)) {
-                    usuarioListNewUsuario.getUsuarioList().add(usuario);
-                    usuarioListNewUsuario = em.merge(usuarioListNewUsuario);
+            for (Usuario listaUsuarioSeguidoNewUsuario : listaUsuarioSeguidoNew) {
+                if (!listaUsuarioSeguidoOld.contains(listaUsuarioSeguidoNewUsuario)) {
+                    listaUsuarioSeguidoNewUsuario.getListaUsuarioSeguido().add(usuario);
+                    listaUsuarioSeguidoNewUsuario = em.merge(listaUsuarioSeguidoNewUsuario);
                 }
             }
-            for (Usuario usuarioList1OldUsuario : usuarioList1Old) {
-                if (!usuarioList1New.contains(usuarioList1OldUsuario)) {
-                    usuarioList1OldUsuario.getUsuarioList().remove(usuario);
-                    usuarioList1OldUsuario = em.merge(usuarioList1OldUsuario);
+            for (Usuario listaUsuarioTeSigueOldUsuario : listaUsuarioTeSigueOld) {
+                if (!listaUsuarioTeSigueNew.contains(listaUsuarioTeSigueOldUsuario)) {
+                    listaUsuarioTeSigueOldUsuario.getListaUsuarioSeguido().remove(usuario);
+                    listaUsuarioTeSigueOldUsuario = em.merge(listaUsuarioTeSigueOldUsuario);
                 }
             }
-            for (Usuario usuarioList1NewUsuario : usuarioList1New) {
-                if (!usuarioList1Old.contains(usuarioList1NewUsuario)) {
-                    usuarioList1NewUsuario.getUsuarioList().add(usuario);
-                    usuarioList1NewUsuario = em.merge(usuarioList1NewUsuario);
+            for (Usuario listaUsuarioTeSigueNewUsuario : listaUsuarioTeSigueNew) {
+                if (!listaUsuarioTeSigueOld.contains(listaUsuarioTeSigueNewUsuario)) {
+                    listaUsuarioTeSigueNewUsuario.getListaUsuarioSeguido().add(usuario);
+                    listaUsuarioTeSigueNewUsuario = em.merge(listaUsuarioTeSigueNewUsuario);
                 }
             }
             for (Viaje viajeListNewViaje : viajeListNew) {
@@ -273,15 +273,15 @@ public class UsuarioJpaController implements Serializable {
             if (illegalOrphanMessages != null) {
                 throw new IllegalOrphanException(illegalOrphanMessages);
             }
-            List<Usuario> usuarioList = usuario.getUsuarioList();
-            for (Usuario usuarioListUsuario : usuarioList) {
-                usuarioListUsuario.getUsuarioList().remove(usuario);
-                usuarioListUsuario = em.merge(usuarioListUsuario);
+            List<Usuario> listaUsuarioSeguido = usuario.getListaUsuarioSeguido();
+            for (Usuario listaUsuarioSeguidoUsuario : listaUsuarioSeguido) {
+                listaUsuarioSeguidoUsuario.getListaUsuarioSeguido().remove(usuario);
+                listaUsuarioSeguidoUsuario = em.merge(listaUsuarioSeguidoUsuario);
             }
-            List<Usuario> usuarioList1 = usuario.getUsuarioList1();
-            for (Usuario usuarioList1Usuario : usuarioList1) {
-                usuarioList1Usuario.getUsuarioList().remove(usuario);
-                usuarioList1Usuario = em.merge(usuarioList1Usuario);
+            List<Usuario> listaUsuarioTeSigue = usuario.getListaUsuarioTeSigue();
+            for (Usuario listaUsuarioTeSigueUsuario : listaUsuarioTeSigue) {
+                listaUsuarioTeSigueUsuario.getListaUsuarioSeguido().remove(usuario);
+                listaUsuarioTeSigueUsuario = em.merge(listaUsuarioTeSigueUsuario);
             }
             em.remove(usuario);
             em.getTransaction().commit();

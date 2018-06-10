@@ -85,7 +85,7 @@ public class Foto implements Serializable {
     public void setTitulo(String titulo) {
         this.titulo = titulo;
     }
-    
+
     public Viaje getIdViaje() {
         return idViaje;
     }
@@ -116,7 +116,7 @@ public class Foto implements Serializable {
 
     @Override
     public String toString() {
-        return "DTO.Foto[ id=" + id + " ]";
+        return "datos.entidades.Foto[ id=" + id + " ]";
     }
     
 }

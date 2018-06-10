@@ -5,18 +5,13 @@
  */
 package beans.modelos;
 
-import datos.entidades.Usuario;
 import java.io.Serializable;
-//import javax.annotation.ManagedBean;
-//import javax.enterprise.context.RequestScoped;
-//import javax.enterprise.context.SessionScoped;
 import javax.faces.bean.ManagedBean;
 import javax.faces.bean.RequestScoped;
-import javax.inject.*;
 
 /**
  *
- * @author Rafa
+ * @author RafaMar
  */
 
 @ManagedBean

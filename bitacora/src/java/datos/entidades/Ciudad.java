@@ -52,7 +52,7 @@ public class Ciudad implements Serializable {
     private Pais idPais;
     @OneToMany(cascade = CascadeType.ALL, mappedBy = "idCiudad")
     private List<Entrada> entradaList;
-    
+
     public Ciudad() {
     }
 
@@ -97,7 +97,7 @@ public class Ciudad implements Serializable {
     public void setEntradaList(List<Entrada> entradaList) {
         this.entradaList = entradaList;
     }
-    
+
 
     @Override
     public int hashCode() {
