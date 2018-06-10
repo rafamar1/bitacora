@@ -6,6 +6,7 @@
 package datos.entidades;
 
 import java.io.Serializable;
+import java.util.Date;
 import java.util.List;
 import javax.persistence.Basic;
 import javax.persistence.CascadeType;
@@ -20,6 +21,8 @@ import javax.persistence.NamedQueries;
 import javax.persistence.NamedQuery;
 import javax.persistence.OneToMany;
 import javax.persistence.Table;
+import javax.persistence.Temporal;
+import javax.persistence.TemporalType;
 import javax.xml.bind.annotation.XmlRootElement;
 import javax.xml.bind.annotation.XmlTransient;
 
@@ -35,7 +38,9 @@ import javax.xml.bind.annotation.XmlTransient;
     , @NamedQuery(name = "Viaje.findById", query = "SELECT v FROM Viaje v WHERE v.id = :id")
     , @NamedQuery(name = "Viaje.findByTitulo", query = "SELECT v FROM Viaje v WHERE v.titulo = :titulo")
     , @NamedQuery(name = "Viaje.findByDescripcion", query = "SELECT v FROM Viaje v WHERE v.descripcion = :descripcion")
-    , @NamedQuery(name = "Viaje.findByImgMiniatura", query = "SELECT v FROM Viaje v WHERE v.imgMiniatura = :imgMiniatura")})
+    , @NamedQuery(name = "Viaje.findByImgMiniatura", query = "SELECT v FROM Viaje v WHERE v.imgMiniatura = :imgMiniatura")
+    , @NamedQuery(name = "Viaje.findByFechaCreacion", query = "SELECT v FROM Viaje v WHERE v.fechaCreacion = :fechaCreacion")
+    , @NamedQuery(name = "Viaje.findByFechaModificacion", query = "SELECT v FROM Viaje v WHERE v.fechaModificacion = :fechaModificacion")})
 public class Viaje implements Serializable {
 
     private static final long serialVersionUID = 1L;
@@ -51,13 +56,21 @@ public class Viaje implements Serializable {
     private String descripcion;
     @Column(name = "img_miniatura")
     private String imgMiniatura;
+    @Basic(optional = false)
+    @Column(name = "fecha_creacion")
+    @Temporal(TemporalType.TIMESTAMP)
+    private Date fechaCreacion;
+    @Basic(optional = false)
+    @Column(name = "fecha_modificacion")
+    @Temporal(TemporalType.TIMESTAMP)
+    private Date fechaModificacion;
     @JoinColumn(name = "usuario", referencedColumnName = "nombre_usuario")
     @ManyToOne(optional = false)
     private Usuario usuario;
     @OneToMany(cascade = CascadeType.ALL, mappedBy = "idViaje")
     private List<Dia> diaList;
     @OneToMany(cascade = CascadeType.ALL, mappedBy = "idViaje")
-    private List<Foto> fotoList;
+    private List<Foto> fotoList;    
 
     public Viaje() {
     }
@@ -110,7 +123,23 @@ public class Viaje implements Serializable {
     public void setUsuario(Usuario usuario) {
         this.usuario = usuario;
     }
+    
+    public Date getFechaCreacion() {
+        return fechaCreacion;
+    }
 
+    public void setFechaCreacion(Date fechaCreacion) {
+        this.fechaCreacion = fechaCreacion;
+    }
+
+    public Date getFechaModificacion() {
+        return fechaModificacion;
+    }
+
+    public void setFechaModificacion(Date fechaModificacion) {
+        this.fechaModificacion = fechaModificacion;
+    }
+    
     @XmlTransient
     public List<Dia> getDiaList() {
         return diaList;

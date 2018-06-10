@@ -19,6 +19,7 @@ import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.Serializable;
 import java.util.Calendar;
+import java.util.Date;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.faces.bean.ManagedBean;
@@ -77,6 +78,10 @@ public class PublicarViajeController implements Serializable {
         Viaje newViaje = new Viaje();
         newViaje.setTitulo(publicarViajeBean.getTitulo());
         newViaje.setDescripcion(publicarViajeBean.getDescripcion());
+        //TODO revisar este seteo de fecha
+        Date fechaModificacion = Calendar.getInstance().getTime();
+        newViaje.setFechaCreacion(fechaModificacion);
+        newViaje.setFechaModificacion(fechaModificacion);
         if (((Usuario) Session.getInstance().getAttribute("usuario")).getNombreUsuario() != null) {
             newViaje.setUsuario(((Usuario) Session.getInstance().getAttribute("usuario")));
         }
@@ -92,21 +97,14 @@ public class PublicarViajeController implements Serializable {
         viajeController.edit(newViaje);
 
         DiaJpaController diaController = new DiaJpaController(emf);
-        Dia primerDia = setearPrimerDia(viajeController, newViaje);
+        Dia primerDia = new Dia();
+        primerDia.setIdViaje(viajeController.findViaje(newViaje.getId()));
         diaController.create(primerDia);
         Integer idPrimerDia = primerDia.getId();
 
         Session.getInstance().setAttribute("idDiaSeleccionado", idPrimerDia);
         Session.getInstance().setAttribute("idViajeSeleccionado", idViajeInsert);
 
-    }
-
-    private Dia setearPrimerDia(ViajeJpaController viajeController, Viaje newViaje) {
-        Dia primerDia = new Dia();
-        primerDia.setIdViaje(viajeController.findViaje(newViaje.getId()));
-        primerDia.setFechaCreacion(Calendar.getInstance().getTime());
-        primerDia.setFechaModificacion(Calendar.getInstance().getTime());
-        return primerDia;
     }
 
     public void subirFotoViaje() throws IOException {

@@ -1,0 +1,52 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+      xmlns:h="http://xmlns.jcp.org/jsf/html"
+      xmlns:f="http://xmlns.jcp.org/jsf/core"
+      xmlns:p="http://primefaces.org/ui"
+      xmlns:c="http://xmlns.jcp.org/jsp/jstl/core">
+
+    <body>
+
+        <ui:composition template="./templates/plantilla.xhtml">
+            <ui:define name="content">
+
+                <f:view>
+
+                    <div id="cabecera_usuario">
+                        MiNombre->#{sessionScope.usuario.nombreUsuario}
+                        MiNombreCompleto->#{sessionScope.usuario.nombreCompleto}
+                        MiImagen->#{sessionScope.usuario.email}
+                        <p>
+                            Viajes Publicados -> #{sessionScope.usuario.viajeList.size()}
+                            Siguiendo->#{sessionScope.usuario.listaUsuarioSeguido.size()}
+                            Seguidores->#{sessionScope.usuario.listaUsuarioTeSigue.size()}                    
+                        </p>                
+                    </div>
+
+
+                    <section id="viajes_siguiendo">
+                        <c:forEach items="#{perfilController.damelistaViajesUsuario()}" var="viaje">
+                            <p>
+                                Titulo -> #{viaje.titulo}
+                                Descripcion -> #{viaje.descripcion}
+                                Imagen -> #{viaje.imgMiniatura}
+                            </p>
+                        </c:forEach>
+                    </section>
+
+                </f:view>
+
+            </ui:define>
+
+            <ui:define name="bottom">
+                <div style="display:none;">
+                    ESTO NO SE MOSTRARIA
+                </div>
+            </ui:define>
+
+        </ui:composition>
+
+    </body>
+</html>

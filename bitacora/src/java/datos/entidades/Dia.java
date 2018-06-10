@@ -35,9 +35,7 @@ import javax.xml.bind.annotation.XmlTransient;
 @XmlRootElement
 @NamedQueries({
     @NamedQuery(name = "Dia.findAll", query = "SELECT d FROM Dia d")
-    , @NamedQuery(name = "Dia.findById", query = "SELECT d FROM Dia d WHERE d.id = :id")
-    , @NamedQuery(name = "Dia.findByFechaCreacion", query = "SELECT d FROM Dia d WHERE d.fechaCreacion = :fechaCreacion")
-    , @NamedQuery(name = "Dia.findByFechaModificacion", query = "SELECT d FROM Dia d WHERE d.fechaModificacion = :fechaModificacion")})
+    , @NamedQuery(name = "Dia.findById", query = "SELECT d FROM Dia d WHERE d.id = :id")})
 public class Dia implements Serializable {
 
     private static final long serialVersionUID = 1L;
@@ -46,14 +44,6 @@ public class Dia implements Serializable {
     @Basic(optional = false)
     @Column(name = "id")
     private Integer id;
-    @Basic(optional = false)
-    @Column(name = "fecha_creacion")
-    @Temporal(TemporalType.TIMESTAMP)
-    private Date fechaCreacion;
-    @Basic(optional = false)
-    @Column(name = "fecha_modificacion")
-    @Temporal(TemporalType.TIMESTAMP)
-    private Date fechaModificacion;
     @OneToMany(cascade = CascadeType.ALL, mappedBy = "idDia")
     private List<Entrada> entradaList;
     @JoinColumn(name = "id_viaje", referencedColumnName = "id")
@@ -67,34 +57,12 @@ public class Dia implements Serializable {
         this.id = id;
     }
 
-    public Dia(Integer id, Date fechaCreacion, Date fechaModificacion) {
-        this.id = id;
-        this.fechaCreacion = fechaCreacion;
-        this.fechaModificacion = fechaModificacion;
-    }
-
     public Integer getId() {
         return id;
     }
 
     public void setId(Integer id) {
         this.id = id;
-    }
-
-    public Date getFechaCreacion() {
-        return fechaCreacion;
-    }
-
-    public void setFechaCreacion(Date fechaCreacion) {
-        this.fechaCreacion = fechaCreacion;
-    }
-
-    public Date getFechaModificacion() {
-        return fechaModificacion;
-    }
-
-    public void setFechaModificacion(Date fechaModificacion) {
-        this.fechaModificacion = fechaModificacion;
     }
 
     public Viaje getIdViaje() {

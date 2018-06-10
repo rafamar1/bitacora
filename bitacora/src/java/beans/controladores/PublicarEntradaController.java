@@ -97,7 +97,7 @@ public class PublicarEntradaController implements Serializable {
     }
     
     public String publicarEntrada() {        
-        
+        //TODO revisar el seteo de la fecha de modificaion!
         Entrada newEntrada = setearValoresEntrada();
         
         try {

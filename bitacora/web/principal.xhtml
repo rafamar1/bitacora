@@ -4,47 +4,47 @@
       xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
       xmlns:h="http://xmlns.jcp.org/jsf/html"
       xmlns:f="http://xmlns.jcp.org/jsf/core"
-      xmlns:p="http://primefaces.org/ui">
+      xmlns:p="http://primefaces.org/ui"
+      xmlns:c="http://xmlns.jcp.org/jsp/jstl/core">
 
     <body>
 
         <ui:composition template="./templates/principal.xhtml">
-            
+
             <ui:define name="left">
-                        <section id="paises_continent_grid">
-                        <h1>¡Tenemos el lugar ideal para ti!</h1>
-                        <a href=""><img src="imagenSpain.jpg" alt="Spain"/></a>
-                        <a href=""><img src="Europa.jpg" alt="Europa"/></a>
-                        <a href=""><img src="Asia.jpg" alt="Asia"/></a>
-                        <a href=""><img src="Africa.jpg" alt="Africa"/></a>
-                    </section>
+                MiNombre->#{sessionScope.usuario.nombreUsuario}
+                MiNombreCompleto->#{sessionScope.usuario.nombreCompleto}
+                MiImagen->#{sessionScope.usuario.email}
+                <p>
+                    Viajes Publicados -> #{sessionScope.usuario.viajeList.size()}
+                    Siguiendo->#{sessionScope.usuario.listaUsuarioSeguido.size()}
+                    Seguidores->#{sessionScope.usuario.listaUsuarioTeSigue.size()}                    
+                </p>
+                <p>
+                    <h:form>
+                        <p:commandButton action="publicarViaje.xhtml" value="Publicar Viaje" rendered="#{sessionScope.usuarioLogeado}"/>
+                        <p:commandButton action="perfilUsuario.xhtml" value="Mi Perfil"/>
+                    </h:form>
+                </p>
+            </ui:define>
 
-
-                    <section id="usuarios_destacados">
-                        <h1>La clave es compartir</h1>
-                    </section>
-                    </ui:define>
-            
             <ui:define name="content">
 
                 <f:view>
-                    <section id="panel_busqueda">
-                        ESTO SERIA LA PAGINA PRINCIPAL, YA ESTA USTED LOGEADO!
-                        <h:form>
-                            <p:commandButton action="publicarViaje.xhtml" value="Publicar Viaje" rendered="#{sessionScope.usuarioLogeado}"/>
-                            <p:commandButton action="miPerfil.xhtml" value="Mis Viajes"/>
-                        </h:form>
-
-                        DE AQUI HACIA ABAJO HAY QUE CAMBIARLO 
-                        <p>
-                        *************-----------------------------------------------------------********************
-                        </p>
-                        <h1>Únete y descubre lugares increíbles</h1>
-                        <h2>Comparte tus experiencias con miles de usuarios</h2>
-
-
+                    <section id="viajes_siguiendo">
+                        <c:forEach items="#{sessionScope.usuario.listaUsuarioSeguido}" var="usuario">
+                            <p>
+                                Sigo a -> #{usuario.nombreUsuario}
+                            </p>
+                            <c:forEach items="#{usuario.viajeList}" var="viaje">
+                                <p>
+                                    #{viaje.titulo} -> #{viaje.descripcion}
+                                </p>
+                                    
+                            </c:forEach>
+                        </c:forEach>
                     </section>
-                    
+
                 </f:view>
 
             </ui:define>
