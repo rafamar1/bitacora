@@ -38,9 +38,11 @@ public class IndexController implements Serializable {
     @ManagedProperty(value = "#{indexBean}")
     private IndexBean indexBean;
     private final EntityManagerFactory emf;
+    private List<Entrada>  listaEntradasRandom;
     
     public IndexController() {
         emf = Persistence.createEntityManagerFactory("bitacoraPU");
+        this.listaEntradasRandom = dameListaEntradas(4);
     }    
 
     public IndexBean getIndexBean() {
@@ -50,7 +52,15 @@ public class IndexController implements Serializable {
     public void setIndexBean(IndexBean indexBean) {
         this.indexBean = indexBean;
     }
-    
+
+    public List<Entrada> getListaEntradasRandom() {
+        return listaEntradasRandom;
+    }
+
+    public void setListaEntradasRandom(List<Entrada> listaEntradasRandom) {
+        this.listaEntradasRandom = listaEntradasRandom;
+    }
+           
     public List<Viaje> dameListaViajes(){
         HashSet<Viaje> hashSetViajes = new HashSet<>();
         
@@ -65,13 +75,12 @@ public class IndexController implements Serializable {
         
         return new ArrayList(hashSetViajes);
     }
-    public List<Entrada> dameListaEntradas(){
+    private List<Entrada> dameListaEntradas(int entradasAMostrar){
         HashSet<Entrada> hashSetEntradas = new HashSet<>();
         
         EntradaJpaController controlEntrada = new EntradaJpaController(emf);
         int numEntradas = controlEntrada.getEntradaCount();
-        int entradasAMostrar = 4;
-        
+                
         while (hashSetEntradas.size()< entradasAMostrar){
             int idEntradaRandom = (new Random()).nextInt(numEntradas) + 1;
             hashSetEntradas.add(controlEntrada.findEntrada(idEntradaRandom));
