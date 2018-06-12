@@ -9,6 +9,7 @@
         <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
         <h:outputStylesheet name="./css/normalize.css"/>
         <style>
+
             /*----------- CABECERA ---------------*/
             header{
                 position:fixed;
@@ -35,10 +36,7 @@
                 width: 65%;                
                 padding: 0px;
                 line-height: normal;
-            }
-
-            #cabecera .ui-widget-content, .ui-menubar, .ui-menu-list, .ui-menuitem, .ui-menuitem-link, .ui-menuitem-text, ui-icon{
-                border: none; background: none; color: white;
+                text-transform: uppercase;
             }
 
             #menu-superior .ui-menuitem-active , #menu-superior .ui-state-hover{
@@ -47,9 +45,6 @@
                 border-radius: 0px;
             }
 
-            #menu-superior a ui-icon{
-                color:white;
-            }
             #menu-superior ul {
                 float: right;
             }
@@ -61,6 +56,8 @@
                 padding: 3px;                
             }
 
+
+            /***********************    PIE DE PAGINA    ******************************/
             footer {
                 position:relative;
                 bottom: 0;
@@ -87,13 +84,6 @@
                 line-height: normal;
             }
 
-            #menu-redsocial  .ui-widget-content, .ui-menubar, .ui-menu-list, .ui-menuitem, .ui-menuitem-link, .ui-menuitem-text, ui-icon{
-                border: none; background: none; color: white;
-            }
-
-            #menu-redsocial  a ui-icon{
-                color:white;
-            }
             #menu-redsocial ul {
                 float: right;
             }
@@ -103,47 +93,46 @@
             #menu-redsocial ul li a{
                 color: #c05e83;
             }
-            
-            #menu-redsocial .ui-menuitem-active , #menu-redsocial .ui-state-hover{
-                background: none;
-                border-radius: 0px;
-            }
-            
-            #menu-redsocial li:hover a#facebook{
-                color: #3b5998;
-            }
-            #menu-redsocial li:hover a#twitter{
-                color: #55acee;
-            }
-            #menu-redsocial li:hover a#google{
-                color: #dd4b39;
-            }
-            #menu-redsocial li:hover a#pinterest{
-                color: #cb2027;
-            }
-            #menu-redsocial li:hover a#mail{
-                color: cornsilk;
-            }
-            #menu-redsocial li a#mail .ui-menuitem-icon {
-                font-size: 1.8em;
-            }
+
+            #menu-redsocial li:hover a#facebook{ color: #3b5998;}
+            #menu-redsocial li:hover a#twitter{ color: #55acee;}
+            #menu-redsocial li:hover a#google{ color: #dd4b39;}
+            #menu-redsocial li:hover a#pinterest{ color: #cb2027;}
+            #menu-redsocial li:hover a#mail{ color: cornsilk;}
+            #menu-redsocial li a#mail .ui-menuitem-icon { font-size: 1.8em;}
 
             footer .ui-icon{
                 width: 30px !important;
                 height: 30px !important;
             }
+
+            /*REVISAR ESTA PROPIEDAD
             footer .ui-g div:first-child{
                 padding-top: 2%;
-            }
+            }*/
+
+            /*-----------  RESETEOS   -----------*/
             html,body{
                 height: 100%;
             }
             #content{
                 padding-top: 5em;
-                padding-bottom: 3em;
+                padding-bottom: 4em;
+            }
+
+            #menu-redsocial  .ui-widget-content, .ui-menubar, .ui-menu-list, .ui-menuitem, .ui-menuitem-link, .ui-menuitem-text, ui-icon{
+                border: none; background: none; color: white;
+            }
+            #cabecera .ui-widget-content, .ui-menubar, .ui-menu-list, .ui-menuitem, .ui-menuitem-link, .ui-menuitem-text, ui-icon{
+                border: none; background: none; color: white;
+            }
+
+            #menu-redsocial .ui-menuitem-active , #menu-redsocial .ui-state-hover{
+                background: none;
+                border-radius: 0px;
             }
         </style>
-        <title><ui:insert name="title">Login</ui:insert></title>
+        <title><ui:insert name="title">bitacora</ui:insert></title>
     </h:head>
 
     <h:body style="position: relative;">
@@ -155,9 +144,9 @@
                     <p:link outcome="index" value="bitacora"/>
 
                     <p:menubar id="menu-superior">
-                        <p:menuitem value="ENTRAR" url="login.xhtml"/>
-                        <p:menuitem value="EXPLORAR" url="explorar.xhtml"/>
-                        <p:menuitem value="REGISTRATE"  url="registro.xhtml"/>
+                        <p:menuitem value="#{messages.botonEntrar}" url="login.xhtml"/>
+                        <p:menuitem value="#{messages.botonExplorar}" url="explorar.xhtml"/>
+                        <p:menuitem value="#{messages.botonRegistrar}"  url="registro.xhtml"/>
                     </p:menubar>
 
                 </div> 

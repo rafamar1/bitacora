@@ -58,6 +58,10 @@ public class IndexController implements Serializable {
         
         while (hashSetViajes.size()< viajesAMostrar){
             int idViajeRandom = (new Random()).nextInt(numViajes) + 1;
+            /*TODO revisar para usuarios publicos solamente
+            if(controlViaje.findViaje(idViajeRandom).getUsuario().getPublico()?1:false){
+                
+            }*/
             hashSetViajes.add(controlViaje.findViaje(idViajeRandom));
         }        
         
