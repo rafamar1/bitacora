@@ -30,7 +30,7 @@
 
             <ui:define name="content">
 
-                <f:view>
+                <f:view locale="#{localeBean.locale}">
                     <section id="viajes_siguiendo">
                         <c:forEach items="#{sessionScope.usuario.listaUsuarioSeguido}" var="usuario">
                             <p>

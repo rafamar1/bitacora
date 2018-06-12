@@ -1,0 +1,71 @@
+#panel_busqueda{
+    background: url("#{resource['images/vistas/index/background_busqueda.jpg']}") no-repeat;
+    background-size: cover;
+    height: 500px;
+    background-position: 0px;
+}
+#panel_busqueda p {
+    text-align: center;
+    padding-top: 150px;
+    margin-bottom: 75px;
+}
+
+
+#panel_busqueda p input, #panel_busqueda p button{    
+    margin: 10px;
+}
+
+#panel_busqueda p button{
+    background: #690c2f;
+    border: 1px solid #debe6f;
+}
+#panel_busqueda p button:hover{
+    background: #8d2e51;
+    /*background: #690c2f;*/
+    border: 1px solid #c09f4d;
+}
+
+#panel_busqueda h1,#panel_busqueda h2{
+    text-align: center;
+    color: white;
+    margin: 40px;
+}
+
+#paises_continent_grid{
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    padding: 10px 5%;
+}
+
+h1{
+    text-align: center;
+}
+
+#viaje{
+    flex: 1;
+    background: #f8f8f8;
+    border: 1px solid #c3c3c3;
+    margin: 25px;
+    padding: 15px;
+    min-width: 200px;
+    max-width: 375px;
+}
+#viaje .descripcion {
+    text-align: justify;
+    margin: 20px auto;
+}
+
+#viaje div.ui-rating{
+    float: left;
+}
+
+#viaje img{
+    width: 100%;
+    height: 135px;        
+}
+
+#viaje .labelUsuario{
+    float: right;
+    text-decoration: none;
+}

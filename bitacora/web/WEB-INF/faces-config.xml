@@ -7,9 +7,13 @@
     
     <application>
         <resource-bundle>
-          <base-name>internacionalizacion.messages</base-name> 
-          <var>messages</var>
+            <base-name>internacionalizacion.messages</base-name> 
+            <var>messages</var>
         </resource-bundle>
+        <locale-config>
+            <default-locale>es</default-locale>
+            <supported-locale>en</supported-locale>
+        </locale-config>
     </application>
   
     <navigation-rule>
@@ -43,13 +47,13 @@
     </navigation-rule>
     
     <navigation-rule>
-      <from-view-id>fileUpload.xhtml</from-view-id>
-     <navigation-case>
-        <from-action>#{fileUploadBean.uploadResume}</from-action>
-        <from-outcome>success</from-outcome>
-        <to-view-id>/fileUploadAck.xhtml</to-view-id>
-    </navigation-case>
-     </navigation-rule>
+        <from-view-id>fileUpload.xhtml</from-view-id>
+        <navigation-case>
+            <from-action>#{fileUploadBean.uploadResume}</from-action>
+            <from-outcome>success</from-outcome>
+            <to-view-id>/fileUploadAck.xhtml</to-view-id>
+        </navigation-case>
+    </navigation-rule>
     <navigation-rule>
         <from-view-id>/publicarViaje.xhtml</from-view-id>
         <navigation-case>

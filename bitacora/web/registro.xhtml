@@ -15,7 +15,7 @@
                 <h:outputScript target="head" name="js/jquery-3.3.1.js"/>
                 <h:outputScript target="head" name="js/jquery.validate.min.js"/>
                 <h:outputScript target="head" name="js/formRegistro_validate.js"/>
-                <f:view>
+                <f:view locale="#{localeBean.locale}">
                     <h:form id="formRegistro" prependId="false">
                         <p:panelGrid columns="2" layout="grid">
                             <p:outputLabel value="#{messages.nombreUsuario}:" />

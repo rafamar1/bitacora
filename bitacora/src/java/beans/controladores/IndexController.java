@@ -6,9 +6,11 @@
 package beans.controladores;
 
 import beans.modelos.IndexBean;
+import datos.dao.EntradaJpaController;
 import datos.dao.UsuarioJpaController;
 import datos.dao.ViajeJpaController;
 import datos.dao.exceptions.NonexistentEntityException;
+import datos.entidades.Entrada;
 import datos.entidades.Usuario;
 import datos.entidades.Viaje;
 import java.io.Serializable;
@@ -58,16 +60,36 @@ public class IndexController implements Serializable {
         
         while (hashSetViajes.size()< viajesAMostrar){
             int idViajeRandom = (new Random()).nextInt(numViajes) + 1;
-            /*TODO revisar para usuarios publicos solamente
-            if(controlViaje.findViaje(idViajeRandom).getUsuario().getPublico()?1:false){
-                
-            }*/
             hashSetViajes.add(controlViaje.findViaje(idViajeRandom));
         }        
         
         return new ArrayList(hashSetViajes);
     }
-    
+    public List<Entrada> dameListaEntradas(){
+        HashSet<Entrada> hashSetEntradas = new HashSet<>();
+        
+        EntradaJpaController controlEntrada = new EntradaJpaController(emf);
+        int numEntradas = controlEntrada.getEntradaCount();
+        int entradasAMostrar = 4;
+        
+        while (hashSetEntradas.size()< entradasAMostrar){
+            int idEntradaRandom = (new Random()).nextInt(numEntradas) + 1;
+            hashSetEntradas.add(controlEntrada.findEntrada(idEntradaRandom));
+        }        
+        
+        return new ArrayList(hashSetEntradas);
+    }
+    public String dameRuta(Entrada entrada){
+        StringBuilder sb = new StringBuilder("resources/images/usuarios/");
+        sb.append(entrada.getIdDia().getIdViaje().getUsuario().getNombreUsuario());
+        sb.append("/");
+        sb.append(entrada.getIdDia().getIdViaje().getId());
+        sb.append("/");
+        sb.append(entrada.getIdDia().getId());
+        sb.append("/");
+        sb.append(entrada.getImgMiniatura());
+        return sb.toString();
+    }
     public String followLitro(){
         try {
             UsuarioJpaController controlUser = new UsuarioJpaController(emf);
@@ -173,6 +195,6 @@ public class IndexController implements Serializable {
         }
         
     }
-
-
+    
+    
 }

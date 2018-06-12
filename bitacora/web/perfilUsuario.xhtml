@@ -12,7 +12,7 @@
         <ui:composition template="./templates/principal.xhtml">
             <ui:define name="content">
 
-                <f:view>
+                <f:view locale="#{localeBean.locale}">
 
                     <div id="cabecera_usuario">
                         MiNombre->#{sessionScope.usuario.nombreUsuario}

@@ -13,7 +13,7 @@
             <ui:define name="title">#{messages.tituloLogin}</ui:define>
             
              <ui:define name="content">
-                <f:view>
+                 <f:view locale="#{localeBean.locale}">
                         <h:form>
                             <h:panelGrid columns="2">
                                 <p:outputLabel value="#{messages.nombreUsuario}:" />
