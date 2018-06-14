@@ -4,36 +4,42 @@
       xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
       xmlns:h="http://xmlns.jcp.org/jsf/html"
       xmlns:f="http://xmlns.jcp.org/jsf/core"
+      xmlns:pt="http://xmlns.jcp.org/jsf/passthrough"
       xmlns:p="http://primefaces.org/ui">
 
     <body>
 
         <ui:composition template="./templates/noLoggedPlantilla.xhtml">
-            
+            <ui:define name="css">
+                <h:outputStylesheet name="login.css" library="css"/>
+            </ui:define>
             <ui:define name="title">#{messages.tituloLogin}</ui:define>
             
              <ui:define name="content">
-                 <f:view locale="#{localeBean.locale}">
-                        <h:form>
-                            <h:panelGrid columns="2">
-                                <p:outputLabel value="#{messages.nombreUsuario}:" />
-                                <p:inputText id="nickname" value="#{loginBean.nombreUsuario}" autocomplete="true" required="true"/>
+                 <f:view locale="#{localeBean.locale}">                                
+                    <div class="user">
+                        <div class="user__header">
+                            <img src="https://s3-us-west-2.amazonaws.com/s.cdpn.io/3219/logo.svg" alt=""/>
+                            LOGO DE BITACORA
+                        </div>
 
-                                <p:outputLabel value="#{messages.password}:"/>                            
-                                <p:password id="password" value="#{loginBean.password}" autocomplete="true" required="true"/>
+                        <h:form id="formLogin" prependId="false">
+                            <div class="form__group">
+                                 <p:inputText class="input_form" value="#{loginBean.nombreUsuario}" required="true" placeholder="#{messages.nombreUsuario}"/>
+                            </div>
 
-                                <p:outputLabel value="#{messages.loginFail}" rendered="#{loginController.badLogin}"/>
+                            <div class="form__group">
+                                <p:password class="input_form" value="#{loginBean.password}" required="true" placeholder="#{messages.password}"/>
+                            </div>
+                            
+                            <p:outputLabel value="#{messages.loginFail}" rendered="#{loginController.badLogin}"/>
                                 <p:commandButton 
+                                    class="btn"
                                     ajax="false"
                                     action="#{loginController.loginUsuario}" 
                                     value="#{messages.login}"/>
-                                
-                                <hr/>
-                                <h:outputLabel value="#{messages.registroLogin}"/>
-                                <p:link outcome="registro" value="#{messages.loginRegistrate}"/>
-
-                            </h:panelGrid>
                         </h:form>
+                    </div>
                    
 
                 </f:view>

@@ -11,6 +11,8 @@
         <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
         <h:outputStylesheet name="css/normalize.css"/>
         <h:outputStylesheet name="css/noLoggedPlantilla.css"/>
+        <h:outputScript target="head" name="js/jquery-3.3.1.js"/>
+        <h:outputScript target="head" name="js/jquery.validate.min.js"/>
         <ui:insert name="css"/>
         <title><ui:insert name="title">bitacora</ui:insert></title>
     </h:head>
@@ -19,7 +21,6 @@
 
         <ui:insert name="top">
             <header>
-
                 <div id="cabecera">
                     <p:link outcome="index" value="bitacora"/>
 

@@ -9,7 +9,7 @@
 
     <body>
 
-        <ui:composition template="./templates/principal.xhtml">
+        <ui:composition template="./templates/usuarioPlantilla.xhtml">
             <ui:define name="content">
 
                 <f:view locale="#{localeBean.locale}">
@@ -24,9 +24,14 @@
                             Seguidores->#{sessionScope.usuario.listaUsuarioTeSigue.size()}                    
                         </p>                
                     </div>
-
+                    
+                    <p> USUARIO SELECCIONADO</p>
+                    <p>
+                        NOMBRE_USUARIO-> #{sessionUtilsBean.idUsuarioSeleccionado}
+                    </p>
 
                     <section id="viajes_siguiendo">
+                        VIAJES PUBLICADOS 
                         <c:forEach items="#{perfilController.damelistaViajesUsuario()}" var="viaje">
                             <p>
                                 Titulo -> #{viaje.titulo}

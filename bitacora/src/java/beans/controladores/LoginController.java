@@ -7,6 +7,7 @@ package beans.controladores;
 
 import beans.modelos.LoginBean;
 import beans.respaldo.Session;
+import beans.respaldo.SessionUtilsBean;
 import datos.dao.UsuarioJpaController;
 import datos.entidades.Usuario;
 import org.jasypt.util.password.*;
@@ -30,6 +31,8 @@ public class LoginController implements Serializable {
 
     @ManagedProperty(value = "#{loginBean}")
     private LoginBean loginBean;
+    @ManagedProperty(value = "#{sessionUtilsBean}")
+    private SessionUtilsBean sessionUtilsBean;
 
     private final EntityManagerFactory emf;
     private boolean badLogin;
@@ -47,6 +50,16 @@ public class LoginController implements Serializable {
         this.loginBean = loginBean;
     }
 
+    public SessionUtilsBean getSessionUtilsBean() {
+        return sessionUtilsBean;
+    }
+
+    public void setSessionUtilsBean(SessionUtilsBean sessionUtilsBean) {
+        this.sessionUtilsBean = sessionUtilsBean;
+    }
+    
+    
+    
     public boolean isBadLogin() {
         return badLogin;
     }
@@ -69,6 +82,7 @@ public class LoginController implements Serializable {
                 if (passwordEncryptor.checkPassword(inputPassword, usuario.getPassword())) {
                     Session.getInstance().setAttribute("usuario", usuario);
                     Session.getInstance().setAttribute("usuarioLogeado", true);
+                    sessionUtilsBean.setUsuario(usuario);
                     return "loginOk";
                 } else {
                     this.badLogin = true;

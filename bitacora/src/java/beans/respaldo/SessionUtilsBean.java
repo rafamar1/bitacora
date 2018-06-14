@@ -6,15 +6,15 @@
 package beans.respaldo;
 
 import datos.entidades.Usuario;
-import javax.inject.Named;
-import javax.enterprise.context.SessionScoped;
 import java.io.Serializable;
+import javax.faces.bean.ManagedBean;
+import javax.faces.bean.SessionScoped;
 
 /**
  *
  * @author rfmarquez
  */
-@Named(value = "sessionUtilsBean")
+@ManagedBean(name = "sessionUtilsBean")
 @SessionScoped
 public class SessionUtilsBean implements Serializable {
 

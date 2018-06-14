@@ -3,24 +3,19 @@
 <html xmlns="http://www.w3.org/1999/xhtml"
       xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
       xmlns:h="http://xmlns.jcp.org/jsf/html"
+      xmlns:f="http://xmlns.jcp.org/jsf/core"      
+      xmlns:pt="http://xmlns.jcp.org/jsf/passthrough"
       xmlns:p="http://primefaces.org/ui">
 
-    <h:head>
+   <h:head>
         <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
-        <!--h:outputStylesheet name="./css/default.css"/>
-        <h:outputStylesheet name="./css/cssLayout.css"/-->
-        <h:outputStylesheet name="./css/normalize.css"/>
+        <h:outputStylesheet name="css/normalize.css"/>
+        <h:outputStylesheet name="css/usuarioPlantilla.css"/>
+        <h:outputScript target="head" name="js/jquery-3.3.1.js"/>
+        <h:outputScript target="head" name="js/jquery.validate.min.js"/>
+        <ui:insert name="css"/>
         <style>
-            #bottom .ui-icon{
-                width: 30px !important;
-                height: 30px !important;
-            }
-            #bottom .ui-g div:first-child{
-                padding-top: 2%;
-            }
-            html,body{
-                height: 100%;
-            }
+            
             #main{
                 display: flex;
                 flex-wrap: nowrap;
@@ -37,59 +32,40 @@
                 background-color: #e9d7fa;
             }
         </style>
-        <title><ui:insert name="title">PRINCIPAL</ui:insert></title>
+        <title><ui:insert name="title">bitacora</ui:insert></title>
     </h:head>
+    <h:body style="position: relative;">
+     
+        <ui:insert name="top">
+            <header>
+                <div id="cabecera">
+                    <p:link outcome="principal" value="bitacora"/>
 
-    <h:body>
-
-        <div id="top" style="position:fixed;top:0;left: 0;right:0;">
-            <ui:insert name="top">
-                <header>
-                    <h:form prependId="false">
-                        <p:panelGrid columns="2" layout="grid">            
-                            <p:outputLabel value="BITACORA" /> 
-
-                            <p:menubar style="border: none;">
-                                <p:menuitem value="ENTRAR" url="login.xhtml"/>
-                                <p:submenu label="EXPLORAR">
-                                    <p:menuitem value="Undo" url="#"></p:menuitem>
-                                    <p:menuitem value="Redo" url="#"></p:menuitem>
-                                </p:submenu>
-                                <p:menuitem value="REGISTRATE"  url="registro.xhtml"/>
-                            </p:menubar>
-                        </p:panelGrid>
+                    <p:menubar id="menu-superior">
+                        <p:menuitem value="#{messages.botonPerfil}" url="perfilUsuario.xhtml"/>
+                        <p:menuitem value="#{messages.botonExplorar}" url="explorarLogged
+                                    .xhtml"/>
+                        <p:menuitem value="#{messages.botonNotificaciones}"  url="principal.xhtml"/>
+                    </p:menubar>
+                    <h:form>                        
+                        <h:selectOneMenu value="#{localeBean.language}" onchange="submit()">
+                            <f:selectItem itemValue="es" itemLabel="ES" pt:title="Español"  class="spanish" />
+                            <f:selectItem itemValue="en" itemLabel="EN" pt:title="English" class="english"/>
+                        </h:selectOneMenu>
                     </h:form>
-                </header>
-            </ui:insert>
-        </div>
+                </div> 
+            </header>
+        </ui:insert>
 
         <div id="main">
             <div id="left">
                 <ui:insert name="left">Left</ui:insert>
             </div>
-            <div id="content" class="left_content">
+            <div id="content">
                 <ui:insert name="content">Content</ui:insert>
             </div>
         </div>
-        <div id="bottom" style="position:absolute;bottom: 0;left: 0;right:0;">
-            <ui:insert name="bottom">
-                <footer>
-                    <p:panelGrid columns="2" layout="grid">            
-                        <p:outputLabel value="2018 &copy; bitacora" /> 
-
-                        <p:menubar style="border: none;">
-                            <p:menuitem title="Facebook" url="http://www.facebook.es" icon="fa fa-facebook fa-2x"/>
-                            <p:menuitem title="Twitter" url="http://www.facebook.es" icon="fa fa-twitter fa-2x"/>
-                            <p:menuitem title="Google+" url="http://www.facebook.es" icon="fa fa-google fa-2x"/>
-                            <p:menuitem title="Pinterest" url="http://www.facebook.es" icon="fa fa-pinterest fa-2x"/>
-                            <p:menuitem title="Contacto" url="" icon="fa fa-mail"/>
-                        </p:menubar>
-                    </p:panelGrid>
-
-                </footer>
-            </ui:insert>
-        </div>
-
+        
     </h:body>
 
 </html>

@@ -8,12 +8,12 @@
     <body>
 
         <ui:composition template="./templates/noLoggedPlantilla.xhtml">
-            
+            <ui:define name="css">
+                <h:outputStylesheet name="registro.css" library="css"/>
+            </ui:define>
             <ui:define name="title">#{messages.tituloRegistro}</ui:define>
-            
+
             <ui:define name="content">
-                <h:outputScript target="head" name="js/jquery-3.3.1.js"/>
-                <h:outputScript target="head" name="js/jquery.validate.min.js"/>
                 <h:outputScript target="head" name="js/formRegistro_validate.js"/>
                 <f:view locale="#{localeBean.locale}">
                     <h:form id="formRegistro" prependId="false">
@@ -42,7 +42,7 @@
                             <p:link outcome="login" value="#{messages.goToLogin}"/>
                         </p:panelGrid>
                     </h:form>
-
+                    
 
                 </f:view>
 

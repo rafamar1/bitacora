@@ -5,23 +5,20 @@
  */
 package beans.controladores;
 
-import beans.modelos.IndexBean;
 import beans.respaldo.Session;
+import beans.respaldo.SessionUtilsBean;
 import datos.dao.UsuarioJpaController;
-import datos.dao.ViajeJpaController;
 import datos.dao.exceptions.NonexistentEntityException;
 import datos.entidades.Usuario;
 import datos.entidades.Viaje;
 import java.io.Serializable;
-import java.util.ArrayList;
-import java.util.HashSet;
 import java.util.List;
-import java.util.Random;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.faces.bean.ManagedBean;
 import javax.faces.bean.ManagedProperty;
 import javax.faces.bean.RequestScoped;
+import javax.faces.bean.ViewScoped;
 import javax.persistence.EntityManagerFactory;
 import javax.persistence.Persistence;
 
@@ -31,24 +28,34 @@ import javax.persistence.Persistence;
  */
 
 @ManagedBean
-@RequestScoped
+@ViewScoped
 public class PerfilController implements Serializable {
     
-    /*@ManagedProperty(value = "#{indexBean}")
-    private IndexBean indexBean;*/
+    @ManagedProperty(value = "#{sessionUtilsBean}")
+    private SessionUtilsBean sessionUtilsBean;
     private final EntityManagerFactory emf;
+    private Usuario usuarioSeleccionado;
     
     public PerfilController() {
         emf = Persistence.createEntityManagerFactory("bitacoraPU");
+        usuarioSeleccionado = dameUsuarioSeleccionadoPorId();
     }    
 
-    /*public IndexBean getIndexBean() {
-        return indexBean;
+    public SessionUtilsBean getSessionUtilsBean() {
+        return sessionUtilsBean;
     }
 
-    public void setIndexBean(IndexBean indexBean) {
-        this.indexBean = indexBean;
-    }*/
+    public void setSessionUtilsBean(SessionUtilsBean sessionUtilsBean) {
+        this.sessionUtilsBean = sessionUtilsBean;
+    }
+
+    public Usuario getUsuarioSeleccionado() {
+        return usuarioSeleccionado;
+    }
+
+    public void setUsuarioSeleccionado(Usuario usuarioSeleccionado) {
+        this.usuarioSeleccionado = usuarioSeleccionado;
+    }
     
     public List<Viaje> damelistaViajesUsuario(){
         UsuarioJpaController controlUser= new UsuarioJpaController(emf);
@@ -56,6 +63,45 @@ public class PerfilController implements Serializable {
         Usuario usuarioSeleccionado = (Usuario)Session.getInstance().getAttribute("usuario");
         
         return usuarioSeleccionado.getViajeList();
+        
+    }
+    
+    private Usuario dameUsuarioSeleccionadoPorId() {
+        UsuarioJpaController controlUser = new UsuarioJpaController(emf);
+        if(controlUser.findUsuario(sessionUtilsBean.getIdUsuarioSeleccionado()) != null){
+            return controlUser.findUsuario(sessionUtilsBean.getIdUsuarioSeleccionado());
+        } else {
+           return controlUser.findUsuario(((Usuario) Session.getInstance().getAttribute("usuario")).getNombreUsuario());
+        }
+    }
+    
+    public String followUnfollow(){
+        try {
+            UsuarioJpaController controlUser = new UsuarioJpaController(emf);
+            Usuario userToFollow = controlUser.findUsuario(sessionUtilsBean.getIdUsuarioSeleccionado());
+            Usuario userToUnfollow = controlUser.findUsuario(sessionUtilsBean.getIdUsuarioSeleccionado());
+            Usuario userLogeado = sessionUtilsBean.getUsuario();
+           
+            //kendrick.getListaUsuarioSeguido().add(usuarioQueSigue);
+            userToFollow.getListaUsuarioTeSigue().add(userLogeado);
+            
+            //controlUser.edit(usuarioSeguido);
+            controlUser.edit(userToFollow);
+            
+            /*PARA DEJAR DE SEGUIR*/
+            List<Usuario> listUserToUnfollow = userToUnfollow.getListaUsuarioTeSigue();
+            if(listUserToUnfollow.contains(userLogeado)){
+                listUserToUnfollow.remove(userLogeado);
+            }
+            return "followOK";
+            
+        } catch (NonexistentEntityException ex) {
+            Logger.getLogger(PerfilController.class.getName()).log(Level.SEVERE, null, ex);
+            return "error";
+        } catch (Exception ex) {
+            Logger.getLogger(PerfilController.class.getName()).log(Level.SEVERE, null, ex);
+            return "error";
+        }
         
     }
     
@@ -81,7 +127,7 @@ public class PerfilController implements Serializable {
         }
         
     }
-    
+
     public String followKendrick(){
         try {
             UsuarioJpaController controlUser = new UsuarioJpaController(emf);
@@ -164,6 +210,6 @@ public class PerfilController implements Serializable {
         }
         
     }
-
+    
 
 }
