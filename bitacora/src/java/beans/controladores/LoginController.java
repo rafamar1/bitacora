@@ -58,8 +58,6 @@ public class LoginController implements Serializable {
         this.sessionUtilsBean = sessionUtilsBean;
     }
     
-    
-    
     public boolean isBadLogin() {
         return badLogin;
     }
@@ -80,8 +78,9 @@ public class LoginController implements Serializable {
                 BasicPasswordEncryptor passwordEncryptor = new BasicPasswordEncryptor();
                 
                 if (passwordEncryptor.checkPassword(inputPassword, usuario.getPassword())) {
+                    /*TODO PROBAR CON COMENTAR ESTO
                     Session.getInstance().setAttribute("usuario", usuario);
-                    Session.getInstance().setAttribute("usuarioLogeado", true);
+                    Session.getInstance().setAttribute("usuarioLogeado", true);*/
                     sessionUtilsBean.setUsuario(usuario);
                     return "loginOk";
                 } else {

@@ -13,6 +13,10 @@
             <ui:define name="content">
 
                 <f:view locale="#{localeBean.locale}">
+                    <f:metadata>
+                        <f:viewParam name="idUsuarioSeleccionado" value="#{sessionUtilsBean.idUsuarioSeleccionado}" />
+                        <f:viewParam name="idUsuarioSeleccionado" value="#{perfilController.idUsuarioSeleccionado}" />
+                    </f:metadata>
 
                     <div id="cabecera_usuario">
                         MiNombre->#{sessionScope.usuario.nombreUsuario}
@@ -24,10 +28,18 @@
                             Seguidores->#{sessionScope.usuario.listaUsuarioTeSigue.size()}                    
                         </p>                
                     </div>
-                    
+
                     <p> USUARIO SELECCIONADO</p>
                     <p>
                         NOMBRE_USUARIO-> #{sessionUtilsBean.idUsuarioSeleccionado}
+                    </p>
+
+                    <p>
+                        PRUEBA PARAM BRONCANO-->
+                        <f:metadata>
+                            <f:viewParam name="idUsuarioSeleccionado" value="#{sessionUtilsBean.idUsuarioSeleccionado}" />
+                        </f:metadata>
+
                     </p>
 
                     <section id="viajes_siguiendo">

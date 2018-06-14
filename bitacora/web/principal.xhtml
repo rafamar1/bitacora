@@ -24,6 +24,10 @@
                     <h:form>
                         <p:commandButton action="publicarViaje.xhtml" value="Publicar Viaje" rendered="#{sessionScope.usuarioLogeado}"/>
                         <p:commandButton action="perfilUsuario.xhtml" value="Mi Perfil"/>
+
+                        <p:link outcome="perfilUsuario" value="Perfil de broncano">
+                            <f:param name="idUsuarioSeleccionado" value="broncano" />
+                        </p:link>
                     </h:form>
                 </p>
             </ui:define>
@@ -40,7 +44,7 @@
                                 <p>
                                     #{viaje.titulo} -> #{viaje.descripcion}
                                 </p>
-                                    
+
                             </c:forEach>
                         </c:forEach>
                     </section>
