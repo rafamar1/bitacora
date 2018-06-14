@@ -21,7 +21,6 @@
                 <f:view locale="#{localeBean.locale}">
                     <section id="panel_busqueda">
                         <h:form>
-
                             <p>
                                 <p:inputText id="busqueda" value="#{indexBean.busqueda}" title="#{messages.buscarLocalizacion}" placeholder="#{messages.buscarLocalizacion}">
                                     <f:validateLength minimum="3" />
@@ -62,7 +61,9 @@
                                 <p class="descripcion"> #{entrada.descripcion}</p>
                                 <p><p:rating value="#{entrada.puntuacion}" readonly="true"/> 
                                     <p:commandLink class="labelUsuario" value="@#{entrada.idDia.idViaje.usuario.nombreUsuario}" action="login.xhtml"/></p>
-
+                                <p:link outcome="perfilUsuario" value="@#{entrada.idDia.idViaje.usuario.nombreUsuario}">
+                                    <f:param name="idUsuarioSeleccionado" value="#{entrada.idDia.idViaje.usuario.nombreUsuario}" />
+                                </p:link>
 
                             </div>                            
                         </c:forEach>

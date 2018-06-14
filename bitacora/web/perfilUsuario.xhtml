@@ -13,46 +13,33 @@
             <ui:define name="content">
 
                 <f:view locale="#{localeBean.locale}">
+                    <h:form>
                     <f:metadata>
                         <f:viewParam name="idUsuarioSeleccionado" value="#{sessionUtilsBean.idUsuarioSeleccionado}" />
-                        <f:viewParam name="idUsuarioSeleccionado" value="#{perfilController.idUsuarioSeleccionado}" />
                     </f:metadata>
 
                     <div id="cabecera_usuario">
-                        MiNombre->#{sessionScope.usuario.nombreUsuario}
-                        MiNombreCompleto->#{sessionScope.usuario.nombreCompleto}
-                        MiImagen->#{sessionScope.usuario.email}
+                        MiNombre->#{sessionUtilsBean.usuario.nombreUsuario}
+                        MiNombreCompleto->#{sessionUtilsBean.usuario.nombreCompleto}
+                        MiImagen->#{sessionUtilsBean.usuario.email}
                         <p>
-                            Viajes Publicados -> #{sessionScope.usuario.viajeList.size()}
-                            Siguiendo->#{sessionScope.usuario.listaUsuarioSeguido.size()}
-                            Seguidores->#{sessionScope.usuario.listaUsuarioTeSigue.size()}                    
+                            Viajes Publicados -> #{sessionUtilsBean.usuario.viajeList.size()}
+                            Siguiendo->#{sessionUtilsBean.usuario.listaUsuarioSeguido.size()}
+                            Seguidores->#{sessionUtilsBean.usuario.listaUsuarioTeSigue.size()}                    
                         </p>                
                     </div>
 
-                    <p> USUARIO SELECCIONADO</p>
-                    <p>
-                        NOMBRE_USUARIO-> #{sessionUtilsBean.idUsuarioSeleccionado}
-                    </p>
+                    <p> USUARIO SELECCIONADO -> #{perfilController.dameUsuarioSeleccionadoPorId()}</p>
+                    <p> USUARIO SELECCIONADO por PARAM -> #{sessionUtilsBean.idUsuarioSeleccionado}</p>
+                    <p> USUARIO ESTA LOGGED? -> #{sessionUtilsBean.usuarioLogeado}</p>
 
-                    <p>
-                        PRUEBA PARAM BRONCANO-->
-                        <f:metadata>
-                            <f:viewParam name="idUsuarioSeleccionado" value="#{sessionUtilsBean.idUsuarioSeleccionado}" />
-                        </f:metadata>
-
-                    </p>
-
-                    <section id="viajes_siguiendo">
-                        VIAJES PUBLICADOS 
-                        <c:forEach items="#{perfilController.damelistaViajesUsuario()}" var="viaje">
-                            <p>
-                                Titulo -> #{viaje.titulo}
-                                Descripcion -> #{viaje.descripcion}
-                                Imagen -> #{viaje.imgMiniatura}
-                            </p>
-                        </c:forEach>
-                    </section>
-
+                    <p:selectBooleanButton id="followUnfollow" value="#{perfilController.followUnfollow}" 
+                                           onLabel="Dejar de Seguir" offLabel="Seguir" rendered="#{sessionUtilsBean.usuarioLogeado}">
+                        <p:ajax update="booleano" listener="#{perfilController.toFollowUnfollow}" />
+                    </p:selectBooleanButton>
+                    
+                    <h:outputLabel id="booleano" value="#{perfilController.followUnfollow}"/>
+                    </h:form>
                 </f:view>
 
             </ui:define>

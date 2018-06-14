@@ -82,6 +82,7 @@ public class LoginController implements Serializable {
                     Session.getInstance().setAttribute("usuario", usuario);
                     Session.getInstance().setAttribute("usuarioLogeado", true);*/
                     sessionUtilsBean.setUsuario(usuario);
+                    sessionUtilsBean.setUsuarioLogeado(true);
                     return "loginOk";
                 } else {
                     this.badLogin = true;
