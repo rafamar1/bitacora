@@ -75,6 +75,7 @@ public class IndexController implements Serializable {
         
         return new ArrayList(hashSetViajes);
     }
+    
     private List<Entrada> dameListaEntradas(int entradasAMostrar){
         HashSet<Entrada> hashSetEntradas = new HashSet<>();
         
@@ -88,6 +89,7 @@ public class IndexController implements Serializable {
         
         return new ArrayList(hashSetEntradas);
     }
+    
     public String dameRuta(Entrada entrada){
         StringBuilder sb = new StringBuilder("resources/images/usuarios/");
         sb.append(entrada.getIdDia().getIdViaje().getUsuario().getNombreUsuario());
@@ -98,112 +100,6 @@ public class IndexController implements Serializable {
         sb.append("/");
         sb.append(entrada.getImgMiniatura());
         return sb.toString();
-    }
-    public String followLitro(){
-        try {
-            UsuarioJpaController controlUser = new UsuarioJpaController(emf);
-            Usuario rafamar = controlUser.findUsuario("rafamar");
-            Usuario kendrick = controlUser.findUsuario("kendrick");
-           
-            //kendrick.getListaUsuarioSeguido().add(rafamar);
-            rafamar.getListaUsuarioTeSigue().add(kendrick);
-            
-            //controlUser.edit(kendrick);
-            controlUser.edit(rafamar);
-            
-            return "followOK";
-        } catch (NonexistentEntityException ex) {
-            Logger.getLogger(IndexController.class.getName()).log(Level.SEVERE, null, ex);
-            return "error";
-        } catch (Exception ex) {
-            Logger.getLogger(IndexController.class.getName()).log(Level.SEVERE, null, ex);
-            return "error";
-        }
-        
-    }
-    
-    public String followKendrick(){
-        try {
-            UsuarioJpaController controlUser = new UsuarioJpaController(emf);
-            Usuario rafamar = controlUser.findUsuario("rafamar");
-            Usuario kendrick = controlUser.findUsuario("kendrick");
-           
-            //rafamar.getListaUsuarioSeguido().add(kendrick);
-            kendrick.getListaUsuarioTeSigue().add(rafamar);
-            
-            //controlUser.edit(rafamar);
-            controlUser.edit(kendrick);
-            
-            return "followOK";
-        } catch (NonexistentEntityException ex) {
-            Logger.getLogger(IndexController.class.getName()).log(Level.SEVERE, null, ex);
-            return "error";
-        } catch (Exception ex) {
-            Logger.getLogger(IndexController.class.getName()).log(Level.SEVERE, null, ex);
-            return "error";
-        }
-        
-    }
-    
-    public String unfollowLitro(){
-        try {
-            UsuarioJpaController controlUser = new UsuarioJpaController(emf);
-            Usuario rafamar = controlUser.findUsuario("rafamar");
-            Usuario kendrick = controlUser.findUsuario("kendrick");
-            
-            /*List<Usuario> listaKendrick = kendrick.getListaUsuarioSeguido();
-            if(listaKendrick.contains(rafamar)){
-                listaKendrick.remove(rafamar);
-            }*/
-            
-            List<Usuario> listaLitro = rafamar.getListaUsuarioTeSigue();
-            if(listaLitro.contains(kendrick)){
-                listaLitro.remove(kendrick);
-            }
-                            
-            controlUser.edit(rafamar);
-            
-            return "followOK";
-        } catch (NonexistentEntityException ex) {
-            Logger.getLogger(IndexController.class.getName()).log(Level.SEVERE, null, ex);
-            return "error";
-        } catch (Exception ex) {
-            Logger.getLogger(IndexController.class.getName()).log(Level.SEVERE, null, ex);
-            return "error";
-        }
-        
-    }
-    
-    public String unfollowKendrick(){
-        try {
-            UsuarioJpaController controlUser = new UsuarioJpaController(emf);
-            Usuario rafamar = controlUser.findUsuario("rafamar");
-            Usuario kendrick = controlUser.findUsuario("kendrick");
-           
-            /*List<Usuario> listaLitro = rafamar.getListaUsuarioSeguido();
-            if(listaLitro.contains(kendrick)){
-                listaLitro.remove(kendrick);
-            }*/
-            
-            List<Usuario> listaKendrick = kendrick.getListaUsuarioTeSigue();
-            if(listaKendrick.contains(rafamar)){
-                listaKendrick.remove(rafamar);
-            }
-            
-            controlUser.edit(kendrick);
-            
-            
-            
-            return "followOK";
-        } catch (NonexistentEntityException ex) {
-            Logger.getLogger(IndexController.class.getName()).log(Level.SEVERE, null, ex);
-            return "error";
-        } catch (Exception ex) {
-            Logger.getLogger(IndexController.class.getName()).log(Level.SEVERE, null, ex);
-            return "error";
-        }
-        
-    }
-    
+    }  
     
 }

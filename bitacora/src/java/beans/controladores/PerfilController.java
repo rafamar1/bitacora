@@ -18,7 +18,6 @@ import java.util.logging.Logger;
 import javax.annotation.PostConstruct;
 import javax.faces.bean.ManagedBean;
 import javax.faces.bean.ManagedProperty;
-import javax.faces.bean.RequestScoped;
 import javax.faces.bean.ViewScoped;
 import javax.persistence.EntityManagerFactory;
 import javax.persistence.Persistence;
@@ -30,7 +29,7 @@ import javax.persistence.Persistence;
 @ManagedBean
 @ViewScoped
 public class PerfilController implements Serializable {
-
+    //TODO habria se puede eliminar el usuarioSeleccionado? o setearlo en el initialize
     @ManagedProperty(value = "#{sessionUtilsBean}")
     private SessionUtilsBean sessionUtilsBean;
     private final EntityManagerFactory emf;
@@ -42,12 +41,12 @@ public class PerfilController implements Serializable {
         UsuarioJpaController controlUser = new UsuarioJpaController(emf);
         Usuario userToFollowUnfollow = controlUser.findUsuario(sessionUtilsBean.getIdUsuarioSeleccionado());
         Usuario userLogeado = sessionUtilsBean.getUsuario();
+//        this.usuarioSeleccionado = controlUser.findUsuario(sessionUtilsBean.getIdUsuarioSeleccionado());
         this.followUnfollow = esSeguidor(userToFollowUnfollow, userLogeado);
     }
 
     public PerfilController() {
         emf = Persistence.createEntityManagerFactory("bitacoraPU");
-        //followUnfollow=true;
     }
 
     public SessionUtilsBean getSessionUtilsBean() {
@@ -75,11 +74,10 @@ public class PerfilController implements Serializable {
     }
 
     public List<Viaje> damelistaViajesUsuario() {
-        UsuarioJpaController controlUser = new UsuarioJpaController(emf);
-        //Usuario usuarioSeleccionado = controlUser.findUsuario((String)Session.getInstance().getAttribute("idUsuarioSeleccionado"));
-        Usuario usuarioSeleccionado = (Usuario) Session.getInstance().getAttribute("usuario");
+        //Usuario usuarioSeleccionado = (Usuario) Session.getInstance().getAttribute("usuario");
+        Usuario userSeleccionado = dameUsuarioSeleccionadoPorId();
 
-        return usuarioSeleccionado.getViajeList();
+        return userSeleccionado.getViajeList();
 
     }
 
@@ -96,22 +94,23 @@ public class PerfilController implements Serializable {
         try {
             UsuarioJpaController controlUser = new UsuarioJpaController(emf);
             Usuario userToFollowUnfollow = controlUser.findUsuario(sessionUtilsBean.getIdUsuarioSeleccionado());
-            //Usuario userToUnfollow = controlUser.findUsuario(sessionUtilsBean.getIdUsuarioSeleccionado());
             Usuario userLogeado = sessionUtilsBean.getUsuario();
 
-            //setFollowUnfollow(!followUnfollow);
             boolean isFollower = esSeguidor(userToFollowUnfollow, userLogeado);
+            List<Usuario> listUserToFollowUnfollow = userToFollowUnfollow.getListaUsuarioTeSigue();
             if (!isFollower) {
-
+                /*/TODO REVISAR ESE CONTAINS
+                if (!listUserToFollowUnfollow.contains(userLogeado)) {
+                    listUserToFollowUnfollow.add(userLogeado)
+                }*/
                 userToFollowUnfollow.getListaUsuarioTeSigue().add(userLogeado);
-                //controlUser.edit(usuarioSeguido);
                 controlUser.edit(userToFollowUnfollow);
 
             } else {
                 /*PARA DEJAR DE SEGUIR*/
-                List<Usuario> listUserToUnfollow = userToFollowUnfollow.getListaUsuarioTeSigue();
-                if (listUserToUnfollow.contains(userLogeado)) {
-                    listUserToUnfollow.remove(userLogeado);
+                
+                if (listUserToFollowUnfollow.contains(userLogeado)) {
+                    listUserToFollowUnfollow.remove(userLogeado);
                 }
                 controlUser.edit(userToFollowUnfollow);
             }
@@ -126,30 +125,7 @@ public class PerfilController implements Serializable {
     private boolean esSeguidor(Usuario userToFollowUnfollow, Usuario userLogeado) {
         return userToFollowUnfollow.getListaUsuarioTeSigue().contains(userLogeado);
     }
-
-    public String followLitro() {
-        try {
-            UsuarioJpaController controlUser = new UsuarioJpaController(emf);
-            Usuario rafamar = controlUser.findUsuario("rafamar");
-            Usuario kendrick = controlUser.findUsuario("kendrick");
-
-            //kendrick.getListaUsuarioSeguido().add(rafamar);
-            rafamar.getListaUsuarioTeSigue().add(kendrick);
-
-            //controlUser.edit(kendrick);
-            controlUser.edit(rafamar);
-
-            return "followOK";
-        } catch (NonexistentEntityException ex) {
-            Logger.getLogger(PerfilController.class.getName()).log(Level.SEVERE, null, ex);
-            return "error";
-        } catch (Exception ex) {
-            Logger.getLogger(PerfilController.class.getName()).log(Level.SEVERE, null, ex);
-            return "error";
-        }
-
-    }
-
+    
     public String followKendrick() {
         try {
             UsuarioJpaController controlUser = new UsuarioJpaController(emf);
@@ -161,34 +137,6 @@ public class PerfilController implements Serializable {
 
             //controlUser.edit(rafamar);
             controlUser.edit(kendrick);
-
-            return "followOK";
-        } catch (NonexistentEntityException ex) {
-            Logger.getLogger(PerfilController.class.getName()).log(Level.SEVERE, null, ex);
-            return "error";
-        } catch (Exception ex) {
-            Logger.getLogger(PerfilController.class.getName()).log(Level.SEVERE, null, ex);
-            return "error";
-        }
-
-    }
-
-    public String unfollowLitro() {
-        try {
-            UsuarioJpaController controlUser = new UsuarioJpaController(emf);
-            Usuario rafamar = controlUser.findUsuario("rafamar");
-            Usuario kendrick = controlUser.findUsuario("kendrick");
-
-            /*List<Usuario> listaKendrick = kendrick.getListaUsuarioSeguido();
-            if(listaKendrick.contains(rafamar)){
-                listaKendrick.remove(rafamar);
-            }*/
-            List<Usuario> listaLitro = rafamar.getListaUsuarioTeSigue();
-            if (listaLitro.contains(kendrick)) {
-                listaLitro.remove(kendrick);
-            }
-
-            controlUser.edit(rafamar);
 
             return "followOK";
         } catch (NonexistentEntityException ex) {

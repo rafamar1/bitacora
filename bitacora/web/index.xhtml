@@ -38,17 +38,6 @@
 
                     </section>
 
-                    <p>
-
-                        <p:commandButton action="#{indexController.followKendrick}" value="Rafamar sigue a Kendrick"/>
-                        <p:commandButton action="#{indexController.followLitro}" value="Kendrick sigue a Rafamar"/>
-                    </p>
-                    <p>
-                        <p:commandButton action="#{indexController.unfollowKendrick}" value="Dejar de seguir a Kendrick"/>
-                        <p:commandButton action="#{indexController.unfollowLitro}" value="Dejar de seguir a Rafamar"/>
-
-                    </p>
-
                     <h1>#{messages.cabeceraGridViajes}</h1>
                     <section id="paises_continent_grid">
                         <c:forEach items="#{indexController.listaEntradasRandom}" var="entrada">
@@ -64,18 +53,17 @@
                                 <p:link outcome="perfilUsuario" value="@#{entrada.idDia.idViaje.usuario.nombreUsuario}">
                                     <f:param name="idUsuarioSeleccionado" value="#{entrada.idDia.idViaje.usuario.nombreUsuario}" />
                                 </p:link>
-
                             </div>                            
-                        </c:forEach>
-                        <!--a href="explorar.xhtml#asia"><img src="Asia.jpg" alt="Asia"/></a>
-                        <a href="explorar.xhtml#usa"><img src="imgUsa.jpg" alt="USA"/></a>
-                        <a href="explorar.xhtml#europa"><img src="Europa.jpg" alt="Europa"/></a>
-                        <a href="explorar.xhtml#africa"><img src="Africa.jpg" alt="Africa"/></a-->
+                        </c:forEach>                        
                     </section>
 
 
                     <section id="usuarios_destacados" style="display: none;">
                         <h1>#{messages.cabeceraUsuariosDestacados}</h1>
+                        <!--a href="explorar.xhtml#asia"><img src="Asia.jpg" alt="Asia"/></a>
+                        <a href="explorar.xhtml#usa"><img src="imgUsa.jpg" alt="USA"/></a>
+                        <a href="explorar.xhtml#europa"><img src="Europa.jpg" alt="Europa"/></a>
+                        <a href="explorar.xhtml#africa"><img src="Africa.jpg" alt="Africa"/></a-->
                     </section>
                 </f:view>
 

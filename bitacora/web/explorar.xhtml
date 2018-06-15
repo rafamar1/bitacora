@@ -4,7 +4,8 @@
       xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
       xmlns:h="http://xmlns.jcp.org/jsf/html"
       xmlns:f="http://xmlns.jcp.org/jsf/core"
-      xmlns:p="http://primefaces.org/ui">
+      xmlns:p="http://primefaces.org/ui"
+      xmlns:c="http://xmlns.jcp.org/jsp/jstl/core">
     
     <body>
 
@@ -15,31 +16,45 @@
                 <f:view locale="#{localeBean.locale}">
                     
                     <section id="asia">
-                        <h1>Asia</h1>
-                        <a href="explorar.xhtml#asia"><img src="Asia.jpg" alt="Asia"/></a>
-                        <a href="explorar.xhtml#usa"><img src="imgUsa.jpg" alt="USA"/></a>
-                        <a href="explorar.xhtml#europa"><img src="Europa.jpg" alt="Europa"/></a>
-                        <a href="explorar.xhtml#africa"><img src="Africa.jpg" alt="Africa"/></a>
-                    </section>
+                        <h1>ASIA</h1>
+                        <c:forEach items="#{explorarController.listaViajesAsia}" var="viaje">
+                            <div id="viaje">
+                                <p> #{viaje.titulo}</p>
+                                <p> IMAGEN USUARIO -> #{viaje.usuario}</p>
+                                <p> CREAR UN METODO QUE DEVUELVA LA LISTA DE CIUDADES VISITADAS (3 MAX)</p>
+                                <img src="#{explorarController.dameRutaViaje(viaje)}"/>
+                                <p> #{explorarController.dameRutaViaje(viaje)}</p>
+                                <p class="descripcion"> #{viaje.descripcion}</p>
+                                <p><p:rating value="#{entrada.puntuacion}" readonly="true"/> 
+                                    <p> PROBAR ESTO<f:param name="idUsuarioSeleccionado" value="#{viaje.usuario.nombreUsuario}" /></p>
+                                <p:link outcome="perfilUsuario" value="@#{viaje.usuario.nombreUsuario}">
+                                    <f:param name="idUsuarioSeleccionado" value="#{viaje.usuario.nombreUsuario}" />
+                                </p:link>
+                            </div>                            
+                        </c:forEach>  
+                    </section>                    
                     
-                    <section id="asia">
-                        <h1>USA</h1>
-                        <a href="explorar.xhtml#asia"><img src="Asia.jpg" alt="Asia"/></a>
-                        <a href="explorar.xhtml#usa"><img src="imgUsa.jpg" alt="USA"/></a>
-                        <a href="explorar.xhtml#europa"><img src="Europa.jpg" alt="Europa"/></a>
-                        <a href="explorar.xhtml#africa"><img src="Africa.jpg" alt="Africa"/></a>
+                    <section id="europa">
+                        <h1>EUROPA</h1>
+                        <c:forEach items="#{explorarController.listaViajesEuropa}" var="viaje">
+                            <div id="viaje">
+                                <p> #{viaje.titulo}</p>
+                                <p> IMAGEN USUARIO -> #{viaje.usuario}</p>
+                                <p> CREAR UN METODO QUE DEVUELVA LA LISTA DE CIUDADES VISITADAS (3 MAX)</p>
+                                <img src="#{explorarController.dameRutaViaje(viaje)}"/>
+                                <p> #{explorarController.dameRutaViaje(viaje)}</p>
+                                <p class="descripcion"> #{viaje.descripcion}</p>
+                                <p><p:rating value="#{entrada.puntuacion}" readonly="true"/> 
+                                    <p> PROBAR ESTO<f:param name="idUsuarioSeleccionado" value="#{viaje.usuario.nombreUsuario}" /></p>
+                                <p:link outcome="perfilUsuario" value="@#{viaje.usuario.nombreUsuario}">
+                                    <f:param name="idUsuarioSeleccionado" value="#{viaje.usuario.nombreUsuario}" />
+                                </p:link>
+                            </div>                            
+                        </c:forEach> 
                     </section>
                     
                     <section id="usa">
-                        <h1>Europa</h1>
-                        <a href="explorar.xhtml#asia"><img src="Asia.jpg" alt="Asia"/></a>
-                        <a href="explorar.xhtml#usa"><img src="imgUsa.jpg" alt="USA"/></a>
-                        <a href="explorar.xhtml#europa"><img src="Europa.jpg" alt="Europa"/></a>
-                        <a href="explorar.xhtml#africa"><img src="Africa.jpg" alt="Africa"/></a>
-                    </section>
-                    
-                    <section id="europa">
-                        <h1>¡Tenemos el lugar ideal para ti!</h1>
+                        <h1>USA</h1>
                         <a href="explorar.xhtml#asia"><img src="Asia.jpg" alt="Asia"/></a>
                         <a href="explorar.xhtml#usa"><img src="imgUsa.jpg" alt="USA"/></a>
                         <a href="explorar.xhtml#europa"><img src="Europa.jpg" alt="Europa"/></a>
@@ -52,11 +67,6 @@
                         <a href="explorar.xhtml#usa"><img src="imgUsa.jpg" alt="USA"/></a>
                         <a href="explorar.xhtml#europa"><img src="Europa.jpg" alt="Europa"/></a>
                         <a href="explorar.xhtml#africa"><img src="Africa.jpg" alt="Africa"/></a>
-                    </section>
-
-
-                    <section id="usuarios_destacados" style="display: none;">
-                        <h1>La clave es compartir</h1>
                     </section>
                 </f:view>
 
