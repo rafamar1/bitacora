@@ -87,4 +87,9 @@ public class SessionUtilsBean implements Serializable {
         this.idCiudadSeleccionada = idCiudadSeleccionada;
     }
     
+    public String cierraSesionYRedirigeLogin(){
+        setUsuarioLogeado(false);
+        Session.getInstance().currentExternalContext().invalidateSession();
+        return "logout";
+    }    
 }

@@ -7,11 +7,14 @@ package beans.controladores;
 
 import beans.modelos.DetalleViajeBean;
 import beans.respaldo.Session;
+import beans.respaldo.SessionUtilsBean;
+import datos.dao.UsuarioJpaController;
 import datos.dao.ViajeJpaController;
 import datos.entidades.Entrada;
 import datos.entidades.Usuario;
 import datos.entidades.Viaje;
 import java.io.Serializable;
+import javax.annotation.PostConstruct;
 import javax.faces.bean.ManagedBean;
 import javax.faces.bean.ManagedProperty;
 import javax.faces.bean.RequestScoped;
@@ -27,14 +30,22 @@ import javax.persistence.Persistence;
 @RequestScoped
 public class DetalleViajeController implements Serializable {
 
+    @ManagedProperty(value = "#{sessionUtilsBean}")
+    private SessionUtilsBean sessionUtilsBean;
     @ManagedProperty(value = "#{detalleViajeBean}")
     private DetalleViajeBean detalleViajeBean;
     private final EntityManagerFactory emf;
     private Viaje viaje;
 
+    @PostConstruct
+    public void initialize() {
+        ViajeJpaController controlViaje = new ViajeJpaController(emf);
+        this.viaje = controlViaje.findViaje(sessionUtilsBean.getIdViajeSeleccionado());
+    }
+    
     public DetalleViajeController() {
         emf = Persistence.createEntityManagerFactory("bitacoraPU");
-        this.viaje = cargarViaje();
+//        this.viaje = cargarViaje();
     }
 
     public DetalleViajeBean getDetalleViajeBean() {

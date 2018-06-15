@@ -29,7 +29,7 @@
                         </p>
 
                         <p>
-                            #{messages.imagenViaje}:  <p:fileUpload id="fileIdResume"  value="#{publicarViajeBean.imagen}" mode="simple" allowTypes="/(\.|\/)(gif|jpe?g|zip)$/" skinSimple="true" dragDropSupport="true"/>
+                            #{messages.imagenViaje}:  <p:fileUpload id="imagenViaje"  value="#{publicarViajeBean.imagen}" mode="simple" allowTypes="/(\.|\/)(gif|jpe?g|zip)$/" skinSimple="true" dragDropSupport="true"/>
                         </p>
                         <p:commandButton value="#{messages.publicarViaje}" ajax="false" action="#{publicarViajeController.publicarViaje}"/> 
 

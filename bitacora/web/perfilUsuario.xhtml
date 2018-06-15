@@ -32,6 +32,18 @@
                     <p> USUARIO SELECCIONADO -> #{perfilController.dameUsuarioSeleccionadoPorId()}</p>
                     <p> USUARIO SELECCIONADO por PARAM -> #{sessionUtilsBean.idUsuarioSeleccionado}</p>
                     <p> USUARIO ESTA LOGGED? -> #{sessionUtilsBean.usuarioLogeado}</p>
+                    
+                    
+                    <div id="cabecera_usuario" style="background-color: lightsteelblue">
+                        MiNombre->#{perfilController.usuarioSeleccionado.nombreUsuario}
+                        MiNombreCompleto->#{perfilController.usuarioSeleccionado.nombreCompleto}
+                        MiImagen->#{perfilController.usuarioSeleccionado.email}
+                        <p>
+                            Viajes Publicados -> #{perfilController.usuarioSeleccionado.viajeList.size()}
+                            Siguiendo->#{perfilController.usuarioSeleccionado.listaUsuarioSeguido.size()}
+                            Seguidores->#{perfilController.usuarioSeleccionado.listaUsuarioTeSigue.size()}                    
+                        </p>                
+                    </div>
 
                     <p:selectBooleanButton id="followUnfollow" value="#{perfilController.followUnfollow}" 
                                            onLabel="Dejar de Seguir" offLabel="Seguir" rendered="#{sessionUtilsBean.usuarioLogeado}">

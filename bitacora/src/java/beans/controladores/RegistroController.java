@@ -34,8 +34,6 @@ public class RegistroController implements Serializable {
 
     @ManagedProperty(value = "#{registroBean}")
     private RegistroBean registroBean;
-
-    //@PersistenceUnit(unitName = "bitacoraPU")
     private final EntityManagerFactory emf;
 
     public RegistroController() {

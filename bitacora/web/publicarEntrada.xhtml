@@ -12,6 +12,8 @@
 
         <ui:composition template="./templates/usuarioPlantilla.xhtml">
 
+            <ui:define name="title">#{messages.tituloPublicarEntrada}</ui:define>
+
             <ui:define name="content">
 
                 <f:view locale="#{localeBean.locale}">
@@ -19,38 +21,38 @@
 
                         <c:if test="#{publicarEntradaController.primeraEntrada}">                      
                             <p:autoComplete id="themeCustom" value="#{publicarEntradaBean.idCiudad}" placeholder="Buscar ciudad"
-                                    completeMethod="#{publicarEntradaController.autocompletadoCiudades}"
-                                    var="ciudad" itemLabel="#{ciudad}" itemValue="#{ciudad.id}"
-                                    scrollHeight="200" forceSelection="true"/>
+                                            completeMethod="#{publicarEntradaController.autocompletadoCiudades}"
+                                            var="ciudad" itemLabel="#{ciudad}" itemValue="#{ciudad.id}"
+                                            scrollHeight="200" forceSelection="true"/>
                         </c:if>
                         <p>
-                            Titulo de la entrada: <h:inputText value="#{publicarEntradaBean.titulo}"/> 
+                            #{messages.tituloEntrada}: <h:inputText value="#{publicarEntradaBean.titulo}"/> 
                         </p> 
 
                         <p>
-                            Escribe tu opinión: <h:inputTextarea value="#{publicarEntradaBean.descripcion}"/>
+                            #{messages.opinionEntrada}: <h:inputTextarea value="#{publicarEntradaBean.descripcion}"/>
                         </p>
 
                         <p>
-                            Comparte una foto del lugar:  <p:fileUpload id="fileIdResume"  value="#{publicarEntradaBean.imagen}" mode="simple" allowTypes="/(\.|\/)(gif|jpe?g|zip)$/" skinSimple="true" dragDropSupport="true"/>
+                            #{messages.imagenEntrada}: <p:fileUpload id="fileIdResume"  value="#{publicarEntradaBean.imagen}" mode="simple" allowTypes="/(\.|\/)(gif|jpe?g|zip)$/" skinSimple="true" dragDropSupport="true"/>
                         </p>
 
                         <p>
-                            Valora tu experiencia: <p:rating value="#{publicarEntradaBean.puntuacion}" />
+                            #{messages.ratingEntrada}: <p:rating value="#{publicarEntradaBean.puntuacion}" />
                         </p>
 
                         <p>
-                            Selecciona una categoría para tu entrada: 
+                           #{messages.categoriaEntrada}: 
                             <p:selectOneMenu value="#{publicarEntradaBean.tipo}">
                                 <f:selectItems value="#{publicarEntradaController.listaCategorias}" var="categoria"
                                                itemValue="#{categoria}" itemLabel="#{categoria}"/>       
                             </p:selectOneMenu>
                         </p>
-                        
+
                         <p>
-                            Gasto aproximado (opcional): <p:inputNumber value="#{publicarEntradaBean.precio}" />
+                            #{messages.precioEntrada}: <p:inputNumber value="#{publicarEntradaBean.precio}" />
                         </p>
-                        <p:commandButton value="Publicar Entrada" ajax="false" action="#{publicarEntradaController.publicarEntrada}"/> 
+                        <p:commandButton value="#{messages.publicarEntrada}:" ajax="false" action="#{publicarEntradaController.publicarEntrada}"/> 
 
                     </h:form>
                 </f:view>

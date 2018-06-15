@@ -28,7 +28,7 @@ public class Session {
     private Session() {
     }
 
-    private ExternalContext currentExternalContext() {
+    public ExternalContext currentExternalContext() {
         if (FacesContext.getCurrentInstance() == null) {
             throw new RuntimeException("FacesContext can’t be called outside of a HTTP request");
         } else {

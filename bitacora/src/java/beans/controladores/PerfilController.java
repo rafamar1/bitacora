@@ -40,8 +40,8 @@ public class PerfilController implements Serializable {
     public void initialize() {
         UsuarioJpaController controlUser = new UsuarioJpaController(emf);
         Usuario userToFollowUnfollow = controlUser.findUsuario(sessionUtilsBean.getIdUsuarioSeleccionado());
+        this.usuarioSeleccionado = controlUser.findUsuario(sessionUtilsBean.getIdUsuarioSeleccionado());
         Usuario userLogeado = sessionUtilsBean.getUsuario();
-//        this.usuarioSeleccionado = controlUser.findUsuario(sessionUtilsBean.getIdUsuarioSeleccionado());
         this.followUnfollow = esSeguidor(userToFollowUnfollow, userLogeado);
     }
 

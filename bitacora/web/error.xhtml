@@ -13,39 +13,14 @@
             <ui:define name="content">
 
                 <f:view locale="#{localeBean.locale}">
-                    <section id="panel_busqueda">
-
-                        <h:form>
-                            <p:inputText id="busqueda" value="#{searchView.text1}" title="Buscar una localización/persona" >
-                                <f:validateLength minimum="3" />
-                            </p:inputText>
-                            <p:commandButton action="buscar" value="BusqueUste"/>
-                        </h:form>
-
-                        <h1>BUGGGGGGGGGGGGGGGGGGG</h1>
-                        <h1>BUGGGGGGGGGGGGGGGGGGG</h1>
-                        <h1>BUGGGGGGGGGGGGGGGGGGG</h1>
-                        <h1>BUGGGGGGGGGGGGGGGGGGG</h1>
-                        <h1>BUGGGGGGGGGGGGGGGGGGG</h1>
-                        <h1>BUGGGGGGGGGGGGGGGGGGG</h1>
-                        <h1>BUGGGGGGGGGGGGGGGGGGG</h1>
-                        <h1>BUGGGGGGGGGGGGGGGGGGG</h1>
-                        <h1>BUGGGGGGGGGGGGGGGGGGG</h1>
-                        <h1>BUGGGGGGGGGGGGGGGGGGG</h1>
-                        <h1>BUGGGGGGGGGGGGGGGGGGG</h1>
-                        <h1>BUGGGGGGGGGGGGGGGGGGG</h1>
-                        <h1>BUGGGGGGGGGGGGGGGGGGG</h1>
-                        <h1>BUGGGGGGGGGGGGGGGGGGG</h1>
-                        <h1>BUGGGGGGGGGGGGGGGGGGG</h1>
-                        <h1>BUGGGGGGGGGGGGGGGGGGG</h1>
-                        <h1>BUGGGGGGGGGGGGGGGGGGG</h1>
-                        <h1>BUGGGGGGGGGGGGGGGGGGG</h1>
-                        <h1>BUGGGGGGGGGGGGGGGGGGG</h1>
-                        <h1>BUGGGGGGGGGGGGGGGGGGG</h1>
-                        <h1>BUGGGGGGGGGGGGGGGGGGG</h1>
+                    
+                    <h:form>                        
+                        <h2>Se ha producido un error inesperado en la aplicación, por favor vuelva a iniciar sesión</h2>
+                        <p:commandButton action="#{sessionUtilsBean.cierraSesionYRedirigeIndex}" value="#{messages.goToLogin}"/>
+                    </h:form>
                         
                     
-                    </section>
+                        
                 </f:view>
 
             </ui:define>

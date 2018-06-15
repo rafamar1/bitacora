@@ -85,8 +85,9 @@ public class LoginController implements Serializable {
                     sessionUtilsBean.setUsuarioLogeado(true);
                     return "loginOk";
                 } else {
+                    //TODO REVISAR REGLA DE NAVEGACION HACIA LOGIN.XHTML O HACIA ERROR
                     this.badLogin = true;
-                    return "error";
+                    return "login.xhtml";
                 }
                 
             }
