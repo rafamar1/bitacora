@@ -77,5 +77,9 @@ public class DetalleViajeController implements Serializable {
         return rutaFichero + "/" + nombreUsuario + "/" + idViajeSeleccionado + "/" + idDiaSeleccionado + "/" + entrada.getImgMiniatura();
 
     }
-
+    
+    public boolean viajeEsDeUsuarioLogeado(){
+        //TODO REVISAR ESTE METODO
+        return this.viaje.getUsuario().equals(sessionUtilsBean.getUsuario());
+    }
 }

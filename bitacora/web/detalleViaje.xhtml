@@ -20,9 +20,10 @@
                         <p>Usuario -> #{detalleViajeController.viaje.usuario.nombreUsuario}</p>
                         <p>Titulo -> #{detalleViajeController.viaje.titulo}</p>
                         <p>Descripcion -> #{detalleViajeController.viaje.descripcion}</p>
-
-                        <p:commandButton action="publicarEntrada.xhtml" value="Nueva Entrada" />
-                        <p:commandButton style="float: right;" action="miPerfil.xhtml" value="Nuevo día" rendered="#{sessionScope.usuarioLogeado}"/>
+                        <c:if test="#{detalleViajeController.viajeEsDeUsuarioLogeado}">
+                            <p:commandButton action="publicarEntrada.xhtml" value="Nueva Entrada" />
+                            <p:commandButton style="float: right;" action="miPerfil.xhtml" value="Nuevo día"/>
+                        </c:if>
 
                         <c:forEach items="#{detalleViajeController.viaje.diaList}" var="dia" varStatus="indice">
                             <div class="dia">
