@@ -68,11 +68,9 @@ public class ExplorarController implements Serializable {
         StringBuilder sb = new StringBuilder("resources/images/usuarios/");
         sb.append(viaje.getUsuario().getNombreUsuario());
         sb.append("/");
-        sb.append(viaje.getImgMiniatura());
-        /*sb.append("/");
-        sb.append(entrada.getIdDia().getId());
+        sb.append(viaje.getId());
         sb.append("/");
-        sb.append(entrada.getImgMiniatura());*/
+        sb.append(viaje.getImgMiniatura());
         return sb.toString();
     } 
 

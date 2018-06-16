@@ -1,9 +1,12 @@
 #panel_busqueda{
     background: url("#{resource['images/vistas/index/background_busqueda.jpg']}") no-repeat;
-    background-size: cover;
+     background-size: cover;
     height: 500px;
     background-position: 0px;
+    box-shadow: 0px 0px 10px #030303;
+    border-bottom: 2px solid #debe6f;
 }
+
 #panel_busqueda p {
     text-align: center;
     padding-top: 150px;

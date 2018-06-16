@@ -9,29 +9,39 @@
     <body>
 
         <ui:composition template="./templates/noLoggedPlantilla.xhtml">
-            
-            <ui:define name="title">#{messages.tituloRegistro}</ui:define>
-            
-             <ui:define name="content">
-                <f:view locale="#{localeBean.locale}">
-                        <h:form>
-                            <h:panelGrid columns="2">
-                                <p>
-                                    <p:outputLabel value="#{messages.bienvenidaRegistro}, #{registroBean.nombreUsuario}" />
-                                </p>
-                                <p>
-                                    <p:outputLabel value="#{messages.altaCorrecta}" />
-                                </p>
-                                <p>
-                                    <p:outputLabel value="#{messages.mailEnviado}, #{registroBean.email}" />
-                                </p>
-                                                                
-                                <p:separator/>
-                                <p:link outcome="login" value="#{messages.goToLogin}"/>
+            <ui:define name="css">
+                <h:outputStylesheet name="registroCorrecto.css" library="css"/>
+            </ui:define>
 
-                            </h:panelGrid>
+            <ui:define name="title">#{messages.tituloRegistro}</ui:define>
+
+            <ui:define name="content">
+                <f:view locale="#{localeBean.locale}">
+
+                    <div class="registro-correcto">
+                        <h:form id="formRegistroCorrecto" prependId="false">
+                            <p>
+                                <p:outputLabel value="#{messages.bienvenidaRegistro}, "/>
+                                <span class="nombreUser">#{registroBean.nombreUsuario}</span> 
+                            </p>                                                               
+
+                            <p>
+                                <p:outputLabel value="#{messages.altaCorrecta}" />
+                            </p>
+                            <p>
+                                <p:outputLabel value="#{messages.mailEnviado} #{registroBean.email}" />
+                            </p>
+                            <p:commandButton 
+                                class="btn"
+                                ajax="false"
+                                action="login" 
+                                value="#{messages.goToLogin}"/>
                         </h:form>
-                   
+                    </div>
+
+
+
+
 
                 </f:view>
 

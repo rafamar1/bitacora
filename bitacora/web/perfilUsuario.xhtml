@@ -6,7 +6,15 @@
       xmlns:f="http://xmlns.jcp.org/jsf/core"
       xmlns:p="http://primefaces.org/ui"
       xmlns:c="http://xmlns.jcp.org/jsp/jstl/core">
-
+    <h:head>
+        <style>
+            #viaje img{
+                min-width: 250px;
+                max-width: 375px;
+                width: 70%;
+            }
+        </style>
+    </h:head>
     <body>
 
         <ui:composition template="./templates/usuarioPlantilla.xhtml">
@@ -14,43 +22,44 @@
 
                 <f:view locale="#{localeBean.locale}">
                     <h:form>
-                    <f:metadata>
-                        <f:viewParam name="idUsuarioSeleccionado" value="#{sessionUtilsBean.idUsuarioSeleccionado}" />
-                    </f:metadata>
+                        <f:metadata>
+                            <f:viewParam name="idUsuarioSeleccionado" value="#{sessionUtilsBean.idUsuarioSeleccionado}" />
+                        </f:metadata>
 
-                    <div id="cabecera_usuario">
-                        MiNombre->#{sessionUtilsBean.usuario.nombreUsuario}
-                        MiNombreCompleto->#{sessionUtilsBean.usuario.nombreCompleto}
-                        MiImagen->#{sessionUtilsBean.usuario.email}
-                        <p>
-                            Viajes Publicados -> #{sessionUtilsBean.usuario.viajeList.size()}
-                            Siguiendo->#{sessionUtilsBean.usuario.listaUsuarioSeguido.size()}
-                            Seguidores->#{sessionUtilsBean.usuario.listaUsuarioTeSigue.size()}                    
-                        </p>                
-                    </div>
+                        <div id="cabecera_usuario">
+                            MiNombre->#{sessionUtilsBean.usuario.nombreUsuario}
+                            MiNombreCompleto->#{sessionUtilsBean.usuario.nombreCompleto}
+                            MiImagen->#{sessionUtilsBean.usuario.email}
+                            <p>
+                                Viajes Publicados -> #{sessionUtilsBean.usuario.viajeList.size()}
+                                Siguiendo->#{sessionUtilsBean.usuario.listaUsuarioSeguido.size()}
+                                Seguidores->#{sessionUtilsBean.usuario.listaUsuarioTeSigue.size()}                    
+                            </p>                
+                        </div>
 
-                    <p> USUARIO SELECCIONADO -> #{perfilController.dameUsuarioSeleccionadoPorId()}</p>
-                    <p> USUARIO SELECCIONADO por PARAM -> #{sessionUtilsBean.idUsuarioSeleccionado}</p>
-                    <p> USUARIO ESTA LOGGED? -> #{sessionUtilsBean.usuarioLogeado}</p>
-                    
-                    
-                    <div id="cabecera_usuario" style="background-color: lightsteelblue">
-                        MiNombre->#{perfilController.usuarioSeleccionado.nombreUsuario}
-                        MiNombreCompleto->#{perfilController.usuarioSeleccionado.nombreCompleto}
-                        MiImagen->#{perfilController.usuarioSeleccionado.email}
-                        <p>
-                            Viajes Publicados -> #{perfilController.usuarioSeleccionado.viajeList.size()}
-                            Siguiendo->#{perfilController.usuarioSeleccionado.listaUsuarioSeguido.size()}
-                            Seguidores->#{perfilController.usuarioSeleccionado.listaUsuarioTeSigue.size()}                    
-                        </p>                
-                    </div>
+                        <p> USUARIO SELECCIONADO -> #{perfilController.dameUsuarioSeleccionadoPorId()}</p>
+                        <p> USUARIO SELECCIONADO por PARAM -> #{sessionUtilsBean.idUsuarioSeleccionado}</p>
+                        <p> USUARIO ESTA LOGGED? -> #{sessionUtilsBean.usuarioLogeado}</p>
 
-                    <p:selectBooleanButton id="followUnfollow" value="#{perfilController.followUnfollow}" 
-                                           onLabel="Dejar de Seguir" offLabel="Seguir" rendered="#{sessionUtilsBean.usuarioLogeado}">
-                        <p:ajax update="booleano" listener="#{perfilController.toFollowUnfollow}" />
-                    </p:selectBooleanButton>
-                    
-                    <h:outputLabel id="booleano" value="#{perfilController.followUnfollow}"/>
+
+                        <div id="cabecera_usuario" style="background-color: lightsteelblue">
+                            MiNombre->#{perfilController.usuarioSeleccionado.nombreUsuario}
+                            MiNombreCompleto->#{perfilController.usuarioSeleccionado.nombreCompleto}
+                            MiImagen->#{perfilController.usuarioSeleccionado.email}
+                            <p>
+                                Viajes Publicados -> #{perfilController.usuarioSeleccionado.viajeList.size()}
+                                Siguiendo->#{perfilController.usuarioSeleccionado.listaUsuarioSeguido.size()}
+                                Seguidores->#{perfilController.usuarioSeleccionado.listaUsuarioTeSigue.size()}                    
+                            </p>                
+                        </div>
+                        <c:if test="#{perfilController.usuarioSeleccionadoNoEsUsuarioLogeado()}">
+                            <p:selectBooleanButton id="followUnfollow" value="#{perfilController.followUnfollow}" 
+                                                   onLabel="Dejar de Seguir" offLabel="Seguir" rendered="#{sessionUtilsBean.usuarioLogeado}">
+                                <p:ajax update="booleano" listener="#{perfilController.toFollowUnfollow}" />
+                            </p:selectBooleanButton>
+                        </c:if>
+
+                        <h:outputLabel id="booleano" value="#{perfilController.followUnfollow}"/>
                     </h:form>
                 </f:view>
 

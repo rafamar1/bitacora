@@ -8,15 +8,13 @@ $color-primary: #ABA194;*/
     box-sizing: border-box;
 }
 
-body {
+body {    
     font-family: "Roboto";
     font-size: 14px;
-    background-size: 200% 100% !important;
+    background-size: 100% 200% !important; /*Para que cubra completo el degradado*/
     animation: move 15s ease infinite;
     transform: translate3d(0, 0, 0);
     background: linear-gradient(45deg, #fff, #934B66 95%);
-    background-size: auto auto;
-    height: 100vh;
 }
 
 .user {
@@ -62,21 +60,25 @@ body {
     transition: 0.3s;
 }
 
+#formLogin input.ui-state-focus{
+    box-shadow: 0 0 5px #934B66;
+}
+
 #formLogin .btn {
     display: block;
     width: 100%;
     padding: 20px;
     font-family: "Roboto";
-    -webkit-appearance: none;
     outline: 0;
     border: 0;
-    color: white;
-    background: #851A43;
+    color: #383838;
+    background: #C0A562;
     transition: 0.5s;
+    text-transform: uppercase;
 }
 
 #formLogin .btn:hover{
-    background: #6B1535;
+    background: #DEBE6F;
     transition: 0.7s;
     cursor: pointer;
 }

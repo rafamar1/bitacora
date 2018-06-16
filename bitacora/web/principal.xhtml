@@ -12,31 +12,33 @@
         <ui:composition template="./templates/usuarioPlantilla.xhtml">
 
             <ui:define name="left">
-                MiNombre->#{sessionScope.usuario.nombreUsuario}
-                MiNombreCompleto->#{sessionScope.usuario.nombreCompleto}
-                MiImagen->#{sessionScope.usuario.email}
+                MiNombre->#{sessionUtilsBean.usuario.nombreUsuario}
+                MiNombreCompleto->#{sessionUtilsBean.usuario.nombreCompleto}
+                MiImagen->#{sessionUtilsBean.usuario.email}
                 <p>
-                    Viajes Publicados -> #{sessionScope.usuario.viajeList.size()}
-                    Siguiendo->#{sessionScope.usuario.listaUsuarioSeguido.size()}
-                    Seguidores->#{sessionScope.usuario.listaUsuarioTeSigue.size()}                    
+                    Viajes Publicados -> #{sessionUtilsBean.usuario.viajeList.size()}
+                    Siguiendo->#{sessionUtilsBean.usuario.listaUsuarioSeguido.size()}
+                    Seguidores->#{sessionUtilsBean.usuario.listaUsuarioTeSigue.size()}                    
                 </p>
-                <p>
-                    <h:form>
-                        <p:commandButton action="publicarViaje.xhtml" value="Publicar Viaje" rendered="#{sessionScope.usuarioLogeado}"/>
-                        <p:commandButton action="perfilUsuario.xhtml" value="Mi Perfil"/>
 
+                <h:form>
+                    <p>
+                        <p:commandButton action="publicarViaje.xhtml" value="Publicar Viaje" rendered="#{sessionUtilsBean.usuarioLogeado}"/>
+                        <p:commandButton action="#{principalController.goToMiPerfil}" value="Mi Perfil"/>
+                    </p>
+                    <p>
                         <p:link outcome="perfilUsuario" value="Perfil de broncano">
                             <f:param name="idUsuarioSeleccionado" value="broncano" />
                         </p:link>
-                    </h:form>
-                </p>
+                    </p>
+                </h:form>
             </ui:define>
 
             <ui:define name="content">
 
                 <f:view locale="#{localeBean.locale}">
                     <section id="viajes_siguiendo">
-                        <c:forEach items="#{sessionScope.usuario.listaUsuarioSeguido}" var="usuario">
+                        <c:forEach items="#{sessionUtilsBean.usuario.listaUsuarioSeguido}" var="usuario">
                             <p>
                                 Sigo a -> #{usuario.nombreUsuario}
                             </p>

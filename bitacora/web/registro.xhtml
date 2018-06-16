@@ -13,36 +13,49 @@
             </ui:define>
             <ui:define name="title">#{messages.tituloRegistro}</ui:define>
 
-            <ui:define name="content">
+            <ui:define name="content" >
+                <h:outputScript target="head" name="js/jquery-3.3.1.js"/>
+                <h:outputScript target="head" name="js/jquery.validate.min.js"/>
                 <h:outputScript target="head" name="js/formRegistro_validate.js"/>
                 <f:view locale="#{localeBean.locale}">
-                    <h:form id="formRegistro" prependId="false">
-                        <p:panelGrid columns="2" layout="grid">
-                            <p:outputLabel value="#{messages.nombreUsuario}:" />
-                            <p:inputText id="userName" value="#{registroBean.nombreUsuario}"/>
+                    <h:form id="formRegistro" prependId="false" class="form-validation">
 
-                            <p:outputLabel value="#{messages.nombreCompleto}:" />
-                            <p:inputText id="name" value="#{registroBean.nombreCompleto}"/>
+                        <div class="form-row form-input-name-row">
+                                <span>#{messages.nombreUsuario}</span>
+                                <h:inputText id="nickname" value="#{registroBean.nombreUsuario}"/>
+                        </div>
 
-                            <p:outputLabel value="#{messages.email}:" />
-                            <p:inputText id="mail" value="#{registroBean.email}"/>
-
-                            <p:outputLabel value="#{messages.password}:" />                            
-                            <p:password id="password" value="#{registroBean.password}"/>
-
-                            <p:outputLabel value="#{messages.repeatPassword}:" />                            
-                            <p:password id="password2" value="#{registroBean.password}"/>
-
-                            <p:commandButton 
+                        <div class="form-row form-input-name-row">
+                                <span>#{messages.nombreCompleto}</span>
+                                <h:inputText id="fullName" value="#{registroBean.nombreCompleto}"/>
+                        </div>
+                        
+                        <div class="form-row form-input-name-row">
+                                <span>#{messages.email}</span>
+                                <h:inputText id="mail" value="#{registroBean.email}"/>
+                        </div>
+                        
+                        <div class="form-row form-input-name-row">                            
+                                <span>#{messages.password}</span>
+                                <h:inputSecret id="password" value="#{registroBean.password}"/>                            
+                        </div>
+                        
+                        <div class="form-row form-input-name-row">                            
+                                <span>#{messages.repeatPassword}</span>
+                                <h:inputSecret id="password2" value="#{registroBean.password}"/>                            
+                        </div>
+                        
+                        <div class="form-row">
+                           <p:commandButton 
                                 ajax="false"
                                 action="#{registroController.altaUsuario}" 
                                 value="#{messages.registrar}"/>
 
-                            <h:outputLabel value="#{messages.yaRegistrado}"/>
-                            <p:link outcome="login" value="#{messages.goToLogin}"/>
-                        </p:panelGrid>
+                        </div>
+
+                        
                     </h:form>
-                    
+
 
                 </f:view>
 
@@ -52,10 +65,27 @@
         </ui:composition>
 
     </body>
-    <script src="js/jquery-3.3.1.js"/>
-    <script src="js/jquery.validate.min.js"/>
     <script>
+         $(document).ready(function() {
 
+        // Here is how to show an error message next to a form field
+
+        var errorField = $('.error');
+
+        // Adding the form-invalid-data class will show
+        // the error message and the red x for that field
+
+        errorField.addClass('form-invalid-data');
+        //errorField.find('.form-invalid-data-info').text('Please enter your name');
+
+
+        // Here is how to mark a field with a green check mark
+
+//        var successField = $('.form-input-email-row');
+        var successField = $('input').not('.error');
+
+        successField.addClass('form-valid-data');
+    });
     </script>
 
 </html>

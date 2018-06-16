@@ -1,0 +1,90 @@
+/*$font-family: "Roboto";
+$font-size:     14px;
+$color-primary: #ABA194;*/
+
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+body {    
+    font-family: "Roboto";
+    font-size: 14px;
+    background-size: 100% 200% !important; /*Para que cubra completo el degradado*/
+    animation: move 15s ease infinite;
+    transform: translate3d(0, 0, 0);
+    background: linear-gradient(45deg, #fff, #934B66 95%);
+}
+
+.registro-correcto {
+    width: 90%;
+    max-width: 480px;
+    margin: 20vh auto;
+}
+
+#formRegistroCorrecto {
+    margin-top: 40px;
+    border-radius: 6px;
+    overflow: hidden;
+    opacity: 0;
+    background: #f0ecec;
+    padding: 30px;
+    animation: arrive 500ms ease-in-out 0.7s forwards;
+}
+
+#formRegistroCorrecto .btn {
+    display: block;
+    width: 60%;
+    padding: 15px;
+    font-family: "Roboto";
+    outline: 0;
+    border: 0;
+    color: #383838;
+    background: #C0A562;
+    transition: 0.5s;
+    text-transform: uppercase;
+    margin: 15px auto;
+    margin-top: 30px;
+}
+
+#formRegistroCorrecto .btn:hover{
+    background: #DEBE6F;
+    transition: 0.7s;
+    cursor: pointer;
+}
+
+#formRegistroCorrecto p {
+    margin: 15px 0px;    
+}
+
+#formRegistroCorrecto span.nombreUser{
+    font-size: 1.2em;
+    color: #934B66;
+}
+
+@keyframes arrive {
+    0% {
+        opacity: 0;
+        transform: translate3d(75px, 0, 0);
+    }
+
+    100% {
+        opacity: 1;
+        transform: translate3d(0, 0, 0);
+    }
+}
+
+@keyframes move {
+    0% {
+        background-position: 0 0;
+    }
+
+    50% {
+        background-position: 100% 0;
+    }
+
+    100% {
+        background-position: 0 0;
+    }
+}

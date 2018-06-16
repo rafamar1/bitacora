@@ -4,7 +4,6 @@ $(function () {
         // The two password inputs
         var password = $("#password").val();
         var confirmPassword = $("#password2").val();
-        console.log("hola amigito");
         // Check for equality with the password inputs
         if (password !== confirmPassword) {
             return false;
@@ -14,23 +13,25 @@ $(function () {
     }, "Your Passwords Must Match");
 
     $('#formRegistro').validate({
+        errorClass: 'error',
+        validClass: 'success',
         rules: {
             nickname: {required: true, minlength: 4},
-            nombre: {required: true, minlength: 4},
+            fullName: {required: true, minlength: 4},
             password: {required: true, minlength: 6},
             password2: {required: true, minlength: 6, passwordMatch: true},
             mail: {
                 required: true,
-                email: true,
-                /*remote: {
-                 url: "compruebaMailRemote",
-                 type: "post",
-                 data: {mail: function () {
-                 return $("#mail").val();
-                 }
-                 }
-                 
-                 }*/
+                email: true
+                        /*,remote: {
+                         url: "compruebaMailRemote",
+                         type: "post",
+                         data: {mail: function () {
+                         return $("#mail").val();
+                         }
+                         }
+                         
+                         }*/
             }
         },
 
@@ -38,7 +39,7 @@ $(function () {
             nickname: {required: "El nombre de usuario es obligatorio",
                 remote: "Ese nombre de usuario no está disponible",
                 minlength: "Indique un usuario de al menos 4 caracteres"},
-            nombre: {required: "El nombre es obligatorio",
+            fullName: {required: "El campo nombre completo es obligatorio",
                 minlength: "Indique un nombre de al menos 4 caracteres"},
             password: {required: "El campo contraseña es obligatorio",
                 minlength: "La contraseña debe tener al menos 6 caracteres"},
@@ -51,4 +52,6 @@ $(function () {
             }
         }
     });
+
+
 });

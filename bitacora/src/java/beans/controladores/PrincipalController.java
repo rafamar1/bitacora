@@ -28,7 +28,7 @@ import javax.persistence.Persistence;
  */
 @ManagedBean
 @ViewScoped
-public class PerfilController implements Serializable {
+public class PrincipalController implements Serializable {
     //TODO habria se puede eliminar el usuarioSeleccionado? o setearlo en el initialize
     @ManagedProperty(value = "#{sessionUtilsBean}")
     private SessionUtilsBean sessionUtilsBean;
@@ -45,7 +45,7 @@ public class PerfilController implements Serializable {
         this.followUnfollow = esSeguidor(userToFollowUnfollow, userLogeado);
     }
 
-    public PerfilController() {
+    public PrincipalController() {
         emf = Persistence.createEntityManagerFactory("bitacoraPU");
     }
 
@@ -120,9 +120,9 @@ public class PerfilController implements Serializable {
             }
 
         } catch (NonexistentEntityException ex) {
-            Logger.getLogger(PerfilController.class.getName()).log(Level.SEVERE, null, ex);
+            Logger.getLogger(PrincipalController.class.getName()).log(Level.SEVERE, null, ex);
         } catch (Exception ex) {
-            Logger.getLogger(PerfilController.class.getName()).log(Level.SEVERE, null, ex);
+            Logger.getLogger(PrincipalController.class.getName()).log(Level.SEVERE, null, ex);
         }
     }
 
@@ -144,10 +144,10 @@ public class PerfilController implements Serializable {
 
             return "followOK";
         } catch (NonexistentEntityException ex) {
-            Logger.getLogger(PerfilController.class.getName()).log(Level.SEVERE, null, ex);
+            Logger.getLogger(PrincipalController.class.getName()).log(Level.SEVERE, null, ex);
             return "error";
         } catch (Exception ex) {
-            Logger.getLogger(PerfilController.class.getName()).log(Level.SEVERE, null, ex);
+            Logger.getLogger(PrincipalController.class.getName()).log(Level.SEVERE, null, ex);
             return "error";
         }
 
@@ -172,10 +172,10 @@ public class PerfilController implements Serializable {
 
             return "followOK";
         } catch (NonexistentEntityException ex) {
-            Logger.getLogger(PerfilController.class.getName()).log(Level.SEVERE, null, ex);
+            Logger.getLogger(PrincipalController.class.getName()).log(Level.SEVERE, null, ex);
             return "error";
         } catch (Exception ex) {
-            Logger.getLogger(PerfilController.class.getName()).log(Level.SEVERE, null, ex);
+            Logger.getLogger(PrincipalController.class.getName()).log(Level.SEVERE, null, ex);
             return "error";
         }
 

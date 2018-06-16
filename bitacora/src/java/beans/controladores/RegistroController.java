@@ -26,9 +26,8 @@ import javax.persistence.PersistenceUnit;
  *
  * @author rfmarquez
  */
-//@Named(value = "registroController")
-@ManagedBean
 
+@ManagedBean
 @RequestScoped
 public class RegistroController implements Serializable {
 
