@@ -11,7 +11,12 @@
     <body>
 
         <ui:composition template="./templates/usuarioPlantilla.xhtml">
+            <ui:define name="css">
+                <h:outputStylesheet name="detalleViaje.css" library="css"/>
+            </ui:define>
 
+            <ui:define name="title">#{messages.tituloIndex}</ui:define>
+            
             <ui:define name="content">
 
                 <f:view locale="#{localeBean.locale}">

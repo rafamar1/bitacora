@@ -67,11 +67,28 @@ header #cabecera{
 html,body{
     height: 100%;
 }
-#content{
-    padding-top: 2.5em;
-    padding-bottom: 5em;
-}
 
 #cabecera .ui-widget-content, .ui-menubar, .ui-menu-list, .ui-menuitem, .ui-menuitem-link, .ui-menuitem-text, ui-icon{
     border: none; background: none; color: white;
+}
+
+
+#main{
+    display: flex;
+    flex-wrap: nowrap;
+    padding: 60px 4%;
+}
+
+#left{
+    width: 25%;
+    background-color: #e7e7c6;
+    margin: 0px 15px;                
+    min-width: 300px;
+}
+#content{
+    width: 70%;
+    margin: 0px 15px;
+    background-color: #e9d7fa;
+    padding-top: 2.5em;
+    padding-bottom: 5em;
 }

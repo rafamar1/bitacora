@@ -18,48 +18,100 @@
     <body>
 
         <ui:composition template="./templates/usuarioPlantilla.xhtml">
+            <ui:define name="css">
+                <h:outputStylesheet name="perfilUsuario.css" library="css"/>
+            </ui:define>
+
+            <ui:define name="title">bitacora - #{perfilController.usuarioSeleccionado.nombreCompleto}</ui:define>
+
             <ui:define name="content">
 
                 <f:view locale="#{localeBean.locale}">
-                    <h:form>
+                    <h:form id="myForm" prependId="false">
                         <f:metadata>
                             <f:viewParam name="idUsuarioSeleccionado" value="#{sessionUtilsBean.idUsuarioSeleccionado}" />
                         </f:metadata>
 
-                        <div id="cabecera_usuario">
-                            MiNombre->#{sessionUtilsBean.usuario.nombreUsuario}
-                            MiNombreCompleto->#{sessionUtilsBean.usuario.nombreCompleto}
-                            MiImagen->#{sessionUtilsBean.usuario.email}
-                            <p>
-                                Viajes Publicados -> #{sessionUtilsBean.usuario.viajeList.size()}
-                                Siguiendo->#{sessionUtilsBean.usuario.listaUsuarioSeguido.size()}
-                                Seguidores->#{sessionUtilsBean.usuario.listaUsuarioTeSigue.size()}                    
-                            </p>                
+                        <div id="info-usuario">
+                            <div class="img-portada-container">
+                                <img class="img-portada" src="#{principalController.dameRutaImgPortada(perfilController.usuarioSeleccionado)}"/>
+                            </div>                        
+                            <img class="img-perfil" src="#{principalController.dameRutaImgPerfil(perfilController.usuarioSeleccionado)}"/>
+
+                            <h:outputLabel value="#{perfilController.usuarioSeleccionado.nombreCompleto}" class="nombre-completo"/>
+                            <h:outputLabel value="@#{perfilController.usuarioSeleccionado.nombreUsuario}" class="nombre-usuario"/>
+                            <div class="barra-superior">
+                                <div class="estadisticas-usuario">
+                                    <div class="fila-grid">
+                                        <h:outputLabel value="#{perfilController.usuarioSeleccionado.viajeList.size()}"/>
+                                        <h:outputLabel value="#{perfilController.usuarioSeleccionado.listaUsuarioSeguido.size()}"/>
+                                        <h:outputLabel value="#{perfilController.usuarioSeleccionado.listaUsuarioTeSigue.size()}"/>
+                                    </div>
+                                    <div class="fila-grid">
+                                        <h:outputLabel value="Publicaciones"/>
+                                        <h:outputLabel value="Siguiendo"/>
+                                        <h:outputLabel value="Seguidores"/>
+                                    </div>
+                                </div>  
+                                <div class="boton-config-follow">
+                                    <h:commandButton action="editarPerfil" value="Modificar Perfil" rendered="#{!perfilController.usuarioSeleccionadoNoEsUsuarioLogeado()}"/>
+                                    <p:selectBooleanButton id="followUnfollow" value="#{perfilController.followUnfollow}"  
+                                                           onLabel="Dejar de Seguir" offLabel="Seguir" rendered="#{perfilController.usuarioSeleccionadoNoEsUsuarioLogeado()}">
+                                        <p:ajax listener="#{perfilController.toFollowUnfollow}" />
+                                    </p:selectBooleanButton>
+                                </div>
+                            </div>
+
                         </div>
 
-                        <p> USUARIO SELECCIONADO -> #{perfilController.dameUsuarioSeleccionadoPorId()}</p>
-                        <p> USUARIO SELECCIONADO por PARAM -> #{sessionUtilsBean.idUsuarioSeleccionado}</p>
-                        <p> USUARIO ESTA LOGGED? -> #{sessionUtilsBean.usuarioLogeado}</p>
+                        <section id="viajes_usuario">
+                            <p:dataScroller value="#{perfilController.usuarioSeleccionado.viajeList}" var="viaje" chunkSize="10">
+                                <f:facet name="header">
+                                    Viajes publicados por <span class="nombre-usuario"> @#{perfilController.usuarioSeleccionado.nombreUsuario}</span>
+                                </f:facet>
+
+                                <p:outputPanel>
+                                    <c:if test="#{empty perfilController.usuarioSeleccionado.viajeList}">
+                                        No se han publicado viajes de momento
+                                    </c:if>
+                                    <h:link outcome="detalleViaje" title="Ver Viaje">
+                                        <f:param name="idViajeSeleccionado" value="#{viaje.id}" />
+                                        <div id="infoViaje">
+                                            <div class="info-general-left">
+                                                <div class="info-general-left-header">
+                                                    <img class="viaje-imgUsuario" src="#{principalController.dameRutaImgPerfil(viaje.usuario)}" /> 
+                                                    <div class="info-general-left-header-text">
+                                                        <h:outputText value="#{viaje.titulo}" class="viaje-title"/>
+                                                        <h:outputText value="@#{viaje.usuario.nombreUsuario}" class="viaje-nombreUsuario"/>                                                    
+                                                    </div>
+                                                </div>
+
+                                                <h:outputText value="#{viaje.descripcion}" class="viaje-descripcion"/>
 
 
-                        <div id="cabecera_usuario" style="background-color: lightsteelblue">
-                            MiNombre->#{perfilController.usuarioSeleccionado.nombreUsuario}
-                            MiNombreCompleto->#{perfilController.usuarioSeleccionado.nombreCompleto}
-                            MiImagen->#{perfilController.usuarioSeleccionado.email}
-                            <p>
-                                Viajes Publicados -> #{perfilController.usuarioSeleccionado.viajeList.size()}
-                                Siguiendo->#{perfilController.usuarioSeleccionado.listaUsuarioSeguido.size()}
-                                Seguidores->#{perfilController.usuarioSeleccionado.listaUsuarioTeSigue.size()}                    
-                            </p>                
-                        </div>
-                        <c:if test="#{perfilController.usuarioSeleccionadoNoEsUsuarioLogeado()}">
-                            <p:selectBooleanButton id="followUnfollow" value="#{perfilController.followUnfollow}" 
-                                                   onLabel="Dejar de Seguir" offLabel="Seguir" rendered="#{sessionUtilsBean.usuarioLogeado}">
-                                <p:ajax update="booleano" listener="#{perfilController.toFollowUnfollow}" />
-                            </p:selectBooleanButton>
-                        </c:if>
+                                                <div class="info-general-left-bottom">
+                                                    <label>                                                    
+                                                        <span class="fa fa-map-marker icono"/>
+                                                        <h:outputText value="#{principalController.dameCiudadesVisitadas(viaje)}" class="viaje-descripcion"/>
+                                                    </label>
+                                                    <label>
+                                                        <h:outputText value="#{messages.fechaCreacion}: "/>
+                                                        <h:outputText value="#{viaje.fechaCreacion}">
+                                                            <f:convertDateTime pattern="dd/MM/yyyy" />
+                                                        </h:outputText>
+                                                    </label>
+                                                </div>
 
-                        <h:outputLabel id="booleano" value="#{perfilController.followUnfollow}"/>
+
+                                            </div>                                        
+                                            <img src="#{principalController.dameRutaImgViaje(viaje)}" class="img-viaje"/>
+                                        </div>
+                                    </h:link> 
+
+                                </p:outputPanel>
+
+                            </p:dataScroller>                            
+                        </section>
                     </h:form>
                 </f:view>
 

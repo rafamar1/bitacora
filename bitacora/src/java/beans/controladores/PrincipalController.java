@@ -13,6 +13,7 @@ import java.util.HashSet;
 import java.util.List;
 import javax.faces.bean.ManagedBean;
 import javax.faces.bean.ManagedProperty;
+import javax.faces.bean.RequestScoped;
 import javax.faces.bean.ViewScoped;
 import javax.persistence.EntityManagerFactory;
 import javax.persistence.Persistence;
@@ -22,7 +23,7 @@ import javax.persistence.Persistence;
  * @author rfmarquez
  */
 @ManagedBean
-@ViewScoped
+@RequestScoped
 public class PrincipalController implements Serializable {
 
     //TODO habria se puede eliminar el usuarioSeleccionado? o setearlo en el initialize
@@ -112,7 +113,7 @@ public class PrincipalController implements Serializable {
     }
 
     private boolean esSeguidoPorUserLogged(Usuario user) {
-        return sessionUtilsBean.getUsuario().getListaUsuarioSeguido().contains(user);
+        return user.getListaUsuarioTeSigue().contains(sessionUtilsBean.getUsuario());
     }
 
     /*public List<Entrada> dameListaEntradasUsuariosQueSigo(){
