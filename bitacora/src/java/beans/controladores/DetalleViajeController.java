@@ -18,6 +18,7 @@ import javax.annotation.PostConstruct;
 import javax.faces.bean.ManagedBean;
 import javax.faces.bean.ManagedProperty;
 import javax.faces.bean.RequestScoped;
+import javax.faces.bean.ViewScoped;
 //import javax.faces.bean.ViewScoped;
 import javax.persistence.EntityManagerFactory;
 import javax.persistence.Persistence;
@@ -27,7 +28,7 @@ import javax.persistence.Persistence;
  * @author rfmarquez
  */
 @ManagedBean
-@RequestScoped
+@ViewScoped
 public class DetalleViajeController implements Serializable {
 
     @ManagedProperty(value = "#{sessionUtilsBean}")
@@ -45,7 +46,6 @@ public class DetalleViajeController implements Serializable {
     
     public DetalleViajeController() {
         emf = Persistence.createEntityManagerFactory("bitacoraPU");
-//        this.viaje = cargarViaje();
     }
 
     public DetalleViajeBean getDetalleViajeBean() {
@@ -55,6 +55,16 @@ public class DetalleViajeController implements Serializable {
     public void setDetalleViajeBean(DetalleViajeBean detalleViajeBean) {
         this.detalleViajeBean = detalleViajeBean;
     }
+
+    public SessionUtilsBean getSessionUtilsBean() {
+        return sessionUtilsBean;
+    }
+
+    public void setSessionUtilsBean(SessionUtilsBean sessionUtilsBean) {
+        this.sessionUtilsBean = sessionUtilsBean;
+    }
+    
+    
 
     public Viaje getViaje() {
         return viaje;
@@ -69,13 +79,16 @@ public class DetalleViajeController implements Serializable {
         return controlViaje.findViaje((int) Session.getInstance().getAttribute("idViajeSeleccionado"));
     }
 
-    public String obtenerRuta(Entrada entrada) {
-        String rutaFichero = "C:/bitacora/usuarios";
-        String nombreUsuario = ((Usuario) Session.getInstance().getAttribute("usuario")).getNombreUsuario();
-        String idViajeSeleccionado = String.valueOf(Session.getInstance().getAttribute("idViajeSeleccionado"));
-        String idDiaSeleccionado = String.valueOf(Session.getInstance().getAttribute("idDiaSeleccionado"));
-        return rutaFichero + "/" + nombreUsuario + "/" + idViajeSeleccionado + "/" + idDiaSeleccionado + "/" + entrada.getImgMiniatura();
-
+    public String dameRutaEntrada(Entrada entrada){
+        StringBuilder sb = new StringBuilder("resources/images/usuarios/");
+        sb.append(entrada.getIdDia().getIdViaje().getUsuario().getNombreUsuario());
+        sb.append("/");
+        sb.append(entrada.getIdDia().getIdViaje().getId());
+        sb.append("/");
+        sb.append(entrada.getIdDia().getId());
+        sb.append("/");
+        sb.append(entrada.getImgMiniatura());
+        return sb.toString();
     }
     
     public boolean viajeEsDeUsuarioLogeado(){

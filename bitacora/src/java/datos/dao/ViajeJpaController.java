@@ -7,6 +7,7 @@ package datos.dao;
 
 import datos.dao.exceptions.IllegalOrphanException;
 import datos.dao.exceptions.NonexistentEntityException;
+import datos.entidades.Ciudad;
 import java.io.Serializable;
 import javax.persistence.Query;
 import javax.persistence.EntityNotFoundException;
@@ -20,6 +21,7 @@ import datos.entidades.Foto;
 import datos.entidades.Viaje;
 import javax.persistence.EntityManager;
 import javax.persistence.EntityManagerFactory;
+import javax.persistence.TypedQuery;
 
 /**
  *
@@ -281,6 +283,13 @@ public class ViajeJpaController implements Serializable {
         } finally {
             em.close();
         }
+    }
+    
+    public List<Viaje> dameListaViajesOrderFecha() {
+        EntityManager em = emf.createEntityManager();
+        TypedQuery<List> query = em.createNamedQuery("Viaje.findAllOrderByFechaModificacion", List.class);
+        List listaResultados = query.getResultList();
+        return listaResultados;
     }
     
 }

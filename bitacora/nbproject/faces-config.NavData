@@ -2,17 +2,20 @@
 <Scene Scope="Project" version="2">
     <Scope Scope="Faces Configuration Only"/>
     <Scope Scope="Project">
-        <Node id="publicarViajeAjax.xhtml" x="400" y="300" zoom="true"/>
-        <Node id="error.xhtml" x="650" y="150" zoom="true"/>
+        <Node id="error.xhtml" x="711" y="149" zoom="true"/>
         <Node id="index.xhtml" x="150" y="300" zoom="true"/>
-        <Node id="registro.xhtml" x="400" y="600" zoom="true"/>
+        <Node id="registro.xhtml" x="575" y="80" zoom="true"/>
+        <Node id="templates/usuarioPlantilla.xhtml" x="650" y="300" zoom="true"/>
+        <Node id="registroCorrecto.xhtml" x="134" y="53" zoom="true"/>
         <Node id="explorar.xhtml" x="1150" y="150" zoom="true"/>
-        <Node id="detalleViaje.xhtml" x="421" y="461" zoom="true"/>
+        <Node id="explorarLogged.xhtml" x="900" y="150" zoom="true"/>
         <Node id="publicarViaje.xhtml" x="847" y="433" zoom="true"/>
+        <Node id="detalleViaje.xhtml" x="421" y="461" zoom="true"/>
+        <Node id="templates/noLoggedPlantilla.xhtml" x="1029" y="75" zoom="true"/>
         <Node id="fileUpload.xhtml" x="150" y="150" zoom="true"/>
-        <Node id="fileUploadAck.xhtml" x="150" y="600" zoom="true"/>
+        <Node id="perfilUsuario.xhtml" x="998" y="207" zoom="true"/>
         <Node id="login.xhtml" x="150" y="450" zoom="true"/>
-        <Node id="principal.xhtml" x="900" y="300" zoom="true"/>
+        <Node id="principal.xhtml" x="1015" y="295" zoom="true"/>
         <Node id="publicarEntrada.xhtml" x="870" y="570" zoom="true"/>
     </Scope>
     <Scope Scope="All Faces Configurations"/>

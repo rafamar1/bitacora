@@ -66,4 +66,18 @@
             <to-view-id>/login.xhtml</to-view-id>
         </navigation-case>
     </navigation-rule>
+    <navigation-rule>
+        <from-view-id>/principal.xhtml</from-view-id>
+        <navigation-case>
+            <from-outcome>verPerfil</from-outcome>
+            <to-view-id>/perfilUsuario.xhtml</to-view-id>
+        </navigation-case>
+    </navigation-rule>
+    <navigation-rule>
+        <from-view-id>/templates/usuarioPlantilla.xhtml</from-view-id>
+        <navigation-case>
+            <from-outcome>verPerfil</from-outcome>
+            <to-view-id>/perfilUsuario.xhtml</to-view-id>
+        </navigation-case>
+    </navigation-rule>
 </faces-config>

@@ -8,6 +8,7 @@ package beans.modelos;
 import java.io.Serializable;
 import javax.faces.bean.ManagedBean;
 import javax.faces.bean.RequestScoped;
+import javax.faces.bean.ViewScoped;
 import org.primefaces.model.UploadedFile;
 
 
@@ -17,7 +18,7 @@ import org.primefaces.model.UploadedFile;
  */
 
 @ManagedBean
-@RequestScoped
+@ViewScoped
 public class DetalleViajeBean implements Serializable{
 
 

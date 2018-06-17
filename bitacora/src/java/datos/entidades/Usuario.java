@@ -53,7 +53,11 @@ public class Usuario implements Serializable {
     @Column(name = "email")
     private String email;
     @Column(name = "publico")
-    private Integer publico;
+    private Integer publico;    
+    @Column(name = "img_perfil")
+    private String imgPerfil;
+    @Column(name = "img_portada")
+    private String imgPortada;
     @JoinTable(name = "usuario_sigue",
             joinColumns = {@JoinColumn(name = "usuario", referencedColumnName = "nombre_usuario")},
             inverseJoinColumns = {@JoinColumn(name = "usuario_seguido", referencedColumnName = "nombre_usuario")})
@@ -118,6 +122,22 @@ public class Usuario implements Serializable {
 
     public void setPublico(Integer publico) {
         this.publico = publico;
+    }
+
+    public String getImgPerfil() {
+        return imgPerfil;
+    }
+
+    public void setImgPerfil(String imgPerfil) {
+        this.imgPerfil = imgPerfil;
+    }
+
+    public String getImgPortada() {
+        return imgPortada;
+    }
+
+    public void setImgPortada(String imgPortada) {
+        this.imgPortada = imgPortada;
     }
 
     @XmlTransient

@@ -7,7 +7,7 @@
       xmlns:pt="http://xmlns.jcp.org/jsf/passthrough"
       xmlns:p="http://primefaces.org/ui">
 
-   <h:head>
+    <h:head>
         <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
         <h:outputStylesheet name="css/normalize.css"/>
         <h:outputStylesheet name="css/usuarioPlantilla.css"/>
@@ -15,39 +15,41 @@
         <h:outputScript target="head" name="js/jquery.validate.min.js"/>
         <ui:insert name="css"/>
         <style>
-            
+
             #main{
                 display: flex;
                 flex-wrap: nowrap;
-                padding-top: 5em;
+                padding: 5em 4%;
             }
 
             #left{
                 width: 25%;
-                background-color: #efefc0;
+                background-color: #e7e7c6;
+                margin: 0px 15px;                
+                min-width: 300px;
             }
             #content{
-                width: 65%;
-                margin: 15px;
+                width: 70%;
+                margin: 0px 15px;
                 background-color: #e9d7fa;
             }
         </style>
         <title><ui:insert name="title">bitacora</ui:insert></title>
     </h:head>
     <h:body style="position: relative;">
-     
+
         <ui:insert name="top">
             <header>
                 <div id="cabecera">
                     <p:link outcome="principal" value="bitacora"/>
-
-                    <p:menubar id="menu-superior">
-                        <p:menuitem value="#{messages.botonPerfil}" url="perfilUsuario.xhtml"/>
-                        <p:menuitem value="#{messages.botonExplorar}" url="explorarLogged
-                                    .xhtml"/>
-                        <p:menuitem value="#{messages.botonNotificaciones}"  url="principal.xhtml"/>
-                    </p:menubar>
-                    <h:form>                        
+                    <h:form id="menu-superior">   
+                        <p:menubar>
+                            <p:menuitem value="#{messages.botonPerfil}" action="#{principalController.goToMiPerfil()}"/>
+                            <p:menuitem value="#{messages.botonExplorar}" url="explorarLogged.xhtml"/>
+                            <p:menuitem value="#{messages.botonNotificaciones}"  url="principal.xhtml"/>
+                        </p:menubar>
+                    </h:form>
+                    <h:form>
                         <h:selectOneMenu value="#{localeBean.language}" onchange="submit()">
                             <f:selectItem itemValue="es" itemLabel="ES" pt:title="Español"  class="spanish" />
                             <f:selectItem itemValue="en" itemLabel="EN" pt:title="English" class="english"/>
@@ -65,7 +67,7 @@
                 <ui:insert name="content">Content</ui:insert>
             </div>
         </div>
-        
+
     </h:body>
 
 </html>

@@ -21,7 +21,7 @@ header #cabecera{
     color: white;
     padding:10px;
 }
-#cabecera  select {
+#cabecera select {
     text-transform: uppercase;
     background: #851a43;
     color: #ffffff;
@@ -39,7 +39,7 @@ header #cabecera{
     background: url("#{resource['images/englishFlag.jpg']}");  
 }
 
-#cabecera > #menu-superior {
+#cabecera #menu-superior {
     width: 65%;                
     padding: 0px;
     line-height: normal;
