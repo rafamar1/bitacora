@@ -63,8 +63,6 @@ public class DetalleViajeController implements Serializable {
     public void setSessionUtilsBean(SessionUtilsBean sessionUtilsBean) {
         this.sessionUtilsBean = sessionUtilsBean;
     }
-    
-    
 
     public Viaje getViaje() {
         return viaje;
@@ -73,10 +71,23 @@ public class DetalleViajeController implements Serializable {
     public void setViaje(Viaje viaje) {
         this.viaje = viaje;
     }
-
-    private Viaje cargarViaje() {
-        ViajeJpaController controlViaje = new ViajeJpaController(emf);
-        return controlViaje.findViaje((int) Session.getInstance().getAttribute("idViajeSeleccionado"));
+    
+    public String dameRutaImgPerfilUsuario(Usuario usuario) {
+        StringBuilder sb = new StringBuilder("resources/images/usuarios/");
+        sb.append(usuario.getNombreUsuario());
+        sb.append("/");
+        sb.append(usuario.getImgPerfil());
+        return sb.toString();
+    }
+    
+    public String dameRutaImgPortadaViaje(Viaje viaje){
+        StringBuilder sb = new StringBuilder("resources/images/usuarios/");
+        sb.append(viaje.getUsuario().getNombreUsuario());
+        sb.append("/");
+        sb.append(viaje.getId());
+        sb.append("/");
+        sb.append(viaje.getImgMiniatura());
+        return sb.toString();
     }
 
     public String dameRutaEntrada(Entrada entrada){

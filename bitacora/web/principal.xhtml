@@ -66,7 +66,7 @@
                                     <div class="info-general-left">
                                         <h:link outcome="perfilUsuario" title="Perfil de #{viaje.usuario.nombreUsuario}">
                                             <f:param name="idUsuarioSeleccionado" value="#{viaje.usuario.nombreUsuario}" />
-
+                                            
                                             <div class="info-general-left-header">
                                                 <img class="viaje-imgUsuario" src="#{principalController.dameRutaImgPerfil(viaje.usuario)}" /> 
                                                 <div class="info-general-left-header-text">
@@ -95,7 +95,7 @@
 
                                     </div>   
                                     <h:link outcome="detalleViaje" title="Ver Viaje">
-                                        <f:param name="idViajeSeleccionado" value="#{viaje.id}" />
+                                        <f:param name="idViajeSeleccionado" value="#{viaje.id}" />         
                                         <img src="#{principalController.dameRutaImgViaje(viaje)}" class="img-viaje"/>
                                     </h:link> 
                                 </div>

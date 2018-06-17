@@ -76,7 +76,6 @@ public class PerfilController implements Serializable {
     public List<Viaje> damelistaViajesUsuario() {
         //Usuario usuarioSeleccionado = (Usuario) Session.getInstance().getAttribute("usuario");
         Usuario userSeleccionado = dameUsuarioSeleccionadoPorId();
-
         return userSeleccionado.getViajeList();
 
     }

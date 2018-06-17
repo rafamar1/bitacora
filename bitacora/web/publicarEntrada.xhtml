@@ -11,8 +11,34 @@
     <body>
 
         <ui:composition template="./templates/usuarioPlantilla.xhtml">
-
+            <ui:define name="css">
+                <h:outputStylesheet name="publicarEntrada.css" library="css"/>
+            </ui:define>
             <ui:define name="title">#{messages.tituloPublicarEntrada}</ui:define>
+
+            <ui:define name="left">
+                <div id="info-usuario">
+                    <div class="img-portada-container">
+                        <img class="img-portada" src="#{principalController.dameRutaImgPortada(sessionUtilsBean.usuario)}"/>
+                    </div>                        
+                    <img class="img-perfil" src="#{principalController.dameRutaImgPerfil(sessionUtilsBean.usuario)}"/>
+
+                    <h:outputLabel value="#{sessionUtilsBean.usuario.nombreCompleto}" class="nombre-completo"/>
+                    <h:outputLabel value="@#{sessionUtilsBean.usuario.nombreUsuario}" class="nombre-usuario"/>
+                    <div class="estadisticas-usuario">
+                        <div class="fila-grid">
+                            <h:outputLabel value="#{sessionUtilsBean.usuario.viajeList.size()}"/>
+                            <h:outputLabel value="#{sessionUtilsBean.usuario.listaUsuarioSeguido.size()}"/>
+                            <h:outputLabel value="#{sessionUtilsBean.usuario.listaUsuarioTeSigue.size()}"/>
+                        </div>
+                        <div class="fila-grid">
+                            <h:outputLabel value="Publicaciones"/>
+                            <h:outputLabel value="Siguiendo"/>
+                            <h:outputLabel value="Seguidores"/>
+                        </div>
+                    </div>                        
+                </div>
+            </ui:define>
 
             <ui:define name="content">
 
@@ -42,7 +68,7 @@
                         </p>
 
                         <p>
-                           #{messages.categoriaEntrada}: 
+                            #{messages.categoriaEntrada}: 
                             <p:selectOneMenu value="#{publicarEntradaBean.tipo}">
                                 <f:selectItems value="#{publicarEntradaController.listaCategorias}" var="categoria"
                                                itemValue="#{categoria}" itemLabel="#{categoria}"/>       

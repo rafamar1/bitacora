@@ -15,32 +15,80 @@
                 <h:outputStylesheet name="detalleViaje.css" library="css"/>
             </ui:define>
 
-            <ui:define name="title">#{messages.tituloIndex}</ui:define>
-            
+            <ui:define name="title">bitacora - #{detalleViajeController.viaje.titulo}</ui:define>
+
             <ui:define name="content">
 
                 <f:view locale="#{localeBean.locale}">
-                    <h:form>
-                        <f:metadata>
-                            <f:viewParam name="idViajeSeleccionado" value="#{sessionUtilsBean.idViajeSeleccionado}" />
-                        </f:metadata>                        
+                    <f:metadata>
+                        <f:viewParam name="idViajeSeleccionado" value="#{sessionUtilsBean.idViajeSeleccionado}"/>
+                        <f:param name="idDiaSeleccionado" value="#{sessionUtilsBean.idDiaSeleccionado}"/>
+                    </f:metadata>  
 
-                        <p>Usuario -> #{detalleViajeController.viaje.usuario.nombreUsuario}</p>
-                        <p>Titulo -> #{detalleViajeController.viaje.titulo}</p>
-                        <p>Descripcion -> #{detalleViajeController.viaje.descripcion}</p>
-                        <c:if test="#{detalleViajeController.viajeEsDeUsuarioLogeado()}">
-                            <p:commandButton action="publicarEntrada.xhtml" value="Nueva Entrada" />
-                            <p:commandButton style="float: right;" action="miPerfil.xhtml" value="Nuevo día"/>
-                        </c:if>
+                    <h:form>
+                        <div id="info-viaje">
+                            <div class="img-portada-container">
+                                <img class="img-portada" src="#{detalleViajeController.dameRutaImgPortadaViaje(detalleViajeController.viaje)}"/>
+                            </div>
+                            <div class="container-cabecera">
+                                <div class="info-cabecera">
+                                    <div class="info-usuario">
+                                        <img class="img-perfil" src="#{detalleViajeController.dameRutaImgPerfilUsuario(detalleViajeController.viaje.usuario)}"/>
+                                        <div class="info-usuario-text">
+                                            <h:outputLabel value="#{detalleViajeController.viaje.usuario.nombreCompleto}" class="nombre-completo"/>
+                                            <h:outputLabel value="@#{detalleViajeController.viaje.usuario.nombreUsuario}" class="nombre-usuario"/>   
+                                        </div>                                    
+                                    </div>
+
+                                    <div class="estadisticas-usuario">
+                                        <div class="fila-grid">
+                                            <h:outputLabel value="#{detalleViajeController.viaje.usuario.viajeList.size()}"/>
+                                            <h:outputLabel value="#{detalleViajeController.viaje.usuario.listaUsuarioSeguido.size()}"/>
+                                            <label>
+                                                <span class="fa fa-star"/>
+                                                <h:outputText value="#{detalleViajeController.viaje.usuario.listaUsuarioTeSigue.size()}"/>
+                                            </label>
+                                        </div>
+                                        <div class="fila-grid">
+                                            <h:outputLabel value="Publicaciones"/>
+                                            <h:outputLabel value="Siguiendo"/>
+                                            <h:outputLabel value="Valoracion"/> 
+                                        </div>
+                                    </div> 
+                                </div>
+
+                                <div class="descripcion-viaje">
+                                    <h:outputLabel value="#{detalleViajeController.viaje.titulo}" class="viaje-title"/>
+                                    <h:outputLabel value="#{detalleViajeController.viaje.descripcion}"/> 
+                                </div>
+                            </div>
+
+                        </div>
+
+
 
                         <c:forEach items="#{detalleViajeController.viaje.diaList}" var="dia" varStatus="indice">
-                            <div class="dia">
-                                Dia numero -> #{indice.index}
+                            <div class="lista_entradas_dia dia{indice.index}">
+
                                 <c:forEach items="#{dia.entradaList}" var="entrada" varStatus="indiceEntrada">
-                                    <p>Descripcion -> #{entrada.descripcion}</p>
-                                    <p>Titulo -> #{entrada.titulo}</p>
-                                    <p>Puntuacion -> #{entrada.puntuacion}</p>
-                                    <img src="#{detalleViajeController.dameRutaEntrada(entrada)}" style="max-width: 250px"/>
+                                    <div class="info-entrada">
+                                        <div class="img-entrada-container">
+                                            <img src="#{detalleViajeController.dameRutaEntrada(entrada)}"/>
+                                        </div>                                        
+                                        <h:outputLabel value="#{entrada.titulo}" title="#{entrada.titulo}" class="entrada-title"/>
+                                        <label class="entrada-ciudad">                                                    
+                                            <span class="fa fa-map-marker icono"/>
+                                            <h:outputLabel value="#{entrada.idCiudad.nombre}" title="#{entrada.idCiudad.nombre}"/>
+                                        </label>
+                                        <label id="puntuacion">
+                                            <h:outputText value="Puntuacion: "/>
+                                            <p:rating value="#{entrada.puntuacion}" readonly="true"/> 
+                                        </label>
+                                        <h:outputLabel value="#{entrada.descripcion}" title="#{entrada.descripcion}"/>
+                                        <label>
+                                            <h:outputText value="Categoría: #{entrada.tipo}" class="entrada-tipo"/>
+                                        </label>
+                                    </div>                                    
                                 </c:forEach>
                             </div>
                         </c:forEach>

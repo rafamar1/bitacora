@@ -113,7 +113,7 @@ public class PrincipalController implements Serializable {
     }
 
     private boolean esSeguidoPorUserLogged(Usuario user) {
-        return user.getListaUsuarioTeSigue().contains(sessionUtilsBean.getUsuario());
+        return user.getListaUsuarioTeSigue().contains(sessionUtilsBean.getUsuario()) || sessionUtilsBean.getUsuario().getListaUsuarioSeguido().contains(user);
     }
 
     /*public List<Entrada> dameListaEntradasUsuariosQueSigo(){

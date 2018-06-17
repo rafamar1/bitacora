@@ -22,15 +22,15 @@
                 <h:outputStylesheet name="perfilUsuario.css" library="css"/>
             </ui:define>
 
-            <ui:define name="title">bitacora - #{perfilController.usuarioSeleccionado.nombreCompleto}</ui:define>
+            <ui:define name="title">#{messages.tituloPerfil} - #{perfilController.usuarioSeleccionado.nombreCompleto}</ui:define>
 
             <ui:define name="content">
 
                 <f:view locale="#{localeBean.locale}">
-                    <h:form id="myForm" prependId="false">
                         <f:metadata>
-                            <f:viewParam name="idUsuarioSeleccionado" value="#{sessionUtilsBean.idUsuarioSeleccionado}" />
+                            <f:viewParam name="idUsuarioSeleccionado" value="#{sessionUtilsBean.idUsuarioSeleccionado}"/>
                         </f:metadata>
+                    <h:form id="myForm" prependId="false">
 
                         <div id="info-usuario">
                             <div class="img-portada-container">
@@ -76,6 +76,7 @@
                                     </c:if>
                                     <h:link outcome="detalleViaje" title="Ver Viaje">
                                         <f:param name="idViajeSeleccionado" value="#{viaje.id}" />
+                                        <f:param name="idDiaSeleccionado" value="#{viaje.diaList.get(0)}"/>
                                         <div id="infoViaje">
                                             <div class="info-general-left">
                                                 <div class="info-general-left-header">

@@ -5,17 +5,17 @@
 
 #main #content{
     margin: 0px auto;
-    width: 75%;
+    width: 85%;
     min-width: 700px;
     background: lightsteelblue;
     padding: 0px;   
 }
 
-#info-usuario{
+#info-viaje{
     width: 100%;  
     min-width: 500px;
     background: #efefc0;
-    height: 256px;
+
 }
 
 div.img-portada-container{
@@ -28,72 +28,68 @@ div.img-portada-container{
 .img-portada{
     width: 100%;
     min-width: 900px;
+    margin-top: -15%; /*Centrar imagen*/
+}
+
+.container-cabecera{
+    display: flex;
+    padding: 0px 7%;
+}
+
+.container-cabecera > div {
+    margin: 0px 20px;
+}
+
+.container-cabecera .info-cabecera {
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+    padding: 10px 0;   
+}
+
+.container-cabecera .descripcion-viaje{
+    flex: 2;
+    display: flex;
+    flex-direction: column;
+    padding: 10px 0; 
+}
+
+.info-usuario{
+    display: flex;    
+}
+
+.info-usuario .info-usuario-text{
+    display: flex;
+    flex-direction: column;
+    padding-left: 15px;
+}
+
+.info-usuario-text label{
+    margin: 3px 0px;
 }
 
 .img-perfil{
-    width: 105px;
-    height: 105px;
+    width: 50px;
+    height: 50px;
     border-radius: 50%;
-    border: 4px solid #8c1d47;
-    position: relative;
-    top: -77px;
-    left: 45px;
-    z-index: 1;
-    /*min-width: 100px;
-    min-height: 100px;
-    max-width: 110px;
-    max-height: 110px;*/
-}
-
-#left .ui-link {
-    text-decoration: none;
-    color: #383838;
+    border: 3px solid #8c1d47;
 }
 
 label.nombre-completo {
-    position: relative;    
-    top: -140px;
-    left: 85px;
-    z-index: 1;
-    font-size: 2em;
-    color: #f8f8f8;
+    font-size: 1.5em;
+    color: #393939;
+}
+label.nombre-usuario {
+    font-size: 1.1em;
+    color: #79153a;
     font-weight: bold;
-    text-shadow: 1px 1px 2px #0f0f0f;
 }
 
-label.nombre-usuario {
-    position: relative;
-    display: block;
-    top: -81px;
-    left: 55px;
-    font-size: 1.2em;
-    color: #79153a;
-    font-weight: bold;
-    z-index: 1;
+.descripcion-viaje label{
+    margin: 5px 0px;
 }
-span.nombre-usuario{
-    color: #79153a;
-    font-weight: bold;
-}
-.barra-superior{
-    display: flex;
-    padding-left: 20%;
-    background: #efefc0;
-    position: relative;
-    top: -154px;
-    border-bottom: 1px solid #a15f78;
-}
-.boton-config-follow{
-    flex: 1;
-    padding: 15px;
-}
-.boton-config-follow input{
-    border-radius: 5px;
-    background: #690c2f;
-    border: 1px solid #debe6f;
-    color: #ffffff;
-    box-shadow: 1px 2px 4px 0 rgba(0, 0, 0, 0.08);
-    padding: 14px 22px;
+.descripcion-viaje .viaje-title{
+    font-size: 2em;
 }
 
 .estadisticas-usuario{
@@ -112,93 +108,66 @@ span.nombre-usuario{
 
 /*CONTENIDO PRINCIPAL - INFO VIAJES*/
 
-#viajes_usuario a {
-    text-decoration: none;
+.lista_entradas_dia{
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    padding: 10px 5%;
 }
 
-#viajes_usuario #infoViaje{
-    background: #f6f2dc;
-    margin: 15px;
-    padding: 0px 0px 0px 25px;
-    position: relative;
-    display: flex;
-    border: 1px solid #d5d5d5;
-}
-
-#viajes_usuario #infoViaje .info-general-left{
-    flex: 3;
-    display: flex;
-    flex-direction: column;
-    padding: 10px 0px;
-}
-/*Estructuracion de imagen, titulo y usuario de viaje*/
-.info-general-left .info-general-left-header{
+.info-entrada{
     flex: 1;
-    display: flex;
-}
-
-.info-general-left .info-general-left-header img{
-    flex: 1;
-}
-.info-general-left .info-general-left-header div{
-    flex: 2;
+    background: #f8f8f8;
+    border: 1px solid #c3c3c3;
+    margin: 30px;
+    min-width: 275px;
+    max-width: 310px;
     display: flex;
     flex-direction: column;
-    margin-left: 15px;
-}
-.info-general-left .info-general-left-header div span{
-    flex: 1;
 }
 
-.info-general-left .info-general-left-bottom{
-    display: flex;
+.info-entrada label{
+    margin: 6px 18px;
 }
 
-.info-general-left .info-general-left-bottom label:first-child{
-    flex: 1;
-    color: #9b4867;
-    text-shadow: 1px 1px 2px #3e3e3e80;
+div.img-entrada-container{
+    width: 100%;
+    min-width: 275px;
+    max-height: 178px;
+    border-bottom: 1px solid #5a5a5a;
+    overflow: hidden; /*Oculta el sobrante de la imagen de portada*/
 }
-.info-general-left .info-general-left-bottom .icono{
-    margin-right: 5px;
-}
-.info-general-left .info-general-left-bottom label:last-child{
-    flex: 1;
-    text-align: right;
-    padding-right: 15px;
-    font-size: 0.8em;
-    color: #838383;
-}
+.img-entrada-container img{
+    width: 100%;
+    max-width: 310px;
 
-#infoViaje img.viaje-imgUsuario{
-    max-width: 50px;
-    max-height: 50px;
-    border-radius: 50%;
-    border: 2px solid #8c1d47;
-    min-width: 40px;   
-    min-height: 40px;
 }
-
-#infoViaje .viaje-title{
-    font-weight: bold;
-    font-size: 1.3em;
-}
-
-#infoViaje .viaje-nombreUsuario{
-    font-weight: bold;
+.info-entrada .entrada-title{
+    font-size: 1.2em;
     color: #79153a;
-    position: relative;
-    top: 0px;
+    font-weight: bold;
+    margin-top: 15px;
 }
 
-#infoViaje .viaje-descripcion{
-    font-size: 0.9em;
-    font-weight: normal;
-    margin: 15px 0px;
+.info-entrada .entrada-ciudad{
+    color: #c3c3c3;
 }
-#infoViaje .img-viaje{
-    flex: 1;
-    max-width: 300px;
-    min-width: 185px;
-    min-height: 125px;
+
+.info-entrada .entrada-ciudad span:first-child{
+    margin-left: 5px;
+}
+
+#content #puntuacion .ui-rating{
+    display: inline-block;
+}
+
+#content #puntuacion span{
+    margin-left: 5px
+}
+.entrada-tipo{
+    color: #838383;    
+}
+
+.info-entrada .descripcion {
+    text-align: justify;
 }
