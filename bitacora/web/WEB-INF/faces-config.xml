@@ -72,6 +72,10 @@
             <from-outcome>verPerfil</from-outcome>
             <to-view-id>/perfilUsuario.xhtml</to-view-id>
         </navigation-case>
+        <navigation-case>
+            <from-outcome>publicarViaje</from-outcome>
+            <to-view-id>/publicarViaje.xhtml</to-view-id>
+        </navigation-case>
     </navigation-rule>
     <navigation-rule>
         <from-view-id>/templates/usuarioPlantilla.xhtml</from-view-id>

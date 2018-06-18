@@ -199,7 +199,8 @@ span.nombre-usuario{
 }
 #infoViaje .img-viaje{
     flex: 1;
-    max-width: 300px;
+    max-width: 230px;
     min-width: 185px;
     min-height: 125px;
+    max-height: 180px;
 }

@@ -12,51 +12,44 @@
 
         <ui:composition template="./templates/usuarioPlantilla.xhtml">
             <ui:define name="css">
-                <h:outputStylesheet name="publicarEntrada.css" library="css"/>
+                <h:outputStylesheet name="publicarViaje.css" library="css"/>
             </ui:define>
-            <ui:define name="title">#{messages.tituloPublicarViaje}</ui:define>
-            
-            <ui:define name="left">
-                <div id="info-usuario">
-                    <div class="img-portada-container">
-                        <img class="img-portada" src="#{principalController.dameRutaImgPortada(sessionUtilsBean.usuario)}"/>
-                    </div>                        
-                    <img class="img-perfil" src="#{principalController.dameRutaImgPerfil(sessionUtilsBean.usuario)}"/>
+            <ui:define name="title">bitacora - #{messages.tituloPublicarViaje}</ui:define>
 
-                    <h:outputLabel value="#{sessionUtilsBean.usuario.nombreCompleto}" class="nombre-completo"/>
-                    <h:outputLabel value="@#{sessionUtilsBean.usuario.nombreUsuario}" class="nombre-usuario"/>
-                    <div class="estadisticas-usuario">
-                        <div class="fila-grid">
-                            <h:outputLabel value="#{sessionUtilsBean.usuario.viajeList.size()}"/>
-                            <h:outputLabel value="#{sessionUtilsBean.usuario.listaUsuarioSeguido.size()}"/>
-                            <h:outputLabel value="#{sessionUtilsBean.usuario.listaUsuarioTeSigue.size()}"/>
-                        </div>
-                        <div class="fila-grid">
-                            <h:outputLabel value="Publicaciones"/>
-                            <h:outputLabel value="Siguiendo"/>
-                            <h:outputLabel value="Seguidores"/>
-                        </div>
-                    </div>                        
-                </div>
-            </ui:define>
-            
             <ui:define name="content">
 
                 <f:view locale="#{localeBean.locale}">
-                    <h:form  enctype="multipart/form-data">                        
+                    <h2>#{messages.tituloPublicarViaje}</h2>
+                    <h:form enctype="multipart/form-data" prependId="false" class="form-validation"> 
+                        <div class="form-row">
+                            <h3>#{messages.informacionEsencial}</h3>
+                        </div>
+                        <div class="form-row">
+                            <h:outputText value="#{messages.tituloViaje}" title="#{messages.tituloViaje}"/>
+                            <h:inputText id="titulo_viaje" value="#{publicarViajeBean.titulo}"
+                                         requiredMessage="#{messages.validacion_required}">
+                                <f:validateRequired/> 
+                                <f:validateLength minimum="3" maximum="25"/>
+                            </h:inputText>      
+                            <h:message for="titulo_viaje" class="error"/>
+                        </div>
 
-                        #{messages.informacionEsencial}
-                        <p>
-                            #{messages.tituloViaje}: <h:inputText value="#{publicarViajeBean.titulo}"/> 
-                        </p> 
-
-                        <p>
-                            #{messages.descripcionViaje}: <h:inputTextarea value="#{publicarViajeBean.descripcion}"/>
-                        </p>
-
-                        <p>
-                            #{messages.imagenViaje}:  <p:fileUpload id="imagenViaje"  value="#{publicarViajeBean.imagen}" mode="simple" allowTypes="/(\.|\/)(gif|jpe?g|zip)$/" skinSimple="true" dragDropSupport="true"/>
-                        </p>
+                        <div class="form-row">
+                            <h:outputText value="#{messages.descripcionViaje}" title="#{messages.descripcionViaje}"/>
+                            <h:inputTextarea id="descripcion_viaje"  value="#{publicarViajeBean.descripcion}" 
+                                             requiredMessage="#{messages.validacion_required}">
+                                <f:validateRequired/> 
+                                <f:validateLength minimum="5" maximum="180"/>
+                            </h:inputTextarea>
+                            <h:message for="titulo_viaje" class="error"/>
+                        </div>   
+                        <div class="form-row">
+                            <h:outputText value="#{messages.imagenViaje}" title="#{messages.imagenViaje}"/>
+                            <p:fileUpload id="imagen_viaje"  value="#{publicarViajeBean.imagen}" 
+                                          mode="simple" allowTypes="/(\.|\/)(gif|jpe?g|zip)$/" dragDropSupport="true"
+                                          required="true" requiredMessage="Por favor seleccione un archivo"/>
+                            <h:message for="imagen_viaje" class="error"/>
+                        </div>
                         <p:commandButton value="#{messages.publicarViaje}" ajax="false" action="#{publicarViajeController.publicarViaje}"/> 
 
                     </h:form>

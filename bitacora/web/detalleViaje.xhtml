@@ -32,13 +32,16 @@
                             </div>
                             <div class="container-cabecera">
                                 <div class="info-cabecera">
-                                    <div class="info-usuario">
-                                        <img class="img-perfil" src="#{detalleViajeController.dameRutaImgPerfilUsuario(detalleViajeController.viaje.usuario)}"/>
-                                        <div class="info-usuario-text">
-                                            <h:outputLabel value="#{detalleViajeController.viaje.usuario.nombreCompleto}" class="nombre-completo"/>
-                                            <h:outputLabel value="@#{detalleViajeController.viaje.usuario.nombreUsuario}" class="nombre-usuario"/>   
-                                        </div>                                    
-                                    </div>
+                                    <h:link outcome="perfilUsuario" title="Perfil de #{detalleViajeController.viaje.usuario.nombreUsuario}">
+                                        <f:param name="idUsuarioSeleccionado" value="#{detalleViajeController.viaje.usuario.nombreUsuario}" />
+                                        <div class="info-usuario">
+                                            <img class="img-perfil" src="#{detalleViajeController.dameRutaImgPerfilUsuario(detalleViajeController.viaje.usuario)}"/>
+                                            <div class="info-usuario-text">
+                                                <h:outputLabel value="#{detalleViajeController.viaje.usuario.nombreCompleto}" class="nombre-completo"/>
+                                                <h:outputLabel value="@#{detalleViajeController.viaje.usuario.nombreUsuario}" class="nombre-usuario"/>   
+                                            </div>                                    
+                                        </div>
+                                    </h:link>
 
                                     <div class="estadisticas-usuario">
                                         <div class="fila-grid">
@@ -65,7 +68,12 @@
 
                         </div>
 
-
+                        <c:if test="#{detalleViajeController.viajeEsDeUsuarioLogeado()}">
+                            <div class="botonera-nuevo-dia">
+                                <p:commandButton action="publicarEntrada.xhtml" value="Nueva Entrada" />
+                                <p:commandButton style="float: right;" action="miPerfil.xhtml" value="Nuevo día"/>                                
+                            </div>
+                        </c:if>
 
                         <c:forEach items="#{detalleViajeController.viaje.diaList}" var="dia" varStatus="indice">
                             <div class="lista_entradas_dia dia{indice.index}">

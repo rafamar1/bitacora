@@ -21,14 +21,15 @@
 div.img-portada-container{
     width: 100%;
     min-width: 500px;
-    max-height: 185px;
+    max-height: 250px;
     border-bottom: 1px solid #5a5a5a;
     overflow: hidden; /*Oculta el sobrante de la imagen de portada*/
 }
+
 .img-portada{
     width: 100%;
     min-width: 900px;
-    margin-top: -15%; /*Centrar imagen*/
+    margin-top: -20%;/*Centrar imagen*/
 }
 
 .container-cabecera{

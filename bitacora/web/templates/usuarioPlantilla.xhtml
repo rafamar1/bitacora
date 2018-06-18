@@ -21,7 +21,7 @@
         <ui:insert name="top">
             <header>
                 <div id="cabecera">
-                    <p:link outcome="principal" value="bitacora"/>
+                    <p:link outcome="principal.xhtml" value="bitacora"/>
                     <h:form id="menu-superior">   
                         <p:menubar>
                             <p:menuitem value="#{messages.botonPerfil}" action="#{principalController.goToMiPerfil()}"/>
@@ -41,7 +41,35 @@
 
         <div id="main">
             <div id="left">
-                <ui:insert name="left">Left</ui:insert>
+                <ui:insert name="left">
+                        <div id="info-usuario">
+                            <p:link outcome="perfilUsuario" title="Ir a mi Perfil">
+                                <f:param name="idUsuarioSeleccionado" value="#{sessionUtilsBean.usuario.nombreUsuario}" /> 
+                                <div class="img-portada-container">
+                                    <img class="img-portada" src="#{sessionUtilsBean.dameRutaImgPortada(sessionUtilsBean.usuario)}"/>
+                                </div>                        
+                                <img class="img-perfil" src="#{sessionUtilsBean.dameRutaImgPerfil(sessionUtilsBean.usuario)}"/>
+
+                                <h:outputLabel value="#{sessionUtilsBean.usuario.nombreCompleto}" class="nombre-completo"/>
+                                <h:outputLabel value="@#{sessionUtilsBean.usuario.nombreUsuario}" class="nombre-usuario"/>
+                            </p:link>
+                            <div class="estadisticas-usuario">
+                                <div class="fila-grid">
+                                    <h:outputLabel value="#{sessionUtilsBean.usuario.viajeList.size()}"/>
+                                    <h:outputLabel value="#{sessionUtilsBean.usuario.listaUsuarioSeguido.size()}"/>
+                                    <h:outputLabel value="#{sessionUtilsBean.usuario.listaUsuarioTeSigue.size()}"/>
+                                </div>
+                                <div class="fila-grid">
+                                    <h:outputLabel value="Publicaciones"/>
+                                    <h:outputLabel value="Siguiendo"/>
+                                    <h:outputLabel value="Seguidores"/>
+                                </div>
+                            </div>                        
+                        </div>
+                    <h:form>
+                        <p:link outcome="publicarViaje" value="Publicar Viaje"/>
+                    </h:form>
+                </ui:insert>
             </div>
             <div id="content">
                 <ui:insert name="content">Content</ui:insert>

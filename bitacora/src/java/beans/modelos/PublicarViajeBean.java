@@ -8,6 +8,8 @@ package beans.modelos;
 import java.io.Serializable;
 import javax.faces.bean.ManagedBean;
 import javax.faces.bean.RequestScoped;
+import javax.validation.constraints.NotNull;
+import javax.validation.constraints.Size;
 import org.primefaces.model.UploadedFile;
 
 
@@ -19,10 +21,14 @@ import org.primefaces.model.UploadedFile;
 @ManagedBean
 @RequestScoped
 public class PublicarViajeBean implements Serializable{
-
-
+    
+    @Size(min=3)
     private String titulo;
+    
+    @Size(min=3, max=180)
     private String descripcion;
+    
+    @NotNull
     private UploadedFile imagen;
     
     

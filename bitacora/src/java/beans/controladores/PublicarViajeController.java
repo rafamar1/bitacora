@@ -6,12 +6,11 @@
 package beans.controladores;
 
 import beans.modelos.PublicarViajeBean;
-import beans.respaldo.Session;
+import beans.respaldo.SessionUtilsBean;
 import datos.dao.DiaJpaController;
 import datos.dao.ViajeJpaController;
 import datos.dao.exceptions.NonexistentEntityException;
 import datos.entidades.Dia;
-import datos.entidades.Usuario;
 import datos.entidades.Viaje;
 import java.io.BufferedOutputStream;
 import java.io.File;
@@ -25,6 +24,7 @@ import java.util.logging.Logger;
 import javax.faces.bean.ManagedBean;
 import javax.faces.bean.ManagedProperty;
 import javax.faces.bean.RequestScoped;
+import javax.faces.context.FacesContext;
 import javax.persistence.EntityManagerFactory;
 import javax.persistence.Persistence;
 import org.primefaces.model.UploadedFile;
@@ -37,7 +37,9 @@ import org.primefaces.model.UploadedFile;
 @ManagedBean
 @RequestScoped
 public class PublicarViajeController implements Serializable {
-
+    
+    @ManagedProperty(value = "#{sessionUtilsBean}")
+    private SessionUtilsBean sessionUtilsBean;
     @ManagedProperty(value = "#{publicarViajeBean}")
     private PublicarViajeBean publicarViajeBean;
     private final EntityManagerFactory emf;
@@ -54,6 +56,14 @@ public class PublicarViajeController implements Serializable {
         this.publicarViajeBean = publicarViajeBean;
     }
 
+    public SessionUtilsBean getSessionUtilsBean() {
+        return sessionUtilsBean;
+    }
+
+    public void setSessionUtilsBean(SessionUtilsBean sessionUtilsBean) {
+        this.sessionUtilsBean = sessionUtilsBean;
+    }
+    
     public String publicarViaje() {
 
         Viaje newViaje = setearValoresNuevoViaje();
@@ -82,8 +92,8 @@ public class PublicarViajeController implements Serializable {
         Date fechaModificacion = Calendar.getInstance().getTime();
         newViaje.setFechaCreacion(fechaModificacion);
         newViaje.setFechaModificacion(fechaModificacion);
-        if (((Usuario) Session.getInstance().getAttribute("usuario")).getNombreUsuario() != null) {
-            newViaje.setUsuario(((Usuario) Session.getInstance().getAttribute("usuario")));
+        if (null != sessionUtilsBean.getUsuario().getNombreUsuario()) {
+            newViaje.setUsuario(sessionUtilsBean.getUsuario());
         }
         newViaje.setImgMiniatura(publicarViajeBean.getImagen().getFileName());
         return newViaje;
@@ -101,9 +111,12 @@ public class PublicarViajeController implements Serializable {
         primerDia.setIdViaje(viajeController.findViaje(newViaje.getId()));
         diaController.create(primerDia);
         Integer idPrimerDia = primerDia.getId();
+        
+        sessionUtilsBean.setIdViajeSeleccionado(idViajeInsert);
+        sessionUtilsBean.setIdDiaSeleccionado(idPrimerDia);
 
-        Session.getInstance().setAttribute("idDiaSeleccionado", idPrimerDia);
-        Session.getInstance().setAttribute("idViajeSeleccionado", idViajeInsert);
+        /*Session.getInstance().setAttribute("idDiaSeleccionado", idPrimerDia);
+        Session.getInstance().setAttribute("idViajeSeleccionado", idViajeInsert);*/
 
     }
 
@@ -112,13 +125,14 @@ public class PublicarViajeController implements Serializable {
         byte[] bytes = null;
 
         if (null != uploadedPhoto) {
-            //String rutaFaces = FacesContext.getCurrentInstance().getExternalContext().getRealPath("/");
-            String rutaRaiz = "C:/bitacora/usuarios"; // main location for uploads
-            if (((Usuario) Session.getInstance().getAttribute("usuario")).getNombreUsuario() != null
-                    && Session.getInstance().getAttribute("idViajeSeleccionado") != null) {
-                String nombreUsuario = ((Usuario) Session.getInstance().getAttribute("usuario")).getNombreUsuario();
-                String idViajeSeleccionado = String.valueOf(Session.getInstance().getAttribute("idViajeSeleccionado"));
-                String rutaFichero = rutaRaiz + "/" + nombreUsuario + "/" + idViajeSeleccionado;
+            String rutaFaces = FacesContext.getCurrentInstance().getExternalContext().getRealPath("/");
+            String rutaUsuarios = rutaFaces.concat("resources\\images\\usuarios");
+            //String rutaRaiz = "C:/bitacora/usuarios";
+            if (sessionUtilsBean.getUsuario().getNombreUsuario() != null
+                    && sessionUtilsBean.getIdViajeSeleccionado() != null) {
+                String nombreUsuario = sessionUtilsBean.getUsuario().getNombreUsuario();
+                String idViajeSeleccionado = String.valueOf(sessionUtilsBean.getIdViajeSeleccionado());
+                String rutaFichero = rutaUsuarios + "/" + nombreUsuario + "/" + idViajeSeleccionado;
                 File theFile = new File(rutaFichero);
                 theFile.mkdirs(); //Creación de carpeta
 
@@ -129,7 +143,6 @@ public class PublicarViajeController implements Serializable {
 
                 stream.write(bytes);
                 stream.close();
-
             }
 
         }

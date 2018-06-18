@@ -32,11 +32,11 @@ header #cabecera{
 
 #cabecera select option:first-child {
     /*background: url("./images/spanishFlag.jpg");*/
-    background: url("#{resource['images/spanishFlag.jpg']}");  
+    background: url("#{resource['images/comun/spanishFlag.jpg']}") !important;
 }
 
 #cabecera select option:nth-child(2){
-    background: url("#{resource['images/englishFlag.jpg']}");  
+    background: url("#{resource['images/comun/englishFlag.jpg']}") no-repeat !important; 
 }
 
 #cabecera > #menu-superior {
@@ -121,9 +121,9 @@ footer .ui-g div:first-child{
 }*/
 
 /*-----------  RESETEOS   -----------*/
-html,body{
+/*html,body{
     height: 100vh;
-}
+}*/
 #content{
     padding-top: 2.5em;
     padding-bottom: 5em;

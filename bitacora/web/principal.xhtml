@@ -17,45 +17,10 @@
 
             <ui:define name="title">#{messages.tituloIndex}</ui:define>
 
-            <ui:define name="left">
-                <p:link outcome="perfilUsuario" title="Ir a mi Perfil">
-                    <f:param name="idUsuarioSeleccionado" value="#{sessionUtilsBean.usuario.nombreUsuario}" /> 
-                    <div id="info-usuario">
-                        <div class="img-portada-container">
-                            <img class="img-portada" src="#{principalController.dameRutaImgPortada(sessionUtilsBean.usuario)}"/>
-                        </div>                        
-                        <img class="img-perfil" src="#{principalController.dameRutaImgPerfil(sessionUtilsBean.usuario)}"/>
-
-                        <h:outputLabel value="#{sessionUtilsBean.usuario.nombreCompleto}" class="nombre-completo"/>
-                        <h:outputLabel value="@#{sessionUtilsBean.usuario.nombreUsuario}" class="nombre-usuario"/>
-                        <div class="estadisticas-usuario">
-                            <div class="fila-grid">
-                                <h:outputLabel value="#{sessionUtilsBean.usuario.viajeList.size()}"/>
-                                <h:outputLabel value="#{sessionUtilsBean.usuario.listaUsuarioSeguido.size()}"/>
-                                <h:outputLabel value="#{sessionUtilsBean.usuario.listaUsuarioTeSigue.size()}"/>
-                            </div>
-                            <div class="fila-grid">
-                                <h:outputLabel value="Publicaciones"/>
-                                <h:outputLabel value="Siguiendo"/>
-                                <h:outputLabel value="Seguidores"/>
-                            </div>
-                        </div>                        
-                    </div>
-
-                </p:link>
-
-                <h:form>
-                    <p>
-                        <p:commandButton action="publicarViaje.xhtml" value="Publicar Viaje" rendered="#{sessionUtilsBean.usuarioLogeado}"/>
-                    </p>
-
-                </h:form>
-            </ui:define>
-
             <ui:define name="content">
                 <f:view locale="#{localeBean.locale}">
                     <section id="viajes_siguiendo">
-                        <p:dataScroller value="#{principalController.dameListaViajesOrdenados()}" var="viaje" chunkSize="10">
+                        <p:dataScroller value="#{principalController.listaViajesQueSigo}" var="viaje" chunkSize="10">
                             <f:facet name="header">
                                 Últimas novedades
                             </f:facet>
@@ -68,7 +33,7 @@
                                             <f:param name="idUsuarioSeleccionado" value="#{viaje.usuario.nombreUsuario}" />
                                             
                                             <div class="info-general-left-header">
-                                                <img class="viaje-imgUsuario" src="#{principalController.dameRutaImgPerfil(viaje.usuario)}" /> 
+                                                <img class="viaje-imgUsuario" src="#{sessionUtilsBean.dameRutaImgPerfil(viaje.usuario)}" /> 
                                                 <div class="info-general-left-header-text">
                                                     <h:outputText value="#{viaje.titulo}" class="viaje-title"/>
                                                     <h:outputText value="@#{viaje.usuario.nombreUsuario}" class="viaje-nombreUsuario"/>                                                    
@@ -96,7 +61,7 @@
                                     </div>   
                                     <h:link outcome="detalleViaje" title="Ver Viaje">
                                         <f:param name="idViajeSeleccionado" value="#{viaje.id}" />         
-                                        <img src="#{principalController.dameRutaImgViaje(viaje)}" class="img-viaje"/>
+                                        <img src="#{sessionUtilsBean.dameRutaImgViaje(viaje)}" class="img-viaje"/>
                                     </h:link> 
                                 </div>
 

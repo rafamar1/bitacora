@@ -6,17 +6,14 @@
 package beans.controladores;
 
 import beans.modelos.PublicarEntradaBean;
-import beans.respaldo.Session;
+import beans.respaldo.SessionUtilsBean;
 import datos.dao.CiudadJpaController;
 import datos.dao.DiaJpaController;
 import datos.dao.EntradaJpaController;
-import datos.dao.ViajeJpaController;
 import datos.dao.exceptions.NonexistentEntityException;
 import datos.entidades.Ciudad;
 import datos.entidades.Dia;
 import datos.entidades.Entrada;
-import datos.entidades.Usuario;
-import datos.entidades.Viaje;
 import java.io.BufferedOutputStream;
 import java.io.File;
 import java.io.FileOutputStream;
@@ -29,9 +26,9 @@ import java.util.logging.Logger;
 import javax.faces.bean.ManagedBean;
 import javax.faces.bean.ManagedProperty;
 import javax.faces.bean.ViewScoped;
+import javax.faces.context.FacesContext;
 import javax.persistence.EntityManagerFactory;
 import javax.persistence.Persistence;
-import org.apache.commons.io.FilenameUtils;
 import org.primefaces.model.UploadedFile;
 
 /**
@@ -44,6 +41,8 @@ public class PublicarEntradaController implements Serializable {
 
     @ManagedProperty(value = "#{publicarEntradaBean}")
     private PublicarEntradaBean publicarEntradaBean;
+    @ManagedProperty(value = "#{sessionUtilsBean}")
+    private SessionUtilsBean sessionUtilsBean;
     private final EntityManagerFactory emf;
     private List<Ciudad> listaCiudades;
     private List<String> listaCategorias;
@@ -63,6 +62,16 @@ public class PublicarEntradaController implements Serializable {
     public void setPublicarEntradaBean(PublicarEntradaBean publicarEntradaBean) {
         this.publicarEntradaBean = publicarEntradaBean;
     }
+
+    public SessionUtilsBean getSessionUtilsBean() {
+        return sessionUtilsBean;
+    }
+
+    public void setSessionUtilsBean(SessionUtilsBean sessionUtilsBean) {
+        this.sessionUtilsBean = sessionUtilsBean;
+    }
+    
+    
 
     public List<Ciudad> getListaCiudades() {
         return listaCiudades;
@@ -96,38 +105,38 @@ public class PublicarEntradaController implements Serializable {
         this.idEntrada = idEntrada;
     }
     
+    public List<Ciudad> autocompletadoCiudades(String query) {
+
+        if (query.length() > 2) {
+            CiudadJpaController ciudadController = new CiudadJpaController(emf);
+            return ciudadController.dameListaCiudadesLikeNombre(query);
+        }
+        return this.listaCiudades;
+    }
+    
     public String publicarEntrada() {        
         //TODO revisar el seteo de la fecha de modificaion!
         Entrada newEntrada = setearValoresEntrada();
         
         try {
             cambiarNombreImagenPorIdEntrada(newEntrada);
-            subirFoto();
+            subirFotoEntrada();
+//            subirFoto();
         } catch (IOException ex) {
             Logger.getLogger(PublicarEntradaController.class.getName()).log(Level.SEVERE, null, ex);
             return "error"; //TODO revisar control de excepciones
         } catch (Exception ex) {
             Logger.getLogger(PublicarEntradaController.class.getName()).log(Level.SEVERE, null, ex);
-            return "error"; //
+            return "error"; 
         }                
-        //TODO gestionar la imagen tanto las individuales como las de la galería
         
         return "ok";
-    }
-    
-     private void cambiarNombreImagenPorIdEntrada(Entrada newEntrada) throws NonexistentEntityException, Exception {
-        EntradaJpaController entradaControl = new EntradaJpaController(emf);
-        entradaControl.create(newEntrada);
-        Integer idEntradaInsert = newEntrada.getId();
-        newEntrada.setImgMiniatura(String.valueOf(idEntradaInsert) + ".jpg");
-        entradaControl.edit(newEntrada);
-        this.idEntrada = idEntradaInsert;
     }
 
     private Entrada setearValoresEntrada() {
         DiaJpaController diaController = new DiaJpaController(emf);
         CiudadJpaController controllerCiudad = new CiudadJpaController(emf);
-        Dia primerDia = diaController.findDia((Integer)Session.getInstance().getAttribute("idDiaSeleccionado"));
+        Dia primerDia = diaController.findDia(sessionUtilsBean.getIdDiaSeleccionado());
         
         Entrada newEntrada = new Entrada();
         newEntrada.setTitulo(publicarEntradaBean.getTitulo());
@@ -145,17 +154,49 @@ public class PublicarEntradaController implements Serializable {
         
         return newEntrada;
     }
-
-    public List<Ciudad> autocompletadoCiudades(String query) {
-
-        if (query.length() > 2) {
-            CiudadJpaController ciudadController = new CiudadJpaController(emf);
-            return ciudadController.dameListaCiudadesLikeNombre(query);
-        }
-        return this.listaCiudades;
+    
+     private void cambiarNombreImagenPorIdEntrada(Entrada newEntrada) throws NonexistentEntityException, Exception {
+        EntradaJpaController entradaControl = new EntradaJpaController(emf);
+        entradaControl.create(newEntrada);
+        Integer idEntradaInsert = newEntrada.getId();
+        newEntrada.setImgMiniatura(String.valueOf(idEntradaInsert) + ".jpg");
+        entradaControl.edit(newEntrada);
+        this.idEntrada = idEntradaInsert;
     }
+    
+    public void subirFotoEntrada() throws IOException {
+        UploadedFile uploadedPhoto = publicarEntradaBean.getImagen();
+        byte[] bytes = null;
 
-    public void subirFoto() throws IOException {
+        if (null != uploadedPhoto) {
+            String rutaFaces = FacesContext.getCurrentInstance().getExternalContext().getRealPath("/");
+            String rutaUsuarios = rutaFaces.concat("resources\\images\\usuarios");
+            //String rutaRaiz = "C:/bitacora/usuarios";
+            if (sessionUtilsBean.getUsuario().getNombreUsuario() != null
+                    && sessionUtilsBean.getIdViajeSeleccionado() != null
+                    && sessionUtilsBean.getIdDiaSeleccionado() != null
+                    && this.idEntrada != null) {
+                String nombreUsuario = sessionUtilsBean.getUsuario().getNombreUsuario();
+                String idViajeSeleccionado = String.valueOf(sessionUtilsBean.getIdViajeSeleccionado());
+                String idDiaSeleccionado = String.valueOf(sessionUtilsBean.getIdDiaSeleccionado());
+                String rutaFichero = rutaUsuarios + "/" + nombreUsuario + "/" + idViajeSeleccionado + "/" + idDiaSeleccionado;
+                File theFile = new File(rutaFichero);
+                theFile.mkdirs(); //Creación de carpeta
+
+                bytes = uploadedPhoto.getContents();
+
+                FileOutputStream nuevoFichero = new FileOutputStream(rutaFichero + "/" + this.idEntrada + ".jpg");
+                BufferedOutputStream stream = new BufferedOutputStream(nuevoFichero);
+
+                stream.write(bytes);
+                stream.close();
+            }
+
+        }
+
+    }
+    
+    /*public void subirFoto() throws IOException {
         UploadedFile uploadedPhoto = publicarEntradaBean.getImagen();
         byte[] bytes = null;
         
@@ -183,7 +224,7 @@ public class PublicarEntradaController implements Serializable {
             }
         }
 
-    }
+    }*/
 
     private List<String> cargaListaCategorias() {
         List<String> tagList = new ArrayList<>();

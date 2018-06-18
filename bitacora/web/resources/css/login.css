@@ -11,7 +11,7 @@ $color-primary: #ABA194;*/
 body {    
     font-family: "Roboto";
     font-size: 14px;
-    background-size: 100% 200% !important; /*Para que cubra completo el degradado*/
+    background-size: 250% 130% !important; /*Para que cubra completo el degradado*/
     animation: move 15s ease infinite;
     transform: translate3d(0, 0, 0);
     background: linear-gradient(45deg, #fff, #934B66 95%);

@@ -20,6 +20,15 @@
         <param-name>primefaces.UPLOADER</param-name>
         <param-value>native</param-value>
     </context-param>
+    
+    <servlet>
+        <servlet-name>compruebaEmailRemote</servlet-name>
+        <servlet-class>compruebaEmailRemote</servlet-class>
+    </servlet>
+    <servlet-mapping>
+        <servlet-name>compruebaEmailRemote</servlet-name>
+        <url-pattern>/compruebaEmailRemote</url-pattern>
+    </servlet-mapping>
 
 
     <filter>

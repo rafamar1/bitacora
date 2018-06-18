@@ -9,16 +9,22 @@ import beans.respaldo.Session;
 import beans.respaldo.SessionUtilsBean;
 import datos.dao.UsuarioJpaController;
 import datos.dao.exceptions.NonexistentEntityException;
+import datos.entidades.Dia;
+import datos.entidades.Entrada;
 import datos.entidades.Usuario;
 import datos.entidades.Viaje;
 import java.io.Serializable;
+import java.util.ArrayList;
+import java.util.HashSet;
 import java.util.List;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.annotation.PostConstruct;
+import javax.faces.application.FacesMessage;
 import javax.faces.bean.ManagedBean;
 import javax.faces.bean.ManagedProperty;
 import javax.faces.bean.ViewScoped;
+import javax.faces.context.FacesContext;
 import javax.persistence.EntityManagerFactory;
 import javax.persistence.Persistence;
 
@@ -29,6 +35,7 @@ import javax.persistence.Persistence;
 @ManagedBean
 @ViewScoped
 public class PerfilController implements Serializable {
+
     //TODO habria se puede eliminar el usuarioSeleccionado? o setearlo en el initialize
     @ManagedProperty(value = "#{sessionUtilsBean}")
     private SessionUtilsBean sessionUtilsBean;
@@ -73,11 +80,61 @@ public class PerfilController implements Serializable {
         this.followUnfollow = followUnfollow;
     }
 
+    public String dameRutaImgPerfil(Usuario usuario) {
+        StringBuilder sb = new StringBuilder("resources/images/usuarios/");
+        sb.append(usuario.getNombreUsuario());
+        sb.append("/");
+        sb.append(usuario.getImgPerfil());
+        return sb.toString();
+    }
+
+    public String dameRutaImgViaje(Viaje viaje) {
+        StringBuilder sb = new StringBuilder("resources/images/usuarios/");
+        sb.append(viaje.getUsuario().getNombreUsuario());
+        sb.append("/");
+        sb.append(viaje.getId());
+        sb.append("/");
+        sb.append(viaje.getImgMiniatura());
+        return sb.toString();
+    }
+
+    public String dameRutaImgPortada(Usuario usuario) {
+        StringBuilder sb = new StringBuilder("resources/images/usuarios/");
+        sb.append(usuario.getNombreUsuario());
+        sb.append("/");
+        sb.append(usuario.getImgPortada());
+        return sb.toString();
+    }
+
     public List<Viaje> damelistaViajesUsuario() {
         //Usuario usuarioSeleccionado = (Usuario) Session.getInstance().getAttribute("usuario");
         Usuario userSeleccionado = dameUsuarioSeleccionadoPorId();
         return userSeleccionado.getViajeList();
 
+    }
+    
+    public String dameCiudadesVisitadas(Viaje viaje) {
+
+        List<Dia> listaDias = viaje.getDiaList();
+        HashSet<String> hashSetNombresCiudades = new HashSet<>();
+        for (Dia dia : listaDias) {
+            for (Entrada entrada : dia.getEntradaList()) {
+                hashSetNombresCiudades.add(entrada.getIdCiudad().getNombre());
+            }
+        }
+        ArrayList<String> listaNombresCiudades = new ArrayList(hashSetNombresCiudades);
+        int numMaximoCiudades = 3;
+        StringBuilder sb = new StringBuilder();
+        if (listaNombresCiudades.size() > 0) {
+            sb.append(listaNombresCiudades.get(0));
+            for (int i = 1; i < listaNombresCiudades.size(); i++) {
+                if (listaNombresCiudades.get(i) != null && i < numMaximoCiudades) {
+                    sb.append(" | ");
+                    sb.append(listaNombresCiudades.get(i));
+                }
+            }
+        }
+        return sb.toString();
     }
 
     public Usuario dameUsuarioSeleccionadoPorId() {
@@ -88,8 +145,8 @@ public class PerfilController implements Serializable {
             return controlUser.findUsuario(((Usuario) Session.getInstance().getAttribute("usuario")).getNombreUsuario());
         }
     }
-    
-    public boolean usuarioSeleccionadoNoEsUsuarioLogeado(){
+
+    public boolean usuarioSeleccionadoNoEsUsuarioLogeado() {
         return !sessionUtilsBean.getUsuario().getNombreUsuario().equals(sessionUtilsBean.getIdUsuarioSeleccionado());
     }
 
@@ -108,14 +165,18 @@ public class PerfilController implements Serializable {
                 }*/
                 userToFollowUnfollow.getListaUsuarioTeSigue().add(userLogeado);
                 controlUser.edit(userToFollowUnfollow);
+                FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(
+                        "Has comenzado a seguir a "+userToFollowUnfollow.getNombreUsuario()));
 
             } else {
                 /*PARA DEJAR DE SEGUIR*/
-                
+
                 if (listUserToFollowUnfollow.contains(userLogeado)) {
                     listUserToFollowUnfollow.remove(userLogeado);
                 }
                 controlUser.edit(userToFollowUnfollow);
+                FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(
+                        "Has dejado de seguir a "+userToFollowUnfollow.getNombreUsuario()));
             }
 
         } catch (NonexistentEntityException ex) {
@@ -128,7 +189,7 @@ public class PerfilController implements Serializable {
     private boolean esSeguidor(Usuario userToFollowUnfollow, Usuario userLogeado) {
         return userToFollowUnfollow.getListaUsuarioTeSigue().contains(userLogeado);
     }
-    
+
     public String followKendrick() {
         try {
             UsuarioJpaController controlUser = new UsuarioJpaController(emf);

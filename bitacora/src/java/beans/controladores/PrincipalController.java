@@ -1,6 +1,7 @@
 package beans.controladores;
 
 import beans.respaldo.SessionUtilsBean;
+import datos.dao.UsuarioJpaController;
 
 import datos.dao.ViajeJpaController;
 import datos.entidades.Dia;
@@ -11,6 +12,7 @@ import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.HashSet;
 import java.util.List;
+import javax.annotation.PostConstruct;
 import javax.faces.bean.ManagedBean;
 import javax.faces.bean.ManagedProperty;
 import javax.faces.bean.RequestScoped;
@@ -30,9 +32,15 @@ public class PrincipalController implements Serializable {
     @ManagedProperty(value = "#{sessionUtilsBean}")
     private SessionUtilsBean sessionUtilsBean;
     private final EntityManagerFactory emf;
+    private List<Viaje> listaViajesQueSigo;
 
     public PrincipalController() {
         emf = Persistence.createEntityManagerFactory("bitacoraPU");
+    }
+    
+    @PostConstruct
+    public void initialize() {
+        this.listaViajesQueSigo = dameListaViajesOrdenados();
     }
 
     public SessionUtilsBean getSessionUtilsBean() {
@@ -43,6 +51,14 @@ public class PrincipalController implements Serializable {
         this.sessionUtilsBean = sessionUtilsBean;
     }
 
+    public List<Viaje> getListaViajesQueSigo() {
+        return listaViajesQueSigo;
+    }
+
+    public void setListaViajesQueSigo(List<Viaje> listaViajesQueSigo) {
+        this.listaViajesQueSigo = listaViajesQueSigo;
+    }
+    
     public String goToMiPerfil() {
         sessionUtilsBean.setIdUsuarioSeleccionado(sessionUtilsBean.getUsuario().getNombreUsuario());
         return "verPerfil";
@@ -86,11 +102,13 @@ public class PrincipalController implements Serializable {
         ArrayList<String> listaNombresCiudades = new ArrayList(hashSetNombresCiudades);
         int numMaximoCiudades = 3;
         StringBuilder sb = new StringBuilder();
-        sb.append(listaNombresCiudades.get(0));
-        for (int i = 1; i < listaNombresCiudades.size(); i++) {
-            if (listaNombresCiudades.get(i) != null && i<numMaximoCiudades ) {
-                sb.append(" | ");
-                sb.append(listaNombresCiudades.get(i));
+        if (listaNombresCiudades.size() > 0) {
+            sb.append(listaNombresCiudades.get(0));
+            for (int i = 1; i < listaNombresCiudades.size(); i++) {
+                if (listaNombresCiudades.get(i) != null && i < numMaximoCiudades) {
+                    sb.append(" | ");
+                    sb.append(listaNombresCiudades.get(i));
+                }
             }
         }
         return sb.toString();
@@ -105,9 +123,6 @@ public class PrincipalController implements Serializable {
                 listaViajesDeUsuariosQueSigo.add(viaje);
             }
         }
-        /*viajesOrdenadosList.stream().filter((viaje) -> (esSeguidoPorUserLogged(viaje.getUsuario()))).forEachOrdered((viaje) -> {
-            listaViajesDeUsuariosQueSigo.add(viaje);
-        });*/
 
         return listaViajesDeUsuariosQueSigo;
     }

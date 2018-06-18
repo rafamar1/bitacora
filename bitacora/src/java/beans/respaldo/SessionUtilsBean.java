@@ -6,6 +6,7 @@
 package beans.respaldo;
 
 import datos.entidades.Usuario;
+import datos.entidades.Viaje;
 import java.io.Serializable;
 import javax.faces.bean.ManagedBean;
 import javax.faces.bean.SessionScoped;
@@ -91,5 +92,31 @@ public class SessionUtilsBean implements Serializable {
         setUsuarioLogeado(false);
         Session.getInstance().currentExternalContext().invalidateSession();
         return "logout";
-    }    
+    }   
+    
+    public String dameRutaImgPerfil(Usuario usuario) {
+        StringBuilder sb = new StringBuilder("resources/images/usuarios/");
+        sb.append(usuario.getNombreUsuario());
+        sb.append("/");
+        sb.append(usuario.getImgPerfil());
+        return sb.toString();
+    }
+
+    public String dameRutaImgViaje(Viaje viaje) {
+        StringBuilder sb = new StringBuilder("resources/images/usuarios/");
+        sb.append(viaje.getUsuario().getNombreUsuario());
+        sb.append("/");
+        sb.append(viaje.getId());
+        sb.append("/");
+        sb.append(viaje.getImgMiniatura());
+        return sb.toString();
+    }
+
+    public String dameRutaImgPortada(Usuario usuario) {
+        StringBuilder sb = new StringBuilder("resources/images/usuarios/");
+        sb.append(usuario.getNombreUsuario());
+        sb.append("/");
+        sb.append(usuario.getImgPortada());
+        return sb.toString();
+    }
 }

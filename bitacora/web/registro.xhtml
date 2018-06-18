@@ -22,7 +22,11 @@
 
                         <div class="form-row form-input-name-row">
                                 <span>#{messages.nombreUsuario}</span>
-                                <h:inputText id="nickname" value="#{registroBean.nombreUsuario}"/>
+                                <h:inputText id="nickname" value="#{registroBean.nombreUsuario}">
+                                    <f:validator validatorId="uniqueNicknameValidator" />
+                                    <f:ajax event="blur" render="m_nickname" />
+                                </h:inputText>
+                                <h:message id="m_nickname" for="nickname" class="error"/>
                         </div>
 
                         <div class="form-row form-input-name-row">

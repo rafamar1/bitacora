@@ -1,10 +1,10 @@
 /*html{
     background-color: #f3f3f3;
 }*/
-body{    
+body {    
     font-family: "Roboto";
     font-size: 14px;
-    background-size: 100% 200% !important; /*Para que cubra completo el degradado*/
+    background-size: 250% 130% !important; /*Para que cubra completo el degradado*/
     animation: move 15s ease infinite;
     transform: translate3d(0, 0, 0);
     background: linear-gradient(45deg, #fff, #934B66 95%);
@@ -23,6 +23,19 @@ label.error {
     margin-bottom: 15px;
 }
 
+#formRegistro .form-row span.error{
+    display: inline-block;
+    margin: 10px auto;
+    margin-bottom: 10px;
+    margin-bottom: 10px;
+    text-align: center;
+    font-size: 0.8em;
+    color: #b94d4d;
+    width: 90%;
+    padding-left: 60px;
+    float: right;
+    margin-bottom: 15px;
+}
 
 .form-validation{
     box-sizing: border-box;
