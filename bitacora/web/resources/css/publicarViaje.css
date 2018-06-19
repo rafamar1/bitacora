@@ -5,7 +5,6 @@ html{
 body{
     position: relative;
     background-size: 150% 150% !important;
-    animation: move 15s ease infinite;
     transform: translate3d(0, 0, 0);
     background: linear-gradient(45deg, #fff, #DEBE6F 95%);
 
@@ -149,6 +148,7 @@ label.nombre-usuario {
     width: 185px;
     text-align: right;
     padding: 8px 25px;
+    vertical-align: top;
 }
 #imagen_viaje{    
     border: none;

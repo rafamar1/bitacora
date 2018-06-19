@@ -72,6 +72,8 @@ public class RegistroController implements Serializable {
         usuario.setNombreCompleto(registroBean.getNombreCompleto());
         usuario.setNombreUsuario(registroBean.getNombreUsuario());
         usuario.setEmail(registroBean.getEmail());
+        usuario.setImgPerfil("sin-imagen.jpg"); 
+        usuario.setImgPortada("sin-imagen-portada.jpg"); 
         usuario.setPublico(1); //Siempre se inicializa un usuario como público
         return usuario;
     }

@@ -172,3 +172,41 @@ div.img-entrada-container{
 .info-entrada .descripcion {
     text-align: justify;
 }
+
+.botonera-add-entrada-dia{
+    display: flex;
+    margin: 20px auto;
+    width: 40%;    
+}
+
+.botonera-add-entrada-dia .nuevo-dia{
+    display: flex;
+    flex-direction: column;
+}
+
+#content .botonera-add-entrada-dia button{
+    display: block;
+    border-radius: 3px;
+    background: #690c2f;
+    border: 1px solid #debe6f;
+    color: #ffffff;
+    box-shadow: 1px 2px 4px 0 rgba(0, 0, 0, 0.08);
+    width: 190px;
+    height: 55px;
+    min-width: 175px;
+    /*padding: 14px 22px;
+    margin: 40px 183px 0;*/
+}
+#content .botonera-add-entrada-dia button.nueva-entrada{
+    margin-right: 20px;
+}
+
+#content .botonera-add-entrada-dia .nuevo-dia button{
+    margin-left: 20px;
+}
+
+#content .botonera-add-entrada-dia button:hover{
+    background: #8d2e51; 
+    border: 1px solid #debe6f;
+    transition: 0.5s;
+}

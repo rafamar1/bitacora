@@ -35,9 +35,9 @@
 
                         <div id="info-usuario">
                             <div class="img-portada-container">
-                                <img class="img-portada" src="#{perfilController.dameRutaImgPortada(perfilController.usuarioSeleccionado)}"/>
+                                <img class="img-portada" src="#{sessionUtilsBean.dameRutaImgPortada(perfilController.usuarioSeleccionado)}"/>
                             </div>                        
-                            <img class="img-perfil" src="#{perfilController.dameRutaImgPerfil(perfilController.usuarioSeleccionado)}"/>
+                            <img class="img-perfil" src="#{sessionUtilsBean.dameRutaImgPerfil(perfilController.usuarioSeleccionado)}"/>
 
                             <h:outputLabel value="#{perfilController.usuarioSeleccionado.nombreCompleto}" class="nombre-completo"/>
                             <h:outputLabel value="@#{perfilController.usuarioSeleccionado.nombreUsuario}" class="nombre-usuario"/>
@@ -55,7 +55,9 @@
                                     </div>
                                 </div>  
                                 <div class="boton-config-follow">
-                                    <h:commandButton action="editarPerfil" value="Modificar Perfil" rendered="#{!perfilController.usuarioSeleccionadoNoEsUsuarioLogeado()}"/>
+                                    <p:commandButton action="modificarPerfil" value="Modificar Perfil" 
+                                                     id="modificarPerfil"  icon="fa fa-gears"
+                                                     rendered="#{!perfilController.usuarioSeleccionadoNoEsUsuarioLogeado()}"/>
                                     <p:selectBooleanButton id="followUnfollow" value="#{perfilController.followUnfollow}"  
                                                            onLabel="Dejar de Seguir" offLabel="Seguir" rendered="#{perfilController.usuarioSeleccionadoNoEsUsuarioLogeado()}">
                                         <p:ajax listener="#{perfilController.toFollowUnfollow}" update="messageUnfollow" />
@@ -89,8 +91,7 @@
                                                 </div>
 
                                                 <h:outputText value="#{viaje.descripcion}" class="viaje-descripcion"/>
-
-
+                                                
                                                 <div class="info-general-left-bottom">
                                                     <label>                                                    
                                                         <span class="fa fa-map-marker icono"/>

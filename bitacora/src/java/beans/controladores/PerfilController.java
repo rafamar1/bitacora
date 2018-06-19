@@ -165,6 +165,7 @@ public class PerfilController implements Serializable {
                 }*/
                 userToFollowUnfollow.getListaUsuarioTeSigue().add(userLogeado);
                 controlUser.edit(userToFollowUnfollow);
+                sessionUtilsBean.setUsuario(userLogeado);
                 FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(
                         "Has comenzado a seguir a "+userToFollowUnfollow.getNombreUsuario()));
 
@@ -174,7 +175,8 @@ public class PerfilController implements Serializable {
                 if (listUserToFollowUnfollow.contains(userLogeado)) {
                     listUserToFollowUnfollow.remove(userLogeado);
                 }
-                controlUser.edit(userToFollowUnfollow);
+                controlUser.edit(userToFollowUnfollow);                
+                sessionUtilsBean.setUsuario(userLogeado);
                 FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(
                         "Has dejado de seguir a "+userToFollowUnfollow.getNombreUsuario()));
             }

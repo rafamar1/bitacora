@@ -46,16 +46,9 @@
         </navigation-case>
     </navigation-rule>
     <navigation-rule>
-        <from-view-id>/publicarViaje.xhtml</from-view-id>
-        <navigation-case>
-            <from-outcome>ok</from-outcome>
-            <to-view-id>/detalleViaje.xhtml</to-view-id>
-        </navigation-case>
-    </navigation-rule>
-    <navigation-rule>
         <from-view-id>/publicarEntrada.xhtml</from-view-id>
         <navigation-case>
-            <from-outcome>ok</from-outcome>
+            <from-outcome>newEntradaOk</from-outcome>
             <to-view-id>/detalleViaje.xhtml</to-view-id>
         </navigation-case>
     </navigation-rule>
@@ -69,19 +62,48 @@
     <navigation-rule>
         <from-view-id>/principal.xhtml</from-view-id>
         <navigation-case>
-            <from-outcome>verPerfil</from-outcome>
+            <from-outcome>perfilUsuario</from-outcome>
             <to-view-id>/perfilUsuario.xhtml</to-view-id>
         </navigation-case>
         <navigation-case>
             <from-outcome>publicarViaje</from-outcome>
             <to-view-id>/publicarViaje.xhtml</to-view-id>
         </navigation-case>
+        <navigation-case>
+            <from-outcome>verViaje</from-outcome>
+            <to-view-id>/detalleViaje.xhtml</to-view-id>
+        </navigation-case>
     </navigation-rule>
     <navigation-rule>
         <from-view-id>/templates/usuarioPlantilla.xhtml</from-view-id>
         <navigation-case>
-            <from-outcome>verPerfil</from-outcome>
+            <from-outcome>perfilUsuario</from-outcome>
             <to-view-id>/perfilUsuario.xhtml</to-view-id>
+        </navigation-case>
+        <navigation-case>
+            <from-outcome>logout</from-outcome>
+            <to-view-id>/index.xhtml</to-view-id>
+        </navigation-case>
+    </navigation-rule>
+    <navigation-rule>
+        <from-view-id>/publicarViaje.xhtml</from-view-id>
+        <navigation-case>
+            <from-outcome>newViajeOk</from-outcome>
+            <to-view-id>/publicarEntrada.xhtml</to-view-id>
+        </navigation-case>
+    </navigation-rule>
+    <navigation-rule>
+        <from-view-id>/detalleViaje.xhtml</from-view-id>
+        <navigation-case>
+            <from-outcome>publicarEntrada</from-outcome>
+            <to-view-id>/publicarEntrada.xhtml</to-view-id>
+        </navigation-case>
+    </navigation-rule>
+    <navigation-rule>
+        <from-view-id>/modificarPerfil.xhtml</from-view-id>
+        <navigation-case>
+            <from-outcome>modificarOK</from-outcome>
+            <to-view-id>/principal.xhtml</to-view-id>
         </navigation-case>
     </navigation-rule>
 </faces-config>

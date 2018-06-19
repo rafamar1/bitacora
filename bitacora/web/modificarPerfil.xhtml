@@ -1,0 +1,104 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+      xmlns:h="http://xmlns.jcp.org/jsf/html"
+      xmlns:f="http://xmlns.jcp.org/jsf/core"
+      xmlns:p="http://primefaces.org/ui"
+      xmlns:c="http://xmlns.jcp.org/jsp/jstl/core">
+    <h:head>
+        <style>
+            #viaje img{
+                min-width: 250px;
+                max-width: 375px;
+                width: 70%;
+            }
+        </style>
+    </h:head>
+    <body>
+
+        <ui:composition template="./templates/usuarioPlantilla.xhtml">
+            <ui:define name="css">
+                <h:outputStylesheet name="modificarPerfil.css" library="css"/>
+            </ui:define>
+
+            <ui:define name="title">#{messages.tituloPerfil} - #{perfilController.usuarioSeleccionado.nombreCompleto}</ui:define>
+
+            <ui:define name="content">
+
+                <f:view locale="#{localeBean.locale}">
+                    <f:metadata>
+                        <f:viewParam name="idUsuarioSeleccionado" value="#{sessionUtilsBean.idUsuarioSeleccionado}"/>
+                    </f:metadata>
+                    <h:form id="form-modif-usuario" prependId="false" enctype="multipart/form-data">
+                        <div id="info-usuario">
+                            <div class="img-portada-container">
+                                <img class="img-portada" src="#{perfilController.dameRutaImgPortada(perfilController.usuarioSeleccionado)}"/>
+                            </div>                        
+                            <img class="img-perfil" src="#{perfilController.dameRutaImgPerfil(perfilController.usuarioSeleccionado)}"/>
+
+                            <h:outputLabel value="#{perfilController.usuarioSeleccionado.nombreCompleto}" class="nombre-completo"/>
+                            <h:outputLabel value="@#{perfilController.usuarioSeleccionado.nombreUsuario}" class="nombre-usuario"/>
+                            <div class="barra-superior">
+                                <div class="estadisticas-usuario">
+                                    <div class="fila-grid">
+                                        <h:outputLabel value="#{perfilController.usuarioSeleccionado.viajeList.size()}"/>
+                                        <h:outputLabel value="#{perfilController.usuarioSeleccionado.listaUsuarioSeguido.size()}"/>
+                                        <h:outputLabel value="#{perfilController.usuarioSeleccionado.listaUsuarioTeSigue.size()}"/>
+                                    </div>
+                                    <div class="fila-grid">
+                                        <h:outputLabel value="Publicaciones"/>
+                                        <h:outputLabel value="Siguiendo"/>
+                                        <h:outputLabel value="Seguidores"/>
+                                    </div>
+                                </div>  
+                                <div class="boton-config-follow">
+                                    <p:commandButton action="#{modificarPerfilController.modificarUsuario()}" value="Guardar Cambios" 
+                                                     id="guardarCambios" ajax="false" icon="fa fa-check"/>
+                                </div>
+                            </div>
+                        </div>
+
+                        <section id="datos-usuario" class="form-validation"> 
+                            <div class="form-row form-input-row">
+                                <span>#{messages.nombreCompleto}</span>
+                                <p:inputText id="fullName" value="#{modificarPerfilBean.nombreCompleto}" placeholder="#{sessionUtilsBean.usuario.nombreCompleto}"/>
+                            </div>
+
+                            <div class="form-row form-input-row">
+                                <span>#{messages.email}</span>
+                                <p:inputText id="mail" value="#{modificarPerfilBean.email}" placeholder="#{sessionUtilsBean.usuario.email}"/>
+                            </div>
+
+                            <div class="form-row form-input-row">                            
+                                <span>#{messages.cambiarPassword}</span>
+                                <p:password id="password" value="#{modificarPerfilBean.password}"/>                            
+                            </div>
+
+                            <div class="form-row form-input-row">                            
+                                <span>#{messages.cambiarPasswordRepeat}</span>
+                                <p:password id="password2" match="password" value="#{modificarPerfilBean.password}"/>                            
+                            </div>
+                            <div class="form-row">
+                                <h:outputText value="#{messages.imagenPerfil}" title="#{messages.imagenPerfil}"/>
+                                <p:fileUpload id="imagen_perfil"  value="#{modificarPerfilBean.imagenPerfil}" 
+                                              mode="simple" allowTypes="/(\.|\/)(gif|jpe?g|zip)$/" dragDropSupport="true"/>
+                                <h:message for="imagen_perfil" class="error"/>
+                            </div>
+                            
+                            <div class="form-row">
+                                <h:outputText value="#{messages.imagenPortada}" title="#{messages.imagenPortada}"/>
+                                <p:fileUpload id="imagen_portada"  value="#{modificarPerfilBean.imagenPortada}" 
+                                              mode="simple" allowTypes="/(\.|\/)(gif|jpe?g|zip)$/" dragDropSupport="true"/>
+                                <h:message for="imagen_portada" class="error"/>
+                            </div>
+                        </section>
+                    </h:form>
+                </f:view>
+
+            </ui:define>
+
+        </ui:composition>
+
+    </body>
+</html>

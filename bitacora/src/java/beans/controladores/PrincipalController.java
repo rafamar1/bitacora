@@ -40,6 +40,7 @@ public class PrincipalController implements Serializable {
     
     @PostConstruct
     public void initialize() {
+        this.listaViajesQueSigo = null;
         this.listaViajesQueSigo = dameListaViajesOrdenados();
     }
 

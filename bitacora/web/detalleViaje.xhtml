@@ -69,9 +69,12 @@
                         </div>
 
                         <c:if test="#{detalleViajeController.viajeEsDeUsuarioLogeado()}">
-                            <div class="botonera-nuevo-dia">
-                                <p:commandButton action="publicarEntrada.xhtml" value="Nueva Entrada" />
-                                <p:commandButton style="float: right;" action="miPerfil.xhtml" value="Nuevo día"/>                                
+                            <div class="botonera-add-entrada-dia">
+                                <p:commandButton action="#{detalleViajeController.publicarNuevaEntrada()}" value="#{messages.anhadirEntrada}" class="nueva-entrada" />
+                                <div class="nuevo-dia">
+                                    <h:outputLabel value="#{messages.preguntaVariosDias}" title="#{messages.preguntaVariosDias}"/>                                               
+                                    <p:commandButton action="#{detalleViajeController.addNuevoDia()}" value="#{messages.anhadirNuevoDia}"/> 
+                                </div>                                                              
                             </div>
                         </c:if>
 

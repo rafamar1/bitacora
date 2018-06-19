@@ -88,13 +88,22 @@ span.nombre-usuario{
     flex: 1;
     padding: 15px;
 }
-.boton-config-follow input{
+.boton-config-follow #modificarPerfil{
     border-radius: 5px;
     background: #690c2f;
     border: 1px solid #debe6f;
     color: #ffffff;
     box-shadow: 1px 2px 4px 0 rgba(0, 0, 0, 0.08);
-    padding: 14px 22px;
+    padding: 5px 10px;
+    text-transform: uppercase;
+    font-size: 0.8em;
+    margin: 5px;
+    min-width: 185px;
+}
+.boton-config-follow #modificarPerfil:hover{
+    background: #8d2e51; 
+    border: 1px solid #debe6f;
+    transition: 0.5s;
 }
 
 .estadisticas-usuario{

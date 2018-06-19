@@ -20,6 +20,7 @@ import datos.entidades.Viaje;
 import datos.entidades.Opinion;
 import javax.persistence.EntityManager;
 import javax.persistence.EntityManagerFactory;
+import javax.persistence.TypedQuery;
 
 /**
  *
@@ -336,6 +337,13 @@ public class UsuarioJpaController implements Serializable {
         } finally {
             em.close();
         }
+    }
+    
+    public List<Usuario> dameListaUsuariosLikeNombre(String nombreUsuario) {
+        EntityManager em = emf.createEntityManager();
+        TypedQuery<List> query = em.createNamedQuery("Usuario.findLikeNombreUsuario", List.class);
+        List lista = query.setParameter("nombreUsuario", nombreUsuario + "%").getResultList();
+        return lista;
     }
     
 }

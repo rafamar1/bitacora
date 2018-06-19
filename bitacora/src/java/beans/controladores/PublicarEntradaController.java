@@ -46,7 +46,6 @@ public class PublicarEntradaController implements Serializable {
     private final EntityManagerFactory emf;
     private List<Ciudad> listaCiudades;
     private List<String> listaCategorias;
-    private boolean primeraEntrada = true;
     private Integer idEntrada;
 
     public PublicarEntradaController() {
@@ -70,8 +69,6 @@ public class PublicarEntradaController implements Serializable {
     public void setSessionUtilsBean(SessionUtilsBean sessionUtilsBean) {
         this.sessionUtilsBean = sessionUtilsBean;
     }
-    
-    
 
     public List<Ciudad> getListaCiudades() {
         return listaCiudades;
@@ -80,15 +77,7 @@ public class PublicarEntradaController implements Serializable {
     public void setListaCiudades(List<Ciudad> listaCiudades) {
         this.listaCiudades = listaCiudades;
     }
-
-    public boolean isPrimeraEntrada() {
-        return primeraEntrada;
-    }
-
-    public void setPrimeraEntrada(boolean primeraEntrada) {
-        this.primeraEntrada = primeraEntrada;
-    }
-
+    
     public List<String> getListaCategorias() {
         return listaCategorias;
     }
@@ -121,7 +110,6 @@ public class PublicarEntradaController implements Serializable {
         try {
             cambiarNombreImagenPorIdEntrada(newEntrada);
             subirFotoEntrada();
-//            subirFoto();
         } catch (IOException ex) {
             Logger.getLogger(PublicarEntradaController.class.getName()).log(Level.SEVERE, null, ex);
             return "error"; //TODO revisar control de excepciones
@@ -130,7 +118,7 @@ public class PublicarEntradaController implements Serializable {
             return "error"; 
         }                
         
-        return "ok";
+        return "newEntradaOk";
     }
 
     private Entrada setearValoresEntrada() {
@@ -170,8 +158,8 @@ public class PublicarEntradaController implements Serializable {
 
         if (null != uploadedPhoto) {
             String rutaFaces = FacesContext.getCurrentInstance().getExternalContext().getRealPath("/");
-            String rutaUsuarios = rutaFaces.concat("resources\\images\\usuarios");
-            //String rutaRaiz = "C:/bitacora/usuarios";
+            String rutaUsuarios = rutaFaces.concat("resources/images/usuarios");
+            
             if (sessionUtilsBean.getUsuario().getNombreUsuario() != null
                     && sessionUtilsBean.getIdViajeSeleccionado() != null
                     && sessionUtilsBean.getIdDiaSeleccionado() != null
@@ -195,43 +183,15 @@ public class PublicarEntradaController implements Serializable {
         }
 
     }
-    
-    /*public void subirFoto() throws IOException {
-        UploadedFile uploadedPhoto = publicarEntradaBean.getImagen();
-        byte[] bytes = null;
-        
-        if (null != uploadedPhoto) {
-            //String rutaFaces = FacesContext.getCurrentInstance().getExternalContext().getRealPath("/");
-            String rutaRaiz = "C:/bitacora/usuarios"; 
-            if (((Usuario) Session.getInstance().getAttribute("usuario")).getNombreUsuario() != null
-                    && Session.getInstance().getAttribute("idViajeSeleccionado") != null
-                    && Session.getInstance().getAttribute("idDiaSeleccionado") != null
-                    && this.idEntrada != null) {
-                String nombreUsuario = ((Usuario) Session.getInstance().getAttribute("usuario")).getNombreUsuario();
-                String idViajeSeleccionado = String.valueOf(Session.getInstance().getAttribute("idViajeSeleccionado"));
-                String idDiaSeleccionado = String.valueOf(Session.getInstance().getAttribute("idDiaSeleccionado"));
-                String rutaFichero = rutaRaiz + "/" + nombreUsuario + "/" + idViajeSeleccionado + "/" + idDiaSeleccionado;
-                File theFile = new File(rutaFichero);
-                theFile.mkdirs();
-
-                bytes = uploadedPhoto.getContents();
-
-                FileOutputStream nuevoFichero = new FileOutputStream(rutaFichero + "/" + this.idEntrada + ".jpg");
-                BufferedOutputStream stream = new BufferedOutputStream(nuevoFichero);
-
-                stream.write(bytes);
-                stream.close();
-            }
-        }
-
-    }*/
 
     private List<String> cargaListaCategorias() {
         List<String> tagList = new ArrayList<>();
+        tagList.add("Turismo");
         tagList.add("Restaurante");
-        tagList.add("Espectáculo");
         tagList.add("Ocio");
         tagList.add("Alojamiento");
+        tagList.add("Compras");
+        tagList.add("Espectáculo");
 
         return tagList;
     }

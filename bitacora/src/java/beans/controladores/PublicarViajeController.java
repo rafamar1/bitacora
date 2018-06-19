@@ -67,8 +67,7 @@ public class PublicarViajeController implements Serializable {
     public String publicarViaje() {
 
         Viaje newViaje = setearValoresNuevoViaje();
-        //TODO gestionar la imagen tanto las individuales como las de la galería
-
+        
         try {
             cambiarNombreImagenPorIdViaje(newViaje);
             subirFotoViaje();
@@ -81,7 +80,7 @@ public class PublicarViajeController implements Serializable {
             return "error";
         }
 
-        return "ok";
+        return "newViajeOk";
     }
 
     private Viaje setearValoresNuevoViaje() {
@@ -115,9 +114,6 @@ public class PublicarViajeController implements Serializable {
         sessionUtilsBean.setIdViajeSeleccionado(idViajeInsert);
         sessionUtilsBean.setIdDiaSeleccionado(idPrimerDia);
 
-        /*Session.getInstance().setAttribute("idDiaSeleccionado", idPrimerDia);
-        Session.getInstance().setAttribute("idViajeSeleccionado", idViajeInsert);*/
-
     }
 
     public void subirFotoViaje() throws IOException {
@@ -126,8 +122,7 @@ public class PublicarViajeController implements Serializable {
 
         if (null != uploadedPhoto) {
             String rutaFaces = FacesContext.getCurrentInstance().getExternalContext().getRealPath("/");
-            String rutaUsuarios = rutaFaces.concat("resources\\images\\usuarios");
-            //String rutaRaiz = "C:/bitacora/usuarios";
+            String rutaUsuarios = rutaFaces.concat("resources/images/usuarios");
             if (sessionUtilsBean.getUsuario().getNombreUsuario() != null
                     && sessionUtilsBean.getIdViajeSeleccionado() != null) {
                 String nombreUsuario = sessionUtilsBean.getUsuario().getNombreUsuario();

@@ -20,9 +20,14 @@
 
                 <f:view locale="#{localeBean.locale}">
                     <h2>#{messages.tituloPublicarViaje}</h2>
+                    <p:breadCrumb>
+                        <p:menuitem value="Inicio" url="principal.xhtml" icon="fa fa-home"/>
+                        <p:menuitem value="#{sessionUtilsBean.usuario.nombreCompleto}" url="principal.xhtml"/>
+                        <p:menuitem value="Publicar Viaje" url="#" />
+                    </p:breadCrumb>
                     <h:form enctype="multipart/form-data" prependId="false" class="form-validation"> 
                         <div class="form-row">
-                            <h3>#{messages.informacionEsencial}</h3>
+                            <h3>#{messages.informacionEsencialViaje}</h3>
                         </div>
                         <div class="form-row">
                             <h:outputText value="#{messages.tituloViaje}" title="#{messages.tituloViaje}"/>
@@ -41,7 +46,7 @@
                                 <f:validateRequired/> 
                                 <f:validateLength minimum="5" maximum="180"/>
                             </h:inputTextarea>
-                            <h:message for="titulo_viaje" class="error"/>
+                            <h:message for="descripcion_viaje" class="error"/>
                         </div>   
                         <div class="form-row">
                             <h:outputText value="#{messages.imagenViaje}" title="#{messages.imagenViaje}"/>

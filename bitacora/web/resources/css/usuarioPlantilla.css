@@ -30,6 +30,16 @@ header #cabecera{
     margin: 15px;
 }
 
+ .ui-autocomplete-items .img-perfil-busqueda {  max-width: 40px;
+    max-height: 40px;
+    max-width: 40px;
+    border-radius: 50%;
+    border: 2px solid #8c1d47;
+    position: relative;
+    min-width: 40px;
+    min-height: 40px;
+}
+
 #cabecera select option:first-child {
     /*background: url("./images/spanishFlag.jpg");*/
     background: url("#{resource['images/spanishFlag.jpg']}");  

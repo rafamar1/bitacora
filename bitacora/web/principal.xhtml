@@ -30,7 +30,7 @@
                                 <div id="infoViaje">
                                     <div class="info-general-left">
                                         <h:link outcome="perfilUsuario" title="Perfil de #{viaje.usuario.nombreUsuario}">
-                                            <f:param name="idUsuarioSeleccionado" value="#{viaje.usuario.nombreUsuario}" />
+                                            <f:param name="idUsuarioSeleccionado" value="#{viaje.usuario.nombreUsuario}"/>
                                             
                                             <div class="info-general-left-header">
                                                 <img class="viaje-imgUsuario" src="#{sessionUtilsBean.dameRutaImgPerfil(viaje.usuario)}" /> 
@@ -59,7 +59,7 @@
 
 
                                     </div>   
-                                    <h:link outcome="detalleViaje" title="Ver Viaje">
+                                    <h:link outcome="verViaje" title="Ver Viaje">
                                         <f:param name="idViajeSeleccionado" value="#{viaje.id}" />         
                                         <img src="#{sessionUtilsBean.dameRutaImgViaje(viaje)}" class="img-viaje"/>
                                     </h:link> 

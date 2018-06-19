@@ -8,8 +8,10 @@ package beans.controladores;
 import beans.modelos.DetalleViajeBean;
 import beans.respaldo.Session;
 import beans.respaldo.SessionUtilsBean;
+import datos.dao.DiaJpaController;
 import datos.dao.UsuarioJpaController;
 import datos.dao.ViajeJpaController;
+import datos.entidades.Dia;
 import datos.entidades.Entrada;
 import datos.entidades.Usuario;
 import datos.entidades.Viaje;
@@ -103,7 +105,26 @@ public class DetalleViajeController implements Serializable {
     }
     
     public boolean viajeEsDeUsuarioLogeado(){
-        //TODO REVISAR ESTE METODO
         return this.viaje.getUsuario().equals(sessionUtilsBean.getUsuario());
+    }
+    
+    public String publicarNuevaEntrada(){
+        int listaDiaSize = this.viaje.getDiaList().size();
+        if(!this.viaje.getDiaList().isEmpty()){
+            Integer ultimoDia = this.viaje.getDiaList().get(listaDiaSize - 1).getId();
+            sessionUtilsBean.setIdDiaSeleccionado(ultimoDia);
+            return "publicarEntrada";
+        }
+        return "errorIdDia";
+    }
+    
+    public String addNuevoDia(){
+        ViajeJpaController viajeController = new ViajeJpaController(emf);
+        DiaJpaController diaController = new DiaJpaController(emf);
+        Dia nuevoDia = new Dia();
+        nuevoDia.setIdViaje(viajeController.findViaje(this.viaje.getId()));
+        diaController.create(nuevoDia);
+        sessionUtilsBean.setIdDiaSeleccionado(nuevoDia.getId());
+        return "publicarEntrada";
     }
 }

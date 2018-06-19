@@ -14,145 +14,76 @@
             <ui:define name="css">
                 <h:outputStylesheet name="publicarEntrada.css" library="css"/>
             </ui:define>
-            <ui:define name="title">#{messages.tituloPublicarEntrada}</ui:define>
-
-            <ui:define name="left">
-                <div id="info-usuario">
-                    <div class="img-portada-container">
-                        <img class="img-portada" src="#{principalController.dameRutaImgPortada(sessionUtilsBean.usuario)}"/>
-                    </div>                        
-                    <img class="img-perfil" src="#{principalController.dameRutaImgPerfil(sessionUtilsBean.usuario)}"/>
-
-                    <h:outputLabel value="#{sessionUtilsBean.usuario.nombreCompleto}" class="nombre-completo"/>
-                    <h:outputLabel value="@#{sessionUtilsBean.usuario.nombreUsuario}" class="nombre-usuario"/>
-                    <div class="estadisticas-usuario">
-                        <div class="fila-grid">
-                            <h:outputLabel value="#{sessionUtilsBean.usuario.viajeList.size()}"/>
-                            <h:outputLabel value="#{sessionUtilsBean.usuario.listaUsuarioSeguido.size()}"/>
-                            <h:outputLabel value="#{sessionUtilsBean.usuario.listaUsuarioTeSigue.size()}"/>
-                        </div>
-                        <div class="fila-grid">
-                            <h:outputLabel value="Publicaciones"/>
-                            <h:outputLabel value="Siguiendo"/>
-                            <h:outputLabel value="Seguidores"/>
-                        </div>
-                    </div>                        
-                </div>
-            </ui:define>
+            <ui:define name="title">bitacora - #{messages.tituloPublicarEntrada}</ui:define>
 
             <ui:define name="content">
 
                 <f:view locale="#{localeBean.locale}">
-                    <h:form  enctype="multipart/form-data" prependId="false">     
-
-                        <c:if test="#{publicarEntradaController.primeraEntrada}">                      
-                            <p:autoComplete id="themeCustom" value="#{publicarEntradaBean.idCiudad}" placeholder="Buscar ciudad"
+                    <h2>#{messages.nuevaEntrada} #{sessionUtilsBean.idViajeSeleccionado}</h2>
+                    <p:breadCrumb>
+                        <p:menuitem value="Inicio" url="principal.xhtml" icon="fa fa-home"/>
+                        <p:menuitem value="#{sessionUtilsBean.usuario.nombreCompleto}" url="principal.xhtml"/>
+                        <p:menuitem value="#{sessionUtilsBean.idViajeSeleccionado}" url="#" />
+                        <p:menuitem value="#{sessionUtilsBean.idDiaSeleccionado}" url="#" />
+                        <p:menuitem value="Publicar entrada" url="#" />
+                    </p:breadCrumb>
+                    <h:form enctype="multipart/form-data" prependId="false" class="form-validation">     
+                        <div class="form-row">
+                            <h3>#{messages.informacionEsencialEntrada}</h3>
+                        </div>
+                        <div class="form-row">
+                            <h:outputText value="#{messages.ciudadEntrada}" title="#{messages.ciudadEntrada}"/>
+                            <p:autoComplete id="buscarCiudad" value="#{publicarEntradaBean.idCiudad}" placeholder="Buscar una ciudad"
                                             completeMethod="#{publicarEntradaController.autocompletadoCiudades}"
                                             var="ciudad" itemLabel="#{ciudad}" itemValue="#{ciudad.id}"
-                                            scrollHeight="200" forceSelection="true"/>
-                        </c:if>
-                        <p>
-                            #{messages.tituloEntrada}: <h:inputText value="#{publicarEntradaBean.titulo}"/> 
-                        </p> 
+                                            scrollHeight="200" forceSelection="true"
+                                            required="true" requiredMessage="#{messages.validacion_required}"/>
+                        </div> 
 
-                        <p>
-                            #{messages.opinionEntrada}: <h:inputTextarea value="#{publicarEntradaBean.descripcion}"/>
-                        </p>
+                        <div class="form-row">
+                            <h:outputText value="#{messages.tituloEntrada}" title="#{messages.tituloEntrada}"/>
+                            <h:inputText id="titulo_entrada" value="#{publicarEntradaBean.titulo}"
+                                         requiredMessage="#{messages.validacion_required}">
+                                <f:validateRequired/> 
+                                <f:validateLength minimum="3" maximum="25"/>
+                            </h:inputText>      
+                            <h:message for="titulo_entrada" class="error"/>
+                        </div>
 
-                        <p>
-                            #{messages.imagenEntrada}: <p:fileUpload id="fileIdResume"  value="#{publicarEntradaBean.imagen}" mode="simple" allowTypes="/(\.|\/)(gif|jpe?g|zip)$/" skinSimple="true" dragDropSupport="true"/>
-                        </p>
+                        <div class="form-row">
+                            <h:outputText value="#{messages.opinionEntrada}" title="#{messages.opinionEntrada}"/>
+                            <h:inputTextarea id="descripcion_entrada"  value="#{publicarEntradaBean.descripcion}" 
+                                             requiredMessage="#{messages.validacion_required}">
+                                <f:validateRequired/> 
+                                <f:validateLength minimum="5" maximum="180"/>
+                            </h:inputTextarea>
+                            <h:message for="descripcion_entrada" class="error"/>
+                        </div>
+                        
+                        <div class="form-row">
+                            <h:outputText value="#{messages.imagenEntrada}" title="#{messages.imagenEntrada}"/>
+                            <p:fileUpload id="imagen_entrada"  value="#{publicarEntradaBean.imagen}" 
+                                          mode="simple" allowTypes="/(\.|\/)(gif|jpe?g|zip)$/" dragDropSupport="true"
+                                          required="true" requiredMessage="Por favor seleccione un archivo"/>
+                            <h:message for="imagen_entrada" class="error"/>
+                        </div>
 
-                        <p>
-                            #{messages.ratingEntrada}: <p:rating value="#{publicarEntradaBean.puntuacion}" />
-                        </p>
-
-                        <p>
-                            #{messages.categoriaEntrada}: 
+                        <div class="form-row">
+                            <h:outputText value="#{messages.ratingEntrada}" title="#{messages.ratingEntrada}"/>
+                            <p:rating id="rating_entrada" value="#{publicarEntradaBean.puntuacion}" required="true" requiredMessage="Valore su review por favor"/>
+                            <h:message for="rating_entrada" class="error"/>
+                        </div>
+                        
+                        <div class="form-row">
+                            <h:outputText value="#{messages.categoriaEntrada}" title="#{messages.categoriaEntrada}"/>
                             <p:selectOneMenu value="#{publicarEntradaBean.tipo}">
                                 <f:selectItems value="#{publicarEntradaController.listaCategorias}" var="categoria"
                                                itemValue="#{categoria}" itemLabel="#{categoria}"/>       
                             </p:selectOneMenu>
-                        </p>
-
-                        <p>
-                            #{messages.precioEntrada}: <p:inputNumber value="#{publicarEntradaBean.precio}" />
-                        </p>
-
-                        <input id="pac-input" class="controls" type="text" placeholder="Search Box"/>
-                            <div id="map"></div>
-                            <script>
-                                 function initAutocomplete() {
-                                    var map = new google.maps.Map(document.getElementById('map'), {
-                                        center: {lat: -33.8688, lng: 151.2195},
-                                        zoom: 13,
-                                        mapTypeId: 'roadmap'
-                                    });
-
-                                    // Create the search box and link it to the UI element.
-                                    var input = document.getElementById('pac-input');
-                                    var searchBox = new google.maps.places.SearchBox(input);
-                                    map.controls[google.maps.ControlPosition.TOP_LEFT].push(input);
-
-                                    // Bias the SearchBox results towards current map's viewport.
-                                    map.addListener('bounds_changed', function () {
-                                        searchBox.setBounds(map.getBounds());
-                                    });
-
-                                    var markers = [];
-                                    // Listen for the event fired when the user selects a prediction and retrieve
-                                    // more details for that place.
-                                    searchBox.addListener('places_changed', function () {
-                                        var places = searchBox.getPlaces();
-
-                                        if (places.length == 0) {
-                                            return;
-                                        }
-
-                                        // Clear out the old markers.
-                                        markers.forEach(function (marker) {
-                                            marker.setMap(null);
-                                        });
-                                        markers = [];
-
-                                        // For each place, get the icon, name and location.
-                                        var bounds = new google.maps.LatLngBounds();
-                                        places.forEach(function (place) {
-                                            if (!place.geometry) {
-                                                console.log("Returned place contains no geometry");
-                                                return;
-                                            }
-                                            var icon = {
-                                                url: place.icon,
-                                                size: new google.maps.Size(71, 71),
-                                                origin: new google.maps.Point(0, 0),
-                                                anchor: new google.maps.Point(17, 34),
-                                                scaledSize: new google.maps.Size(25, 25)
-                                            };
-
-                                            // Create a marker for each place.
-                                            markers.push(new google.maps.Marker({
-                                                map: map,
-                                                icon: icon,
-                                                title: place.name,
-                                                position: place.geometry.location
-                                            }));
-
-                                            if (place.geometry.viewport) {
-                                                // Only geocodes have viewport.
-                                                bounds.union(place.geometry.viewport);
-                                            } else {
-                                                bounds.extend(place.geometry.location);
-                                            }
-                                        });
-                                        map.fitBounds(bounds);
-                                    });
-                                }
-
-                            </script>
-                            <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyC8b0KYVmgv96V-u2t7aDGI0kcbQfaeIWE&amp;libraries=places&amp;callback=initAutocomplete" />
+                        </div>
+                        <div class="form-row">
                             <p:commandButton value="#{messages.publicarEntrada}:" ajax="false" action="#{publicarEntradaController.publicarEntrada}"/> 
-
+                        </div>
                     </h:form>
                 </f:view>
 
