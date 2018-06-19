@@ -9,7 +9,7 @@ header{
 header #cabecera{
     display: flex;
     background: linear-gradient(180deg,#771439,#8f1e49);
-    padding: 0px 40px;
+    padding: 0px 20px;
     border-bottom: 3px solid #debe6f;
     height: 80px;
 }

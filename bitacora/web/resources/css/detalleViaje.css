@@ -37,6 +37,7 @@ div.img-portada-container{
 .container-cabecera{
     display: flex;
     padding: 0px 7%;
+    border-bottom: 1px solid #c4c497;
 }
 
 .container-cabecera > div {
@@ -106,8 +107,8 @@ label.nombre-usuario {
     flex-wrap: nowrap;
     margin: 15px 0px;
 }
-.fila-grid label{
-    /*display: block;*/
+.fila-grid label{    
+     margin: 5px;
     flex: 1;
     text-align: center;
 }
@@ -121,6 +122,14 @@ label.nombre-usuario {
     padding: 10px 5%;
 }
 
+.container-entradas{
+    display: flex;
+    flex-direction: row;
+    flex-wrap: wrap;
+    justify-content: center;
+    max-width: 900px;
+}
+
 .info-entrada{
     flex: 1;
     background: #f8f8f8;
@@ -130,7 +139,9 @@ label.nombre-usuario {
     max-width: 310px;
     display: flex;
     flex-direction: column;
+    box-shadow: 1px 1px 3px lightgrey;
 }
+
 
 .info-entrada label{
     margin: 6px 18px;
@@ -180,11 +191,16 @@ div.img-entrada-container{
 
 .botonera-add-entrada-dia{
     display: flex;
-    margin: 20px auto;
-    width: 40%;    
+    margin: 20px auto;   
+}
+
+.botonera-add-entrada-dia .div-nueva-entrada{
+    flex: 1;
+     padding-top: 20px;
 }
 
 .botonera-add-entrada-dia .nuevo-dia{
+    flex: 1;
     display: flex;
     flex-direction: column;
 }
@@ -199,15 +215,7 @@ div.img-entrada-container{
     width: 190px;
     height: 55px;
     min-width: 175px;
-    /*padding: 14px 22px;
-    margin: 40px 183px 0;*/
-}
-#content .botonera-add-entrada-dia button.nueva-entrada{
-    margin-right: 20px;
-}
-
-#content .botonera-add-entrada-dia .nuevo-dia button{
-    margin-left: 20px;
+    margin: 10px auto;
 }
 
 #content .botonera-add-entrada-dia button:hover{
@@ -217,7 +225,22 @@ div.img-entrada-container{
 }
 
 /***EASY PAGINATE***/
-#easyPaginate {width:300px;}
-#easyPaginate img {display:block;margin-bottom:10px;}
-.easyPaginateNav a {padding:5px;}
-.easyPaginateNav a.current {font-weight:bold;text-decoration:underline;}
+.easyPaginateNav {
+    margin: auto;
+    background: #d8d8d8;
+    border-top: 1px solid #831941b3;
+    padding: 10px;
+    text-align: center;
+}
+.easyPaginateNav a{
+    text-decoration: none;
+    color: #7f173e;
+    padding: 3px 6px;
+    margin: 5px;
+    font-size: 1.5em;
+}
+.easyPaginateNav a.current {
+    background: #7f173e;
+    border-radius: 3px;
+    color: #ffffff;
+}

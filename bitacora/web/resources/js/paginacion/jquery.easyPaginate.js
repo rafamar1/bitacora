@@ -63,15 +63,15 @@ $.fn.easyPaginate = function (options) {
             }
             
             if(plugin.settings.prevButton) {
-                htmlNav += '<a href="" title="Previous" rel="" class="prev">'+plugin.settings.prevButtonText+'</a>';
+                htmlNav += '<a href="" title="Anterior" rel="" class="prev">'+plugin.settings.prevButtonText+'</a>';
             }
             
             for(i = 1;i <= plugin.settings.pages;i++) {
-                htmlNav += '<a href="#'+plugin.settings.hashPage+':'+i+'" title="Page '+i+'" rel="'+i+'" class="page">'+i+'</a>';
+                htmlNav += '<a href="#'+plugin.settings.hashPage+':'+i+'" title="Dia '+i+'" rel="'+i+'" class="page">'+i+'</a>';
             };
             
             if(plugin.settings.nextButton) {
-                htmlNav += '<a href="" title="Next" rel="" class="next">'+plugin.settings.nextButtonText+'</a>';
+                htmlNav += '<a href="" title="Siguiente" rel="" class="next">'+plugin.settings.nextButtonText+'</a>';
             }
             
             if(plugin.settings.lastButton) {
@@ -80,9 +80,9 @@ $.fn.easyPaginate = function (options) {
             
             htmlNav += '</div>';
             plugin.nav = $(htmlNav);
-            plugin.nav.css({
+            /*plugin.nav.css({
                 'width': plugin.el.width()
-            });
+            });*/
             plugin.el.after(plugin.nav);
 
             var elSelector = '#' + plugin.el.get(0).id + ' + ';
@@ -161,7 +161,7 @@ $.fn.easyPaginate = function (options) {
             plugin.currentElements = plugin.settings.objElements.slice(offsetStart, offsetEnd).clone();
             plugin.currentElements.css({
                 'margin-left': plugin.settings.slideOffset,
-                'display': 'block',
+                'display': 'flex',
                 'opacity': 0,
                 'min-width': plugin.el.width() / 2
             });
@@ -188,7 +188,7 @@ $.fn.easyPaginate = function (options) {
             plugin.currentElements = plugin.settings.objElements.slice(offsetStart, offsetEnd).clone();
             plugin.currentElements.css({
                 'margin-left': plugin.settings.slideOffset,
-                'display': 'block',
+                'display': 'flex',
                 'opacity': 0,
                 'min-width': plugin.el.width() / 2
             });
