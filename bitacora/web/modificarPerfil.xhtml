@@ -5,6 +5,7 @@
       xmlns:h="http://xmlns.jcp.org/jsf/html"
       xmlns:f="http://xmlns.jcp.org/jsf/core"
       xmlns:p="http://primefaces.org/ui"
+      xmlns:pt="http://xmlns.jcp.org/jsf/passthrough"
       xmlns:c="http://xmlns.jcp.org/jsp/jstl/core">
     <h:head>
         <style>
@@ -26,6 +27,10 @@
 
             <ui:define name="content">
 
+                <h:outputScript target="head" name="js/jquery-3.3.1.js"/>
+                <h:outputScript target="head" name="js/jquery.validate.min.js"/>
+                <h:outputScript target="head" name="js/formModificarPerfil_validate.js"/>
+
                 <f:view locale="#{localeBean.locale}">
                     <f:metadata>
                         <f:viewParam name="idUsuarioSeleccionado" value="#{sessionUtilsBean.idUsuarioSeleccionado}"/>
@@ -33,9 +38,9 @@
                     <h:form id="form-modif-usuario" prependId="false" enctype="multipart/form-data">
                         <div id="info-usuario">
                             <div class="img-portada-container">
-                                <img class="img-portada" src="#{perfilController.dameRutaImgPortada(perfilController.usuarioSeleccionado)}"/>
+                                <img class="img-portada" src="#{sessionUtilsBean.dameRutaImgPortada(perfilController.usuarioSeleccionado)}"/>
                             </div>                        
-                            <img class="img-perfil" src="#{perfilController.dameRutaImgPerfil(perfilController.usuarioSeleccionado)}"/>
+                            <img class="img-perfil" src="#{sessionUtilsBean.dameRutaImgPerfil(perfilController.usuarioSeleccionado)}"/>
 
                             <h:outputLabel value="#{perfilController.usuarioSeleccionado.nombreCompleto}" class="nombre-completo"/>
                             <h:outputLabel value="@#{perfilController.usuarioSeleccionado.nombreUsuario}" class="nombre-usuario"/>
@@ -60,33 +65,39 @@
                         </div>
 
                         <section id="datos-usuario" class="form-validation"> 
-                            <div class="form-row form-input-row">
+                            <div class="form-row">
                                 <span>#{messages.nombreCompleto}</span>
                                 <p:inputText id="fullName" value="#{modificarPerfilBean.nombreCompleto}" placeholder="#{sessionUtilsBean.usuario.nombreCompleto}"/>
                             </div>
 
-                            <div class="form-row form-input-row">
+                            <div class="form-row">
                                 <span>#{messages.email}</span>
                                 <p:inputText id="mail" value="#{modificarPerfilBean.email}" placeholder="#{sessionUtilsBean.usuario.email}"/>
                             </div>
 
-                            <div class="form-row form-input-row">                            
+                            <div class="form-row">                            
                                 <span>#{messages.cambiarPassword}</span>
                                 <p:password id="password" value="#{modificarPerfilBean.password}"/>                            
                             </div>
-
-                            <div class="form-row form-input-row">                            
+                            <div class="form-row">                            
                                 <span>#{messages.cambiarPasswordRepeat}</span>
-                                <p:password id="password2" match="password" value="#{modificarPerfilBean.password}"/>                            
+                                <p:password id="password2" value="#{modificarPerfilBean.password}"/>                            
                             </div>
                             <div class="form-row">
+                                <span>#{messages.cambiarIdioma}</span>
+                                <h:selectOneMenu value="#{localeBean.language}" onchange="submit()">
+                                    <f:selectItem itemValue="es" itemLabel="Español" pt:title="Español"  class="spanish"/>
+                                    <f:selectItem itemValue="en" itemLabel="English" pt:title="English" class="english"/>
+                                </h:selectOneMenu>
+                            </div>
+                            <div class="form-column">
                                 <h:outputText value="#{messages.imagenPerfil}" title="#{messages.imagenPerfil}"/>
                                 <p:fileUpload id="imagen_perfil"  value="#{modificarPerfilBean.imagenPerfil}" 
                                               mode="simple" allowTypes="/(\.|\/)(gif|jpe?g|zip)$/" dragDropSupport="true"/>
                                 <h:message for="imagen_perfil" class="error"/>
                             </div>
-                            
-                            <div class="form-row">
+
+                            <div class="form-column">
                                 <h:outputText value="#{messages.imagenPortada}" title="#{messages.imagenPortada}"/>
                                 <p:fileUpload id="imagen_portada"  value="#{modificarPerfilBean.imagenPortada}" 
                                               mode="simple" allowTypes="/(\.|\/)(gif|jpe?g|zip)$/" dragDropSupport="true"/>
@@ -95,7 +106,6 @@
                         </section>
                     </h:form>
                 </f:view>
-
             </ui:define>
 
         </ui:composition>

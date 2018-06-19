@@ -213,3 +213,13 @@ span.nombre-usuario{
     min-height: 125px;
     max-height: 180px;
 }
+
+.boton-config-follow #followUnfollow{
+    min-width: 140px
+}
+
+.boton-config-follow #followUnfollow.ui-state-active{
+    border: 1px solid #7e173d;
+    background: #79153a;
+    color: #fff;
+}

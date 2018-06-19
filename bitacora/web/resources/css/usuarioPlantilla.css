@@ -11,7 +11,7 @@ header #cabecera{
     background: linear-gradient(180deg,#771439,#8f1e49);
     padding: 0px 40px;
     border-bottom: 3px solid #debe6f;
-    /*box-shadow: 0px 1px 10px #000000b3;*/
+    height: 80px;
 }
 
 #cabecera > a {
@@ -86,15 +86,19 @@ html,body{
 #main{
     display: flex;
     flex-wrap: nowrap;
-    padding: 60px 4%;
+    padding: 82px 4%;
 }
 
 #left{
     width: 25%;
-    background-color: #e7e7c6;
     margin: 0px 15px;                
     min-width: 300px;
 }
+
+.link-publicar-viaje{
+    display: none;
+}
+
 #content{
     width: 70%;
     margin: 0px 15px;

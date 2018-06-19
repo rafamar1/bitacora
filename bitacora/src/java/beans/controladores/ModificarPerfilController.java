@@ -75,7 +75,7 @@ public class ModificarPerfilController implements Serializable {
             return "error";
         }
 
-        return "modificaOK";
+        return "modificarOK";
     }
 
     private Usuario setUsuario() {

@@ -5,11 +5,13 @@
 
 #main #content{
     margin: 0px auto;
-    width: 85%;
+    width: 75%;
     min-width: 700px;
-    background: lightsteelblue;
-    padding: 0px;   
+    background: linear-gradient(0deg,#e9e8e8,#f2f2f2);
+    padding: 0px;
+    border: 1px solid #cecece;  
 }
+
 
 #info-viaje{
     width: 100%;  
@@ -46,6 +48,9 @@ div.img-portada-container{
     display: flex;
     flex-direction: column;
     padding: 10px 0;   
+}
+.container-cabecera .info-cabecera a{
+    text-decoration: none;
 }
 
 .container-cabecera .descripcion-viaje{
@@ -109,7 +114,7 @@ label.nombre-usuario {
 
 /*CONTENIDO PRINCIPAL - INFO VIAJES*/
 
-.lista_entradas_dia{
+#lista_entradas_dia{
     display: flex;
     flex-wrap: wrap;
     justify-content: center;
@@ -210,3 +215,9 @@ div.img-entrada-container{
     border: 1px solid #debe6f;
     transition: 0.5s;
 }
+
+/***EASY PAGINATE***/
+#easyPaginate {width:300px;}
+#easyPaginate img {display:block;margin-bottom:10px;}
+.easyPaginateNav a {padding:5px;}
+.easyPaginateNav a.current {font-weight:bold;text-decoration:underline;}

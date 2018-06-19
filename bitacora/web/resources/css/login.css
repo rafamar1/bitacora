@@ -8,6 +8,14 @@ $color-primary: #ABA194;*/
     box-sizing: border-box;
 }
 
+html,body{
+    height: 100%;
+}
+
+footer.footer {
+    position: absolute;
+}
+
 body {    
     font-family: "Roboto";
     font-size: 14px;

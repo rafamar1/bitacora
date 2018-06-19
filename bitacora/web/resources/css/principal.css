@@ -1,3 +1,29 @@
+
+
+#left .link-publicar-viaje{
+    display: block;
+    margin: 45px auto;
+    width: 40%;
+    width: 190px;
+}
+
+#left .link-publicar-viaje .ui-link{
+    text-decoration: none;
+    color: #ffffff;
+    background: #690c2f;
+    padding: 10px 20px;
+    text-transform: uppercase;
+    border-radius: 2px;
+    border: 1px solid #debe6f;
+    box-shadow: 1px 2px 4px 0 rgba(0, 0, 0, 0.15);
+}
+
+#left .link-publicar-viaje .ui-link:hover{
+    background: #8d2e51; 
+    border: 1px solid #debe6f;
+    transition: 0.5s;
+}
+
 /*ASIDE INFORMACION USUARIO*/
 #info-usuario{
     width: 100%;

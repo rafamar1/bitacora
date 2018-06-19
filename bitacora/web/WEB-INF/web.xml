@@ -33,19 +33,19 @@
         <servlet-name>compruebaEmailRemote</servlet-name>
         <url-pattern>/compruebaEmailRemote</url-pattern>
     </servlet-mapping>
-
+    
+    <filter>
+        <filter-name>authorization</filter-name>
+        <filter-class>validaciones.AuthorizationFilter</filter-class>
+    </filter>
+    <filter-mapping>
+        <filter-name>authorization</filter-name>
+        <url-pattern>*.xhtml</url-pattern>
+    </filter-mapping>
 
     <filter>
         <filter-name>PrimeFaces FileUpload Filter</filter-name>
         <filter-class>org.primefaces.webapp.filter.FileUploadFilter</filter-class>
-        <!--init-param>
-            <param-name>thresholdSize</param-name>
-            <param-value>51200</param-value>
-        </init-param>
-        <init-param>
-            <param-name>uploadDirectory</param-name>
-            <param-value>/Users/local/temp</param-value>
-        </init-param-->
     </filter>
   
     <servlet>

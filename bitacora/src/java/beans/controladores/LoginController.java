@@ -79,8 +79,8 @@ public class LoginController implements Serializable {
                 
                 if (passwordEncryptor.checkPassword(inputPassword, usuario.getPassword())) {
                     /*TODO PROBAR CON COMENTAR ESTO
-                    Session.getInstance().setAttribute("usuario", usuario);
-                    Session.getInstance().setAttribute("usuarioLogeado", true);*/
+                    Session.getInstance().setAttribute("usuario", usuario);*/
+                    Session.getInstance().setAttribute("usuarioLogeado", true);
                     sessionUtilsBean.setUsuario(usuario);
                     sessionUtilsBean.setUsuarioLogeado(true);
                     return "loginOk";

@@ -173,6 +173,7 @@ label.error {
     box-shadow: 1px 2px 4px 0 rgba(0, 0, 0, 0.08);
     padding: 14px 22px;
     margin: 40px 183px 0;
+    text-transform: uppercase;
 }
 
 #formRegistro .form-row button:hover{
@@ -180,10 +181,6 @@ label.error {
     border: 1px solid #debe6f;
     transition: 0.5s;
 }
-
-
-
-
 /* Placeholder color */
 
 .form-validation ::-webkit-input-placeholder {

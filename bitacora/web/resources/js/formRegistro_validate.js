@@ -1,10 +1,10 @@
 $(function () {
 
     $.validator.addMethod('passwordMatch', function (value, element) {
-        // The two password inputs
+        
         var password = $("#password").val();
         var confirmPassword = $("#password2").val();
-        // Check for equality with the password inputs
+       
         if (password !== confirmPassword) {
             return false;
         } else {
@@ -16,33 +16,11 @@ $(function () {
         errorClass: 'error',
         validClass: 'success',
         rules: {
-            nickname: {required: true, minlength: 4,
-                remote: {
-                    url: "compruebaEmailRemote",
-                    //type: "post",
-                    data: {nickname: function () {
-                            return $("#nickname").val();
-                        }
-                    }
-                    //data:{Email:$("#mail").val()}
-
-                }},
+            nickname: {required: true, minlength: 4},
             fullName: {required: true, minlength: 4},
             password: {required: true, minlength: 6},
             password2: {required: true, minlength: 6, passwordMatch: true},
-            mail: {
-                required: true,
-                email: true
-                        /*,remote: {
-                         url: "compruebaMailRemote",
-                         type: "post",
-                         data: {mail: function () {
-                         return $("#mail").val();
-                         }
-                         }
-                         
-                         }*/
-            }
+            mail: {required: true, email: true }
         },
 
         messages: {
