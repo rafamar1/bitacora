@@ -25,7 +25,7 @@ import javax.persistence.Persistence;
  * @author rfmarquez
  */
 @ManagedBean
-@RequestScoped
+@ViewScoped
 public class PrincipalController implements Serializable {
 
     //TODO habria se puede eliminar el usuarioSeleccionado? o setearlo en el initialize
@@ -131,15 +131,4 @@ public class PrincipalController implements Serializable {
     private boolean esSeguidoPorUserLogged(Usuario user) {
         return user.getListaUsuarioTeSigue().contains(sessionUtilsBean.getUsuario()) || sessionUtilsBean.getUsuario().getListaUsuarioSeguido().contains(user);
     }
-
-    /*public List<Entrada> dameListaEntradasUsuariosQueSigo(){
-        ViajeJpaController controlViaje = new ViajeJpaController(emf);
-        List<Viaje> viajesOrdenadosList = controlViaje.dameListaViajesOrderFecha();
-        List<Entrada> listaEntradas = new ArrayList<>();
-        for(Viaje viaje:viajesOrdenadosList){
-            if(esSeguidoPorUserLogged(viaje.getUsuario())){
-                
-            }
-        }
-    }*/
 }

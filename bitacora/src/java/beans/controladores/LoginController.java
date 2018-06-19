@@ -80,12 +80,11 @@ public class LoginController implements Serializable {
                 if (passwordEncryptor.checkPassword(inputPassword, usuario.getPassword())) {
                     /*TODO PROBAR CON COMENTAR ESTO
                     Session.getInstance().setAttribute("usuario", usuario);*/
-                    Session.getInstance().setAttribute("usuarioLogeado", true);
                     sessionUtilsBean.setUsuario(usuario);
-                    sessionUtilsBean.setUsuarioLogeado(true);
+                    sessionUtilsBean.setUsuarioLogeado(true);                    
+                    Session.getInstance().setAttribute("usuarioLogeado", true);
                     return "loginOk";
                 } else {
-                    //TODO REVISAR REGLA DE NAVEGACION HACIA LOGIN.XHTML O HACIA ERROR
                     this.badLogin = true;
                     return "login.xhtml";
                 }

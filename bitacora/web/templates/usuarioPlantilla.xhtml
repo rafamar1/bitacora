@@ -21,8 +21,11 @@
         <ui:insert name="top">
             <header>
                 <div id="cabecera">
-                    <p:link outcome="principal.xhtml" value="bitacora"/>
-                    <h:form id="menu-superior"> 
+                    <div class="enlace-inicio">                        
+                        <p:link outcome="principal.xhtml" value="bitacora"/>
+                        <h:outputText value="Share your experiences"/>
+                    </div>
+                    <h:form id="busqueda-usuario"> 
                         <p:autoComplete id="buscarUsuario" value="#{sessionUtilsBean.usuarioBusqueda}" var="usuario" scrollHeight="200" 
                                         completeMethod="#{sessionUtilsBean.buscarUsuario}" placeholder="Buscar usuario"
                                         itemLabel="#{usuario.nombreUsuario}" itemValue="#{usuario}" forceSelection="true">
@@ -38,15 +41,23 @@
                                 </h:link>
                             </p:column>
                         </p:autoComplete>
+                    </h:form>
+                    <h:form id="menu-superior"> 
                         <p:menubar>
+                            <p:menuitem value="#{messages.botonInicio}"  url="principal.xhtml"/>
                             <p:menuitem value="#{messages.botonPerfil}" title="Ir a Mi Perfil" outcome="perfilUsuario">
                                 <f:param name="idUsuarioSeleccionado" value="#{sessionUtilsBean.usuario.nombreUsuario}"/>
+                            </p:menuitem>           
+                            <p:menuitem   action="#{sessionUtilsBean.logout()}" 
+                                          ajax="false"                 
+                                          title="#{messages.logout}"
+                                          icon="fa fa-power-off"          
+                                          iconPos="top">        
                             </p:menuitem>
-                            <p:menuitem value="#{messages.botonExplorar}" url="explorarLogged.xhtml"/>
-                            <p:menuitem value="#{messages.botonNotificaciones}"  url="principal.xhtml"/>
                         </p:menubar>
+
                     </h:form>
-                    <h:form>
+                    <h:form id="form-logout" style="display: none;">
                         <p:commandButton value="Cerrar Session" action="#{sessionUtilsBean.logout()}">
                             <p:confirm header="Cerrar Sesion" message="Estas Seguro?Are you sure?"/>
                         </p:commandButton>

@@ -108,27 +108,35 @@ public class SessionUtilsBean implements Serializable {
     }
 
     public String dameRutaImgPerfil(Usuario usuario) {
-        if (usuario.getImgPerfil().equals("sin-imagen.jpg")) {
-            return "resources/images/comun/sin-imagen.jpg";
-        } else {
-            StringBuilder sb = new StringBuilder("resources/images/usuarios/");
-            sb.append(usuario.getNombreUsuario());
-            sb.append("/");
-            sb.append(usuario.getImgPerfil());
-            return sb.toString();
+        if (usuario != null) {
+            if (usuario.getImgPerfil().equals("sin-imagen.jpg")) {
+                return "resources/images/comun/sin-imagen.jpg";
+            } else {
+                StringBuilder sb = new StringBuilder("resources/images/usuarios/");
+                sb.append(usuario.getNombreUsuario());
+                sb.append("/");
+                sb.append(usuario.getImgPerfil());
+                return sb.toString();
+            }
         }
+        return "resources/images/comun/sin-imagen.jpg";
     }
 
+    
+
     public String dameRutaImgPortada(Usuario usuario) {
-        if (usuario.getImgPortada().equals("sin-imagen-portada.jpg")) {
-            return "resources/images/comun/sin-imagen-portada.jpg";
-        } else {
-            StringBuilder sb = new StringBuilder("resources/images/usuarios/");
-            sb.append(usuario.getNombreUsuario());
-            sb.append("/");
-            sb.append(usuario.getImgPortada());
-            return sb.toString();
+        if (usuario != null) {
+            if (usuario.getImgPortada().equals("sin-imagen-portada.jpg")) {
+                return "resources/images/comun/sin-imagen-portada.jpg";
+            } else {
+                StringBuilder sb = new StringBuilder("resources/images/usuarios/");
+                sb.append(usuario.getNombreUsuario());
+                sb.append("/");
+                sb.append(usuario.getImgPortada());
+                return sb.toString();
+            }
         }
+        return "resources/images/comun/sin-imagen-portada.jpg";
     }
 
     public String dameRutaImgViaje(Viaje viaje) {
@@ -141,9 +149,13 @@ public class SessionUtilsBean implements Serializable {
         return sb.toString();
     }
 
-    public String logout() {
+    /*public String logout() {
         FacesContext.getCurrentInstance().getExternalContext().invalidateSession();
         return "logout";
+    }*/
+    public String logout() {
+        FacesContext.getCurrentInstance().getExternalContext().invalidateSession();
+        return "/index.xhtml?faces-redirect=true";
     }
 
     public List<Usuario> buscarUsuario(String query) {
