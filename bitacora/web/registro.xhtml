@@ -18,46 +18,47 @@
                 <h:outputScript target="head" name="js/jquery.validate.min.js"/>
                 <h:outputScript target="head" name="js/formRegistro_validate.js"/>
                 <f:view locale="#{localeBean.locale}">
+
                     <h:form id="formRegistro" prependId="false" class="form-validation">
+                        <h:outputLabel value="#{messages.formularioAlta}" class="titulo-formulario"/>
+                        <div class="form-row form-input-name-row">
+                            <span>#{messages.nombreUsuario}</span>
+                            <h:inputText id="nickname" value="#{registroBean.nombreUsuario}">
+                                <f:validator validatorId="uniqueNicknameValidator" />
+                                <f:ajax event="blur" render="m_nickname" />
+                            </h:inputText>
+                            <h:message id="m_nickname" for="nickname" class="error"/>
+                        </div>
 
                         <div class="form-row form-input-name-row">
-                                <span>#{messages.nombreUsuario}</span>
-                                <h:inputText id="nickname" value="#{registroBean.nombreUsuario}">
-                                    <f:validator validatorId="uniqueNicknameValidator" />
-                                    <f:ajax event="blur" render="m_nickname" />
-                                </h:inputText>
-                                <h:message id="m_nickname" for="nickname" class="error"/>
+                            <span>#{messages.nombreCompleto}</span>
+                            <h:inputText id="fullName" value="#{registroBean.nombreCompleto}"/>
                         </div>
 
                         <div class="form-row form-input-name-row">
-                                <span>#{messages.nombreCompleto}</span>
-                                <h:inputText id="fullName" value="#{registroBean.nombreCompleto}"/>
+                            <span>#{messages.email}</span>
+                            <h:inputText id="mail" value="#{registroBean.email}"/>
                         </div>
-                        
-                        <div class="form-row form-input-name-row">
-                                <span>#{messages.email}</span>
-                                <h:inputText id="mail" value="#{registroBean.email}"/>
-                        </div>
-                        
+
                         <div class="form-row form-input-name-row">                            
-                                <span>#{messages.password}</span>
-                                <h:inputSecret id="password" value="#{registroBean.password}"/>                            
+                            <span>#{messages.password}</span>
+                            <h:inputSecret id="password" value="#{registroBean.password}"/>                            
                         </div>
-                        
+
                         <div class="form-row form-input-name-row">                            
-                                <span>#{messages.repeatPassword}</span>
-                                <h:inputSecret id="password2" value="#{registroBean.password}"/>                            
+                            <span>#{messages.repeatPassword}</span>
+                            <h:inputSecret id="password2" value="#{registroBean.password}"/>                            
                         </div>
-                        
+
                         <div class="form-row">
-                           <p:commandButton 
+                            <p:commandButton 
                                 ajax="false"
                                 action="#{registroController.altaUsuario}" 
                                 value="#{messages.registrar}"/>
 
                         </div>
 
-                        
+
                     </h:form>
 
 
@@ -70,26 +71,26 @@
 
     </body>
     <script>
-         $(document).ready(function() {
+        $(document).ready(function () {
 
-        // Here is how to show an error message next to a form field
+            // Here is how to show an error message next to a form field
 
-        var errorField = $('.error');
+            var errorField = $('.error');
 
-        // Adding the form-invalid-data class will show
-        // the error message and the red x for that field
+            // Adding the form-invalid-data class will show
+            // the error message and the red x for that field
 
-        errorField.addClass('form-invalid-data');
-        //errorField.find('.form-invalid-data-info').text('Please enter your name');
+            errorField.addClass('form-invalid-data');
+            //errorField.find('.form-invalid-data-info').text('Please enter your name');
 
 
-        // Here is how to mark a field with a green check mark
+            // Here is how to mark a field with a green check mark
 
 //        var successField = $('.form-input-email-row');
-        var successField = $('input').not('.error');
+            var successField = $('input').not('.error');
 
-        successField.addClass('form-valid-data');
-    });
+            successField.addClass('form-valid-data');
+        });
     </script>
 
 </html>

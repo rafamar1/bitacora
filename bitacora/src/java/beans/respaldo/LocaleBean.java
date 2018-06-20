@@ -30,5 +30,13 @@ public class LocaleBean {
         locale = new Locale(language);
         FacesContext.getCurrentInstance().getViewRoot().setLocale(locale);
     }
+    
+    public void cambiaEng(){
+        this.setLanguage("en");
+    }
+    
+    public void cambiaEsp(){
+        this.setLanguage("es");
+    }
 
 }

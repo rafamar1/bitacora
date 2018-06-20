@@ -14,34 +14,33 @@
                 <h:outputStylesheet name="login.css" library="css"/>
             </ui:define>
             <ui:define name="title">#{messages.tituloLogin}</ui:define>
-            
-             <ui:define name="content">
-                 <f:view locale="#{localeBean.locale}">   
-                     
+
+            <ui:define name="content">
+                <f:view locale="#{localeBean.locale}">   
+
                     <div class="user">
                         <div class="user__header">
-                            <img src="https://s3-us-west-2.amazonaws.com/s.cdpn.io/3219/logo.svg" alt=""/>
-                            LOGO DE BITACORA
+                            <img class="logo-bitacora" src="resources/images/comun/blanco-grande.png"/>
                         </div>
 
                         <h:form id="formLogin" prependId="false">
-                            <div class="form__group">
-                                 <p:inputText class="input_form" value="#{loginBean.nombreUsuario}" required="true" placeholder="#{messages.nombreUsuario}"/>
+                            <div>
+                                <p:inputText class="input_form" value="#{loginBean.nombreUsuario}" required="true" placeholder="#{messages.nombreUsuario}"/>
                             </div>
-
-                            <div class="form__group">
+                            <div>
                                 <p:password class="input_form" value="#{loginBean.password}" required="true" placeholder="#{messages.password}"/>
                             </div>
-                            
-                            <p:outputLabel value="#{messages.loginFail}" rendered="#{loginController.badLogin}"/>
-                                <p:commandButton 
-                                    class="btn"
-                                    ajax="false"
-                                    action="#{loginController.loginUsuario}" 
-                                    value="#{messages.login}"/>
+                            <div class="error">
+                                <p:outputLabel value="#{messages.loginFail}" rendered="#{loginController.badLogin}" class="error"/>
+                            </div>                            
+                            <p:commandButton 
+                                class="btn"
+                                ajax="false"
+                                action="#{loginController.loginUsuario}" 
+                                value="#{messages.login}"/>
                         </h:form>
                     </div>
-                   
+
                 </f:view>
 
             </ui:define>

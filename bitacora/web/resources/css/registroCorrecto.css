@@ -20,7 +20,7 @@ body {
 .registro-correcto {
     width: 90%;
     max-width: 480px;
-    margin: 20vh auto;
+    margin: 5vh auto;
 }
 
 #formRegistroCorrecto {
@@ -61,6 +61,18 @@ body {
 #formRegistroCorrecto span.nombreUser{
     font-size: 1.2em;
     color: #934B66;
+}
+.user__header {
+    text-align: center;
+    opacity: 0;
+    transform: translate3d(0, 500px, 0);
+    animation: arrive 500ms ease-in-out 0.7s forwards;
+}
+
+.user__header img{
+    max-width: 180px;
+    max-height: 180px;
+    margin-top: 50px;
 }
 
 @keyframes arrive {

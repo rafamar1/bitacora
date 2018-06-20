@@ -1,10 +1,16 @@
 #panel_busqueda{
     background: url("#{resource['images/vistas/index/background_busqueda.jpg']}") no-repeat;
     background-size: cover;
-    height: 500px;
+    height: 330px;
     background-position: 0px;
     box-shadow: 0px 0px 10px #030303;
     border-bottom: 2px solid #debe6f;
+    padding-top: 100px;
+}
+#content h3{
+    text-align: center;
+    font-family: 'Quicksand', sans-serif; 
+    color: #dadad8;
 }
 
 #panel_busqueda p {
@@ -33,6 +39,7 @@
     text-align: center;
     color: white;
     margin: 40px;
+    font-family: 'Quicksand', sans-serif; 
 }
 
 #paises_continent_grid{
@@ -44,32 +51,73 @@
 
 h1{
     text-align: center;
+    font-family: 'Quicksand', sans-serif; 
+    color: #dadad8;
 }
 
-#viaje{
+.container-entradas{
+    display: flex;
+    flex-direction: row;
+    flex-wrap: wrap;
+    justify-content: center;
+    max-width: 900px;
+}
+
+.info-entrada{
     flex: 1;
     background: #f8f8f8;
     border: 1px solid #c3c3c3;
-    margin: 25px;
-    padding: 15px;
-    min-width: 200px;
-    max-width: 375px;
-}
-#viaje .descripcion {
-    text-align: justify;
-    margin: 20px auto;
+    margin: 30px;
+    min-width: 275px;
+    max-width: 310px;
+    display: flex;
+    flex-direction: column;
+    box-shadow: 1px 1px 3px #17171796;
 }
 
-#viaje div.ui-rating{
-    float: left;
+
+.info-entrada label{
+    margin: 6px 18px;
 }
 
-#viaje img{
+div.img-entrada-container{
     width: 100%;
-    height: 135px;        
+    min-width: 275px;
+    max-height: 178px;
+    border-bottom: 1px solid #5a5a5a;
+    overflow: hidden; /*Oculta el sobrante de la imagen de portada*/
+}
+.img-entrada-container img{
+    width: 100%;
+    max-width: 310px;
+
+}
+.info-entrada .entrada-title{
+    font-size: 1.2em;
+    color: #79153a;
+    font-weight: bold;
+    margin-top: 15px;
 }
 
-#viaje .labelUsuario{
-    float: right;
-    text-decoration: none;
+.info-entrada .entrada-ciudad{
+    color: #c3c3c3;
+}
+
+.info-entrada .entrada-ciudad span:first-child{
+    margin-left: 5px;
+}
+
+#content #puntuacion .ui-rating{
+    display: inline-block;
+}
+
+#content #puntuacion span{
+    margin-left: 5px
+}
+.entrada-tipo{
+    color: #838383;    
+}
+
+.info-entrada .descripcion {
+    text-align: justify;
 }

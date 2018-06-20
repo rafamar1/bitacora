@@ -1,0 +1,30 @@
+
+header,footer{
+    display: none;
+}
+
+.logo-negro{
+    display: flex;
+    margin: 25px;
+}
+.logo-negro label{
+    flex: 1;
+    position: relative;
+    top: -35px;
+    color: black;
+    font-size: 2em;
+}
+.logo-negro img{
+    flex:1;
+    max-width: 140px;
+    max-height: 140px;
+}
+
+.tablas{
+    display: flex;
+    flex-direction: column;
+    margin: 40px;    
+}
+.linea-temporal button{
+    display:none;
+}

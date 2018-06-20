@@ -20,48 +20,50 @@
 
                 <f:view locale="#{localeBean.locale}">
                     <section id="panel_busqueda">
-                        <h:form>
-                            <p>
+                        <h:form rendered="false">
+                            <div class="hidden">
                                 <p:inputText id="busqueda" value="#{indexBean.busqueda}" title="#{messages.buscarLocalizacion}" placeholder="#{messages.buscarLocalizacion}">
                                     <f:validateLength minimum="3" />
                                 </p:inputText>
 
                                 <p:commandButton action="buscar" value="#{messages.buscar}"/>
-
-                            </p>
+                            </div>
 
                         </h:form>
-                        
+
                         <h1>#{messages.mensajePrincipalIndex}</h1>
                         <h2>#{messages.subtituloPrincipalIndex}</h2>
-                        
+
                     </section>
 
-                    <h1>#{messages.cabeceraGridViajes}</h1>
+                    <h1>#{messages.titleLugarParaTi}</h1>
+                    <h3>#{messages.miraQueCompartieronOtros}</h3>
                     <section id="paises_continent_grid">
                         <c:forEach items="#{indexController.listaEntradasRandom}" var="entrada">
-                            <div id="viaje">
-                                <p> #{entrada.titulo}</p>
-                                <p> #{entrada.idCiudad.nombre}</p>
-                                <img src="#{indexController.dameRuta(entrada)}"/>
-                                <p> #{indexController.dameRuta(entrada)}</p>
-                                <p class="descripcion"> #{entrada.descripcion}</p>
-                                <p><p:rating value="#{entrada.puntuacion}" readonly="true"/> 
-                                    <p:commandLink class="labelUsuario" value="@#{entrada.idDia.idViaje.usuario.nombreUsuario}" action="login.xhtml"/></p>
-                                <p:link outcome="perfilUsuario" value="@#{entrada.idDia.idViaje.usuario.nombreUsuario}">
-                                    <f:param name="idUsuarioSeleccionado" value="#{entrada.idDia.idViaje.usuario.nombreUsuario}" />
-                                </p:link>
-                            </div>                            
+                            <div class="info-entrada">
+                                <div class="img-entrada-container">
+                                    <img src="#{indexController.dameRutaEntrada(entrada)}"/>
+                                </div>                                        
+                                <h:outputLabel value="#{entrada.titulo}" title="#{entrada.titulo}" class="entrada-title"/>
+                                <label class="entrada-ciudad">                                                    
+                                    <span class="fa fa-map-marker icono"/>
+                                    <h:outputLabel value="#{entrada.idCiudad.nombre}" title="#{entrada.idCiudad.nombre}"/>
+                                </label>
+                                <label id="puntuacion">
+                                    <h:outputText value="Puntuacion: "/>
+                                    <p:rating value="#{entrada.puntuacion}" readonly="true"/> 
+                                </label>
+                                <h:outputLabel value="#{entrada.descripcion}" title="#{entrada.descripcion}"/>
+                                <label>
+                                    <h:outputText value="Categoría: #{entrada.tipo}" class="entrada-tipo"/>
+                                </label>
+                            </div>                       
                         </c:forEach>                        
                     </section>
 
 
                     <section id="usuarios_destacados" style="display: none;">
                         <h1>#{messages.cabeceraUsuariosDestacados}</h1>
-                        <!--a href="explorar.xhtml#asia"><img src="Asia.jpg" alt="Asia"/></a>
-                        <a href="explorar.xhtml#usa"><img src="imgUsa.jpg" alt="USA"/></a>
-                        <a href="explorar.xhtml#europa"><img src="Europa.jpg" alt="Europa"/></a>
-                        <a href="explorar.xhtml#africa"><img src="Africa.jpg" alt="Africa"/></a-->
                     </section>
                 </f:view>
 

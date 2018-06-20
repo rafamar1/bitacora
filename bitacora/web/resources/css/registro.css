@@ -39,15 +39,24 @@ label.error {
 
 .form-validation{
     box-sizing: border-box;
-    max-width: 640px;
-    margin: 50px auto;
-    padding: 55px;
+    max-width: 600px;
+    margin: 100px auto;
+    padding: 40px;
     border-radius: 5px 5px 0px 0px;
-    background-color:  #ffffff;
+    background-color: #ffffff;
     box-shadow: 0 1px 3px 0 rgba(0, 0, 0, 0.1);
     font: bold 14px sans-serif;
     text-align: center;
 }
+
+.form-validation .titulo-formulario{
+    font-family: 'Abel', sans-serif;
+    font-size: 1.5em;
+    margin-bottom: 40px;
+    display: inline-block;
+    color: #5d0828;
+}
+    
 
 .form-row{
     position: relative;

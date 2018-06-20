@@ -328,3 +328,13 @@ html, body {
 #target {
     width: 345px;
 }
+.ui-breadcrumb{
+    border: 1px solid grey !important;
+    background: #881b458c;
+}
+/*#content .ui-breadcrumb span.ui-menu-item-text{
+    color: grey !important;
+}
+#content .ui-breadcrumb span.ui-menu-item-link{
+    color: grey !important;
+}*/

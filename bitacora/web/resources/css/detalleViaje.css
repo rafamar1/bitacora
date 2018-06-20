@@ -139,7 +139,7 @@ label.nombre-usuario {
     max-width: 310px;
     display: flex;
     flex-direction: column;
-    box-shadow: 1px 1px 3px lightgrey;
+    box-shadow: 1px 1px 3px #17171796;
 }
 
 
@@ -150,7 +150,7 @@ label.nombre-usuario {
 div.img-entrada-container{
     width: 100%;
     min-width: 275px;
-    max-height: 178px;
+    max-height: 170px;
     border-bottom: 1px solid #5a5a5a;
     overflow: hidden; /*Oculta el sobrante de la imagen de portada*/
 }

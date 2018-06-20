@@ -5,7 +5,10 @@
  */
 package beans.respaldo;
 
+import datos.dao.DiaJpaController;
 import datos.dao.UsuarioJpaController;
+import datos.dao.ViajeJpaController;
+import datos.entidades.Dia;
 import datos.entidades.Usuario;
 import datos.entidades.Viaje;
 import java.io.Serializable;
@@ -122,8 +125,6 @@ public class SessionUtilsBean implements Serializable {
         return "resources/images/comun/sin-imagen.jpg";
     }
 
-    
-
     public String dameRutaImgPortada(Usuario usuario) {
         if (usuario != null) {
             if (usuario.getImgPortada().equals("sin-imagen-portada.jpg")) {
@@ -167,5 +168,33 @@ public class SessionUtilsBean implements Serializable {
             return userController.dameListaUsuariosLikeNombre(query);
         }
         return new ArrayList<>();
+    }
+
+    public String dameNombreViaje() {
+        EntityManagerFactory emf = Persistence.createEntityManagerFactory("bitacoraPU");
+        ViajeJpaController viajeController = new ViajeJpaController(emf);
+        if (viajeController.findViaje(this.idViajeSeleccionado) != null) {
+            return viajeController.findViaje(this.idViajeSeleccionado).getTitulo();
+        }
+        return "Nuevo Viaje";
+    }
+
+    public String dameNumeroDia() {
+        EntityManagerFactory emf = Persistence.createEntityManagerFactory("bitacoraPU");
+        ViajeJpaController viajeController = new ViajeJpaController(emf);
+        if (viajeController.findViaje(this.idViajeSeleccionado) != null) {
+            List<Dia> listaDias = viajeController.findViaje(this.idViajeSeleccionado).getDiaList();
+            if (!listaDias.isEmpty()) {
+                DiaJpaController diaController = new DiaJpaController(emf);
+                if(diaController.findDia(this.idDiaSeleccionado) != null){
+                   int diaIndex = listaDias.indexOf(diaController.findDia(this.idDiaSeleccionado));
+                   int numDia = diaIndex + 1;
+                   return "Dia " + String.valueOf(numDia);
+                }
+            }else
+                return  "Nuevo Dia";
+
+        }
+        return "Nuevo Viaje";
     }
 }

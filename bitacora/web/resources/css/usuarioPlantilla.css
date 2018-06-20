@@ -5,6 +5,7 @@ header{
     left: 0;
     right:0;
     z-index: 100;
+    font-family: 'Abel', sans-serif;
 }
 header #cabecera{
     display: flex;
@@ -13,47 +14,56 @@ header #cabecera{
     border-bottom: 3px solid #debe6f;
     height: 80px;
 }
-
-#cabecera > a {
-    width: 35%;
-    font-size: 2em;
+#cabecera div.logo{
+    width: 80px;
+}
+#cabecera div.logo img{
+    width: 80px;
+}
+#cabecera .enlace-inicio{
+    flex: 2;
+    margin: 0px 5px;
+    padding: 15px;
+}
+#cabecera .enlace-inicio a {
+    font-size: 2.4em;
     text-decoration: none;
     color: white;
-    padding:10px;
+    padding: 0px;
 }
-#cabecera select {
-    text-transform: uppercase;
-    background: #851a43;
-    color: #ffffff;
-    padding: 0px 5px 0px 30px;
-    border: 1px solid #650e2e;
-    margin: 15px;
+#cabecera .enlace-inicio label {
+    position: absolute;
+    bottom: 10px;
+    left: 200px;
+    color: white;
 }
 
- .ui-autocomplete-items .img-perfil-busqueda {  max-width: 40px;
-    max-height: 40px;
-    max-width: 40px;
+#cabecera #busqueda-usuario{
+    flex: 1;
+    margin: 0px 5px;
+    padding: 20px;
+}
+#cabecera #menu-superior{
+    flex: 2;
+    text-transform: uppercase;
+    margin: 0px 5px;
+    padding: 15px;
+}
+ .ui-autocomplete-items .img-perfil-busqueda { 
+    max-width: 30px;
+    max-height: 30px;
+    max-width: 30px;
     border-radius: 50%;
     border: 2px solid #8c1d47;
     position: relative;
-    min-width: 40px;
-    min-height: 40px;
+    min-width: 30px;
+    min-height: 30px;
 }
 
-#cabecera select option:first-child {
-    /*background: url("./images/spanishFlag.jpg");*/
-    background: url("#{resource['images/spanishFlag.jpg']}");  
-}
-
-#cabecera select option:nth-child(2){
-    background: url("#{resource['images/englishFlag.jpg']}");  
-}
-
-#cabecera #menu-superior {
-    width: 65%;                
-    padding: 0px;
-    line-height: normal;
-    text-transform: uppercase;
+.ui-state-highlight, .ui-widget-content .ui-state-highlight, .ui-widget-header .ui-state-highlight {
+    border: 1px solid #999996 !important;
+    background: #dedeb5 !important;
+    color: #222 !important;
 }
 
 #menu-superior .ui-menuitem-active , #menu-superior .ui-state-hover{
@@ -76,6 +86,7 @@ header #cabecera{
 /*-----------  RESETEOS   -----------*/
 html,body{
     height: 100%;
+    font-family: 'Quicksand', sans-serif;  
 }
 
 #cabecera .ui-widget-content, .ui-menubar, .ui-menu-list, .ui-menuitem, .ui-menuitem-link, .ui-menuitem-text, ui-icon{
@@ -87,16 +98,6 @@ html,body{
     display: flex;
     flex-wrap: nowrap;
     padding: 82px 4%;
-}
-
-#left{
-    width: 25%;
-    margin: 0px 15px;                
-    min-width: 300px;
-}
-
-.link-publicar-viaje{
-    display: none;
 }
 
 #content{

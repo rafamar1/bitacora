@@ -20,7 +20,7 @@
 
                 <f:view locale="#{localeBean.locale}">
                     <h2>#{messages.tituloPublicarViaje}</h2>
-                    <p:breadCrumb>
+                    <p:breadCrumb id="breadcrumb">
                         <p:menuitem value="Inicio" url="principal.xhtml" icon="fa fa-home"/>
                         <p:menuitem value="#{sessionUtilsBean.usuario.nombreCompleto}" url="principal.xhtml"/>
                         <p:menuitem value="Publicar Viaje" url="#" />
@@ -50,7 +50,7 @@
                         </div>   
                         <div class="form-row">
                             <h:outputText value="#{messages.imagenViaje}" title="#{messages.imagenViaje}"/>
-                            <p:fileUpload id="imagen_viaje"  value="#{publicarViajeBean.imagen}" 
+                            <p:fileUpload id="imagen_viaje"  value="#{publicarViajeBean.imagen}"
                                           mode="simple" allowTypes="/(\.|\/)(gif|jpe?g|zip)$/" dragDropSupport="true"
                                           required="true" requiredMessage="Por favor seleccione un archivo"/>
                             <h:message for="imagen_viaje" class="error"/>

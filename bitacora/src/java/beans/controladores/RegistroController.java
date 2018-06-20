@@ -6,6 +6,7 @@
 package beans.controladores;
 
 import beans.modelos.RegistroBean;
+import beans.respaldo.EnviarMail;
 import datos.dao.UsuarioJpaController;
 import datos.entidades.Usuario;
 import javax.inject.*;
@@ -62,7 +63,14 @@ public class RegistroController implements Serializable {
             Logger.getLogger(RegistroController.class.getName()).log(Level.SEVERE, null, ex);
             return "error";
         }
-
+        
+        EnviarMail sendEmail = new EnviarMail();
+        sendEmail.setUsuario(usuario.getNombreUsuario());
+        sendEmail.setBody(usuario.getNombreCompleto()+", bienvenido a bitacora.\n+"
+                + "Ahora puede compartir experiencias con miles de usuarios.\n"
+                + "Sus datos son:\n"
+                + "usuario: "+usuario.getNombreUsuario()
+                + "\nmail: " + usuario.getEmail());
         return "registroOk";
     }
 

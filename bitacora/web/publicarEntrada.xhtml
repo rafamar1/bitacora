@@ -19,12 +19,12 @@
             <ui:define name="content">
 
                 <f:view locale="#{localeBean.locale}">
-                    <h2>#{messages.nuevaEntrada} #{sessionUtilsBean.idViajeSeleccionado}</h2>
-                    <p:breadCrumb>
+                    <h2>#{messages.nuevaEntrada} #{sessionUtilsBean.dameNombreViaje()}</h2>
+                    <p:breadCrumb id="breadcrumb">
                         <p:menuitem value="Inicio" url="principal.xhtml" icon="fa fa-home"/>
                         <p:menuitem value="#{sessionUtilsBean.usuario.nombreCompleto}" url="principal.xhtml"/>
-                        <p:menuitem value="#{sessionUtilsBean.idViajeSeleccionado}" url="#" />
-                        <p:menuitem value="#{sessionUtilsBean.idDiaSeleccionado}" url="#" />
+                        <p:menuitem value="#{sessionUtilsBean.dameNombreViaje()}" url="#" />
+                        <p:menuitem value="#{sessionUtilsBean.dameNumeroDia()}" url="#" />
                         <p:menuitem value="Publicar entrada" url="#" />
                     </p:breadCrumb>
                     <h:form enctype="multipart/form-data" prependId="false" class="form-validation">     
@@ -81,15 +81,11 @@
                                                itemValue="#{categoria}" itemLabel="#{categoria}"/>       
                             </p:selectOneMenu>
                         </div>
-                        <div class="form-row">
                             <p:commandButton value="#{messages.publicarEntrada}" ajax="false" action="#{publicarEntradaController.publicarEntrada}"/> 
-                        </div>
+                        
                     </h:form>
                 </f:view>
-
             </ui:define>
-
-
         </ui:composition>
 
     </body>

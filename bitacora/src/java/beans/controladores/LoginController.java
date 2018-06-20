@@ -78,12 +78,16 @@ public class LoginController implements Serializable {
                 BasicPasswordEncryptor passwordEncryptor = new BasicPasswordEncryptor();
                 
                 if (passwordEncryptor.checkPassword(inputPassword, usuario.getPassword())) {
-                    /*TODO PROBAR CON COMENTAR ESTO
-                    Session.getInstance().setAttribute("usuario", usuario);*/
                     sessionUtilsBean.setUsuario(usuario);
                     sessionUtilsBean.setUsuarioLogeado(true);                    
                     Session.getInstance().setAttribute("usuarioLogeado", true);
-                    return "loginOk";
+                    //TODO refactorizar este codigo
+                    if(usuario.getNombreUsuario().equals("admin") || usuario.getNombreUsuario().equals("bitacora")){
+                        Session.getInstance().setAttribute("usuarioAdmin", true);
+                        return "adminOk";
+                    } else {                        
+                        return "loginOk";
+                    }
                 } else {
                     this.badLogin = true;
                     return "login.xhtml";

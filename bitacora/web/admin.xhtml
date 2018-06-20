@@ -1,0 +1,46 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+      xmlns:h="http://xmlns.jcp.org/jsf/html"
+      xmlns:f="http://xmlns.jcp.org/jsf/core"
+      xmlns:p="http://primefaces.org/ui"
+      xmlns:c="http://xmlns.jcp.org/jsp/jstl/core">
+
+
+    <body>
+
+        <ui:composition template="./templates/adminPlantilla.xhtml" >    
+            <ui:define name="css">
+                <h:outputStylesheet name="admin.css" library="css"/>
+                <link rel="stylesheet" type="text/css" href="printAdmin.css" media="print" />
+            </ui:define>
+            <ui:define name="title">#{messages.tituloAdmin}</ui:define>
+
+            <ui:define name="content" >
+
+                <f:view locale="#{localeBean.locale}">
+                    <div class="logo-negro">
+                        <img class="logo-bitacora" 
+                             src="resources/images/comun/negro-grande.png"/>  
+                        <p:outputLabel value="bitacora"/>
+                    </div>
+                    <h1>Estadísticas de uso de la aplicación</h1>
+                    <div class="tablas">
+                        <div class="grafico pie">
+                          <p:chart type="pie" model="#{graficosAdmin.pieModel2}" style="max-width: 450px;"/>
+                        </div>
+                        <div class="grafico linea-temporal">
+                            <p:chart type="line" model="#{graficosAdmin.dateModel}" style="max-width: 450px;" widgetVar="chart"/>
+                            <p:commandButton type="button" value="Deshacer Zoom" icon="ui-icon-cancel" onclick="PF('chart').resetZoom()"/>
+                        </div>
+                    </div>
+                </f:view>
+
+            </ui:define>
+
+
+        </ui:composition>
+
+    </body>
+</html>

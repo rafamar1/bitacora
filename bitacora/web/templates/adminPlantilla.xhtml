@@ -10,12 +10,12 @@
     <h:head>
         <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
         <h:outputStylesheet name="css/normalize.css"/>
-        <h:outputStylesheet name="css/noLoggedPlantilla.css"/>
-        <link href="https://fonts.googleapis.com/css?family=Abel|Mina|Quicksand" rel="stylesheet"/>
+        <h:outputStylesheet name="css/admin.css"/>
+        <h:outputScript target="head" name="js/jquery-3.3.1.js"/>
+        <h:outputScript target="head" name="js/jquery.validate.min.js"/>
         <ui:insert name="css"/>
-        <title><ui:insert name="title">bitacora</ui:insert></title>
+        <title><ui:insert name="title">bitacora - Admin</ui:insert></title>
     </h:head>
-
     <h:body style="position: relative;">
 
         <ui:insert name="top">
@@ -23,24 +23,36 @@
                 <div id="cabecera">
                     <div class="logo">
                         <img class="logo-bitacora" 
-                             src="resources/images/comun/blanco-grande.png"/>
+                             src="resources/images/comun/blanco-grande.png"/>  
                     </div>                    
                     <div class="enlace-inicio">                                                
-                        <p:link outcome="index.xhtml" value="bitacora"/>
+                        <p:link outcome="admin.xhtml" value="bitacora"/>
                         <h:outputLabel value="#{messages.tagline}"/>
                     </div>
-                    <h:form id="menu-superior"> 
-                        <p:menubar id="menu-superior">
-                            <p:menuitem value="#{messages.botonEntrar}" url="login.xhtml"/>
-                            <p:menuitem value="#{messages.botonExplorar}" url="explorar.xhtml" rendered="false"/>
-                            <p:menuitem value="#{messages.botonRegistrar}"  url="registro.xhtml"/>
-                        </p:menubar>
+                    <h:form id="busqueda-usuario"> 
+                        <p:autoComplete id="buscarUsuario" value="#{sessionUtilsBean.usuarioBusqueda}" var="usuario" 
+                                        completeMethod="#{sessionUtilsBean.buscarUsuario}" placeholder="Buscar usuario"
+                                        itemLabel="#{usuario.nombreUsuario}" itemValue="#{usuario}" forceSelection="true">
+
+                            <p:column>
+                                <img class="img-perfil-busqueda" src="#{sessionUtilsBean.dameRutaImgPerfil(usuario)}"/>
+                            </p:column>
+
+                            <p:column>
+                                <h:link value="#{messages.verPerfil}" title="Ver Perfil" outcome="perfilUsuario">
+                                    <f:param name="idUsuarioSeleccionado" value="#{usuario.nombreUsuario}"/> 
+                                    <h:outputText value=" #{usuario.nombreUsuario}"/>
+                                </h:link>
+                            </p:column>
+                        </p:autoComplete>
                     </h:form>
-
-
-                    <h:form id="form-banderas">       
-                        <h:commandButton image="resources/images/comun/spanishFlag.jpg" value="es" actionListener="#{localeBean.cambiaEsp()}"/>
-                        <h:commandButton image="resources/images/comun/englishFlag.jpg" value="en" actionListener="#{localeBean.cambiaEng()}"/>
+                    <h:form id="menu-superior"> 
+                        <p:menubar>
+                            <p:menuitem value="#{messages.botonInicio}"  url="admin.xhtml"/>
+                            <p:menuitem   action="#{sessionUtilsBean.logout()}" ajax="false"                 
+                                          title="#{messages.logout}" icon="fa fa-power-off" iconPos="top">        
+                            </p:menuitem>
+                        </p:menubar>
                     </h:form>
 
                 </div> 

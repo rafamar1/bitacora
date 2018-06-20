@@ -38,8 +38,21 @@ body {
     animation: arrive 500ms ease-in-out 0.7s forwards;
 }
 
+.user__header img{
+    max-width: 180px;
+    max-height: 180px;
+}
+
+#formLogin div.error{  
+    background: #f5bfb3;
+    color: #900000;
+}
+#formLogin div.error label{    
+    padding: 10px;
+}
+
 #formLogin {
-    margin-top: 40px;
+    margin-top: 10px;
     border-radius: 6px;
     overflow: hidden;
     opacity: 0;

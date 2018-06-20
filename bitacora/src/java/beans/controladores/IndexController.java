@@ -36,7 +36,7 @@ public class IndexController implements Serializable {
 
     public IndexController() {
         emf = Persistence.createEntityManagerFactory("bitacoraPU");
-        this.listaEntradasRandom = dameListaEntradas(4);
+        this.listaEntradasRandom = dameListaEntradas(6);
     }
 
     public IndexBean getIndexBean() {
@@ -86,7 +86,7 @@ public class IndexController implements Serializable {
         return new ArrayList(hashSetEntradas);
     }
 
-    public String dameRuta(Entrada entrada) {
+    public String dameRutaEntrada(Entrada entrada){
         StringBuilder sb = new StringBuilder("resources/images/usuarios/");
         sb.append(entrada.getIdDia().getIdViaje().getUsuario().getNombreUsuario());
         sb.append("/");

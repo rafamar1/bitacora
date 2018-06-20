@@ -1,14 +1,9 @@
-/*----------- CABECERA ---------------*/
-body{
-    font-family: 'Quicksand', sans-serif;    
-}
 header{
     position:fixed;
     top:0;
     left: 0;
     right:0;
     z-index: 100;
-    font-family: 'Abel', sans-serif;
 }
 header #cabecera{
     display: flex;
@@ -40,31 +35,33 @@ header #cabecera{
     left: 200px;
     color: white;
 }
+
+#cabecera #busqueda-usuario{
+    flex: 1;
+    margin: 0px 5px;
+    padding: 20px;
+}
 #cabecera #menu-superior{
     flex: 2;
     text-transform: uppercase;
     margin: 0px 5px;
     padding: 15px;
 }
-#cabecera #form-banderas{
-    flex: 1;
-    display: flex;
-    flex-direction: row;
-    padding: 15px;
-}
-#form-banderas input {
-    max-width: 35px;
-    max-height: 20px;
-    flex: 1;
-    margin: 10px;  
-}
-#cabecera select option:first-child {
-    /*background: url("./images/spanishFlag.jpg");*/
-    background: url("#{resource['images/comun/spanishFlag.jpg']}") !important;
+.ui-autocomplete-items .img-perfil-busqueda { 
+    max-width: 30px;
+    max-height: 30px;
+    max-width: 30px;
+    border-radius: 50%;
+    border: 2px solid #8c1d47;
+    position: relative;
+    min-width: 30px;
+    min-height: 30px;
 }
 
-#cabecera select option:nth-child(2){
-    background: url("#{resource['images/comun/englishFlag.jpg']}") no-repeat !important; 
+.ui-state-highlight, .ui-widget-content .ui-state-highlight, .ui-widget-header .ui-state-highlight {
+    border: 1px solid #999996 !important;
+    background: #dedeb5 !important;
+    color: #222 !important;
 }
 
 #menu-superior .ui-menuitem-active , #menu-superior .ui-state-hover{
@@ -83,7 +80,6 @@ header #cabecera{
     margin: 0px 3px;
     padding: 3px;                
 }
-
 
 /***********************    PIE DE PAGINA    ******************************/
 footer {
@@ -135,52 +131,79 @@ footer .ui-icon{
     height: 30px !important;
 }
 
-/*REVISAR ESTA PROPIEDAD
-footer .ui-g div:first-child{
-    padding-top: 2%;
-}*/
-
 /*-----------  RESETEOS   -----------*/
-/*html,body{
-    height: 100vh;
-}*/
-#content{
-    padding-top: 2.5em;
-    padding-bottom: 5em;
+html,body{
+    height: 100%;
 }
 
-#menu-redsocial  .ui-widget-content, .ui-menubar, .ui-menu-list, .ui-menuitem, .ui-menuitem-link, .ui-menuitem-text, ui-icon{
-    border: none; background: none; color: white;
-}
 #cabecera .ui-widget-content, .ui-menubar, .ui-menu-list, .ui-menuitem, .ui-menuitem-link, .ui-menuitem-text, ui-icon{
     border: none; background: none; color: white;
 }
 
-#menu-redsocial .ui-menuitem-active , #menu-redsocial .ui-state-hover{
-    background: none;
-    border-radius: 0px;
-}
-/*TODO REVISAR ESTE SETEO DEL BODY*/
-
-body {    
-    font-family: "Roboto";
-    font-size: 14px;
-    background-size: 200% 100% !important; /*Para que cubra completo el degradado*/
-    /*animation: move 15s ease infinite;*/
-    transform: translate3d(0, 0, 0);
-    background: linear-gradient(45deg, #fff, #934B66 95%);
+#left{
+    width: 25%;
+    margin: 0px 15px;                
+    min-width: 300px;
 }
 
-@keyframes move {
-    0% {
-        background-position: 0 0;
+.link-publicar-viaje{
+    display: none;
+}
+
+#content{
+    /*width: 70%;
+    margin: 0px 15px;*/
+    background-color: #e9d7fa;
+    padding-top: 80px;
+    padding-bottom: 5em;
+    /*display: flex;
+    flex-wrap: wrap;*/
+    padding-left: 6%;
+    padding-right: 6%;
+}
+#content h1{
+    color: #66667a;
+}
+.tablas{
+    display: flex;
+    flex-direction: row;
+    margin: 40px;    
+}
+.tablas > div {
+    flex: 1;
+}
+.logo-negro{
+    display: none;
+}
+
+@media print {
+    header,footer{
+        display: none;
     }
 
-    50% {
-        background-position: 100% 0 ;
+    .logo-negro{
+        display: flex;
+        margin: 25px;
+    }
+    .logo-negro label{
+        flex: 1;
+        position: relative;
+        top: 35px;
+        color: black;
+        font-size: 2em;
+    }
+    .logo-negro img{
+        flex:1;
+        max-width: 140px;
+        max-height: 140px;
     }
 
-    100% {
-        background-position: 0 0;
+    .tablas{
+        display: flex;
+        flex-direction: column;
+        margin: 40px;    
+    }
+    .linea-temporal button{
+        display:none;
     }
 }
