@@ -48,7 +48,8 @@ body {
     color: #900000;
 }
 #formLogin div.error label{    
-    padding: 10px;
+    margin: 10px;
+    display: inline-block;
 }
 
 #formLogin {

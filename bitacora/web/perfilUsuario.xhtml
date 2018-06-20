@@ -59,7 +59,7 @@
                                                      id="modificarPerfil"  icon="fa fa-gears"
                                                      rendered="#{!perfilController.usuarioSeleccionadoNoEsUsuarioLogeado()}"/>
                                     <p:selectBooleanButton id="followUnfollow" value="#{perfilController.followUnfollow}"  
-                                                           onLabel="Dejar de Seguir" offLabel="Seguir" rendered="#{perfilController.usuarioSeleccionadoNoEsUsuarioLogeado()}">
+                                                           onLabel="#{messages.unfollow}" offLabel="#{messages.follow}" rendered="#{perfilController.usuarioSeleccionadoNoEsUsuarioLogeado()}">
                                         <p:ajax listener="#{perfilController.toFollowUnfollow}" update="messageUnfollow" />
                                     </p:selectBooleanButton>
                                 </div>

@@ -103,7 +103,16 @@ label.nombre-usuario {
 #viajes_siguiendo a {
     text-decoration: none;
 }
-
+#viajes_siguiendo label.nuevo-contenido{
+    display: inline-block;
+    width: 100%;
+    border-top: 1px solid lightgrey;
+    padding-top: 8px;
+    color: #7b163c;
+}
+#viajes_siguiendo .ui-datascroller-item:first-child label.nuevo-contenido{
+    border:none;
+}
 #viajes_siguiendo #infoViaje{
     background: #f6f2dc;
     margin: 15px;
@@ -111,6 +120,7 @@ label.nombre-usuario {
     position: relative;
     display: flex;
     border: 1px solid #d5d5d5;
+    margin-bottom: 25px;
 }
 
 #viajes_siguiendo #infoViaje .info-general-left{

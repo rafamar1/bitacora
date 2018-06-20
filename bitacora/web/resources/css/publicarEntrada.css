@@ -47,6 +47,10 @@ div.img-portada-container{
     color: #383838;
 }
 
+#left #boton-publicar-viaje{
+    display: none;
+}
+
 label.nombre-completo {
     position: relative;    
     display: block;

@@ -10,7 +10,7 @@
 #content h3{
     text-align: center;
     font-family: 'Quicksand', sans-serif; 
-    color: #dadad8;
+    color: #6c4654;
 }
 
 #panel_busqueda p {
@@ -52,7 +52,7 @@
 h1{
     text-align: center;
     font-family: 'Quicksand', sans-serif; 
-    color: #dadad8;
+    color: #6c4654;
 }
 
 .container-entradas{
@@ -74,6 +74,9 @@ h1{
     flex-direction: column;
     box-shadow: 1px 1px 3px #17171796;
 }
+.info-entrada:hover{
+    box-shadow: 1px 1px 6px #17171799;
+} 
 
 
 .info-entrada label{

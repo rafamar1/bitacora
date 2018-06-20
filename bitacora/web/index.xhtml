@@ -9,7 +9,6 @@
 
 
     <body>
-
         <ui:composition template="./templates/noLoggedPlantilla.xhtml" >    
             <ui:define name="css">
                 <h:outputStylesheet name="index.css" library="css"/>
@@ -50,21 +49,17 @@
                                     <h:outputLabel value="#{entrada.idCiudad.nombre}" title="#{entrada.idCiudad.nombre}"/>
                                 </label>
                                 <label id="puntuacion">
-                                    <h:outputText value="Puntuacion: "/>
+                                    <h:outputText value="#{messages.puntuacion}: "/>
                                     <p:rating value="#{entrada.puntuacion}" readonly="true"/> 
                                 </label>
                                 <h:outputLabel value="#{entrada.descripcion}" title="#{entrada.descripcion}"/>
                                 <label>
-                                    <h:outputText value="Categoría: #{entrada.tipo}" class="entrada-tipo"/>
+                                    <h:outputText value="#{messages.categoria}: #{entrada.tipo}" class="entrada-tipo"/>
                                 </label>
                             </div>                       
                         </c:forEach>                        
                     </section>
 
-
-                    <section id="usuarios_destacados" style="display: none;">
-                        <h1>#{messages.cabeceraUsuariosDestacados}</h1>
-                    </section>
                 </f:view>
 
             </ui:define>
